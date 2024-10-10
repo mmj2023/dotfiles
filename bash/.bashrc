@@ -428,4 +428,6 @@ lazyg() {
 	git commit -m "$1"
 	git push
 }
-source ~/.local/share/blesh/ble.sh
+if [ -f ~/.local/share/blesh/ble.sh ]; then
+    source ~/.local/share/blesh/ble.sh
+fi
