@@ -46,14 +46,15 @@ check_tmux_window() {
 # Create a new tmux session/window
 create_tmux_session_or_window() {
   local dir="$1"
+  local dir_n=$(basename "$dir")
   if [ -z "$(tmux list-sessions)" ]; then
         tmux new-session -s "editing" -n "$dir" -c "$dir"
   else
-        tmux new-window -t "$(tmux list-sessions -F '#S' | head -n 1)" -n "$dir" -c "$dir"
+        tmux new-window -t "$(tmux list-sessions -F '#S' | head -n 1)" -n "$dir_n" -c "$dir"
         if [ -z "$TMUX" ]; then
-          tmux a -t "$(tmux list-sessions -F '#S' | head -n 1):$dir"
+          tmux a -t "$(tmux list-sessions -F '#S' | head -n 1):$dir_n"
         else
-          tmux switch-client -t "$dir"
+          tmux switch-client -t "$dir_n"
         fi
   fi
 }
@@ -76,7 +77,7 @@ main() {
     dir_name=$(basename "$selected_dir")
     # dir_name=$(basename "$selected_dir")
     if ! check_tmux_window "$dir_name"; then
-        create_tmux_session_or_window "$dir_name"
+        create_tmux_session_or_window "$selected_dir"
     fi
   fi
 }
