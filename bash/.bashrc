@@ -291,6 +291,7 @@ fi
 alias la='ls -Alh'                # show hidden files
 alias ls='ls -aFh --color=always' # add colors and file type extensions
 alias ld='lsd -aFh --color=always' # add colors and file type extensions
+alias ll='lsd -alFh --color=always' # add colors and file type extensions
 alias lx='ls -lXBh'               # sort by extension
 alias lk='ls -lSrh'               # sort by size
 alias lc='ls -ltcrh'              # sort by change time
@@ -299,7 +300,7 @@ alias lr='ls -lRh'                # recursive ls
 alias lt='ls -ltrh'               # sort by date
 alias lm='ls -alh |more'          # pipe through 'more'
 alias lw='ls -xAh'                # wide listing format
-alias ll='ls -Fls'                # long listing format
+# alias ll='ls -Fls'                # long listing format
 alias labc='ls -lap'              # alphabetical sort
 alias lf="ls -l | egrep -v '^d'"  # files only
 alias ldir="ls -l | egrep '^d'"   # directories only
@@ -428,6 +429,19 @@ lazyg() {
 	git commit -m "$1"
 	git push
 }
+sessionize_script=~/dotfiles/bash/custom-scripts/sessionize.sh
+if [ -f "$sessionize_script" ]; then
+    if [ ! -x "$sessionize_script" ]; then
+        chmod +x "$sessionize_script"
+    fi
+    # bind -x '"\C-t":{ $sessionize_script }'
+    # bind -x '"\C-t":"$sessionize_script"'
+    # ble-bind -x '"\C-t":"$sessionize_script"'
+    # ble-bind -x '"\C-t": $sessionize_script'
+    bind -x '"\C-t": $sessionize_script'
+else
+    echo "Sessionize script not found"
+fi
 if [ -f ~/.local/share/blesh/ble.sh ]; then
     source ~/.local/share/blesh/ble.sh
 fi
