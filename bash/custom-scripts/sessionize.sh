@@ -48,7 +48,7 @@ create_tmux_session_or_window() {
   local dir="$1"
   local dir_n=$(basename "$dir")
   if [ -z "$(tmux list-sessions)" ]; then
-        tmux new-session -s "editing" -n "$dir" -c "$dir"
+        tmux new-session -s "editing" -n "$dir_n" -c "$dir"
   else
         tmux new-window -t "$(tmux list-sessions -F '#S' | head -n 1)" -n "$dir_n" -c "$dir"
         if [ -z "$TMUX" ]; then
