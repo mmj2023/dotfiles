@@ -134,6 +134,8 @@ truncation_symbol = "…/"
 "music" = " "
 "Pictures" = " "
 "pictures" = " "
+"Videos" = " "
+"videos" = " "
 
 [docker_context]
 symbol = " "
