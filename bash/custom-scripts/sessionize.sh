@@ -11,9 +11,9 @@
 select_dir_file_item() {
   # selected_dir=$(find . -type d -printf "%P\n" | fzf --height 40% --reverse --prompt "Select directory to sessionize> ")
   if command -v fd &> /dev/null; then
-    selected_dir=$(fd . --type d --type f ~ | fzf)
+    selected_dir=$(fd . --type d --type f ~ | fzf --prompt="  Which directory are you looking for?   " --layout=reverse --height=~75% --border --exit-0) #Which directory to use
   elif command -v find &> /dev/null; then
-    selected_dir=$(find ~ -type d -o -type f 2>/dev/null | fzf)
+    selected_dir=$(find ~ -type d -o -type f 2>/dev/null | fzf --prompt="  Which directory are you looking for?   " --layout=reverse --height=~75% --border --exit-0)
   # elif command -v ls &> /dev/null
   #   # selected_dir=$(ls -d ~ | fzf)
   #   echo "working on it"
