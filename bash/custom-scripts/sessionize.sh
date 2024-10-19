@@ -12,9 +12,9 @@ select_dir_file_item() {
   # selected_dir=$(find . -type d -printf "%P\n" | fzf --height 40% --reverse --prompt "Select directory to sessionize> ")
   if command -v fd &> /dev/null; then
     if command -v sed &> /dev/null; then
-      selected_dir=$(fd . --type d --type f ~ | sed "s|$HOME|~|" | fzf --prompt="  Which directory are you looking for?   " --layout=reverse --height=~75% --border --exit-0) #Which directory to use fd . --type d --type f ~ | fzf
-    elif command -v sed &> /dev/null; then
-      selected_dir=$(fd . --type d --type f ~ | awk -v home="$HOME" '{gsub(home, "~"); print}' | fzf --prompt="  Which directory are you looking for?   " --layout=reverse --height=~75% --border --exit-0) #Which directory to use fd . --type d --type f ~ | fzf
+      selected_dir=$(fd . --type d --type f ~ | sed "s|$HOME|~|" | fzf --prompt="  Which directory are you looking for?   " --layout=reverse --height=~75% --border --exit-0 | sed "s|~|$HOME|") #Which directory to use fd . --type d --type f ~ | fzf
+    elif command -v awk &> /dev/null; then
+      selected_dir=$(fd . --type d --type f ~ | awk -v home="$HOME" '{gsub(home, "~"); print}' | fzf --prompt="  Which directory are you looking for?   " --layout=reverse --height=~75% --border --exit-0 | awk -v home="$HOME" '{gsub("~", home); print}') #Which directory to use fd . --type d --type f ~ | fzf
     else
       echo "Error: sed and awk is not available or not working properly. Please check it."
       selected_dir=$(fd . --type d --type f ~ | fzf --prompt="  Which directory are you looking for?   " --layout=reverse --height=~75% --border --exit-0) #Which directory to use fd . --type d --type f ~ | fzf
@@ -22,9 +22,9 @@ select_dir_file_item() {
   elif command -v find &> /dev/null; then
     # selected_dir=$(find ~ -type d -o -type f 2>/dev/null | fzf --prompt="  Which directory are you looking for?   " --layout=reverse --height=~75% --border --exit-0)
     if command -v sed &> /dev/null; then
-      selected_dir=$(find ~ -type d -o -type f 2>/dev/null | sed "s|$HOME|~|" | fzf --prompt="  Which directory are you looking for?   " --layout=reverse --height=~75% --border --exit-0) #Which directory to use fd . --type d --type f ~ | fzf
-    elif command -v sed &> /dev/null; then
-      selected_dir=$(find ~ -type d -o -type f 2>/dev/null | awk -v home="$HOME" '{gsub(home, "~"); print}' | fzf --prompt="  Which directory are you looking for?   " --layout=reverse --height=~75% --border --exit-0) #Which directory to use fd . --type d --type f ~ | fzf
+      selected_dir=$(find ~ -type d -o -type f 2>/dev/null | sed "s|$HOME|~|" | fzf --prompt="  Which directory are you looking for?   " --layout=reverse --height=~75% --border --exit-0 | sed "s|~|$HOME|") #Which directory to use fd . --type d --type f ~ | fzf
+    elif command -v awk &> /dev/null; then
+      selected_dir=$(find ~ -type d -o -type f 2>/dev/null | awk -v home="$HOME" '{gsub(home, "~"); print}' | fzf --prompt="  Which directory are you looking for?   " --layout=reverse --height=~75% --border --exit-0 | awk -v home="$HOME" '{gsub("~", home); print}') #Which directory to use fd . --type d --type f ~ | fzf
     else
       echo "Error: sed and awk is not available or not working properly. Please check it."
       selected_dir=$(find ~ -type d -o -type f 2>/dev/null | fzf --prompt="  Which directory are you looking for?   " --layout=reverse --height=~75% --border --exit-0) #Which directory to use fd . --type d --type f ~ | fzf
