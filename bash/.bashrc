@@ -270,7 +270,6 @@ if command -v z > /dev/null 2>&1; then
     alias .....='z ../../../..'
     # cd into the old directory
     alias bd='z "$OLDPWD"'
-    alias wind="z /mnt/c/users/mmj21/"
 
 else
     # echo "Program 'z' does not exist"
@@ -283,7 +282,6 @@ else
     alias .....='cd ../../../..'
     # cd into the old directory
     alias bd='cd "$OLDPWD"'
-    alias wind="cd /mnt/c/users/mmj21/"
 
 fi
 
