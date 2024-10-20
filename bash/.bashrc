@@ -379,7 +379,20 @@ alias clickpaste='sleep 3; xdotool type "$(xclip -o -selection clipboard)"'
 # KITTY - alias to be able to use kitty features when connecting to remote servers(e.g use tmux on remote server)
 
 alias kssh="kitty +kitten ssh"
-alias wssh="wezterm.exe ssh"
+# Function to check if running in WSL
+check_wsl() {
+    if grep -qEi "(Microsoft|WSL)" /proc/version &> /dev/null ; then
+        # echo "Running in WSL"
+        alias wssh="wezterm.exe ssh"
+    else
+        # echo "Not running in WSL"
+        alias wssh="wezterm ssh"
+    fi
+}
+
+# Run the function
+check_wsl
+
 
 # alias to cleanup unused docker containers, images, networks, and volumes
 
@@ -439,6 +452,25 @@ if [ -f "$sessionize_script" ]; then
     bind -x '"\C-t": $sessionize_script'
 else
     echo "Sessionize script not found"
+fi
+# #!/bin/bash
+#
+# # Function to check if running in WSL
+# check_wsl() {
+#     if grep -qEi "(Microsoft|WSL)" /proc/version &> /dev/null ; then
+#         # echo "Running in WSL"
+#         bind '"\C-w": clear'
+#     else
+#         echo "Not running in WSL"
+#     fi
+# }
+#
+# # Run the function
+# check_wsl
+
+if command -v tmux &> /dev/null; then
+    bind -x '"\C-w": clear'
+    bind '"\C-g": "\C-j"'
 fi
 if [ -f ~/.local/share/blesh/ble.sh ]; then
     source ~/.local/share/blesh/ble.sh
