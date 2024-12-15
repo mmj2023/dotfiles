@@ -87,6 +87,8 @@ iatest=$(expr index "$-" i)
 # if [ -f /usr/bin/fastfetch ]; then
 # 	fastfetch
 # fi
+# Running colorscript and fastfetch only if not in a tmux session
+# and if bashrc has not been sourced before
 if [ -z "$BASHRC_SOURCED" ]; then
     export BASHRC_SOURCED=1
     # Run your command here
@@ -94,6 +96,9 @@ if [ -z "$BASHRC_SOURCED" ]; then
         # Run fastfetch only if not in a tmux session
         if command -v fastfetch &> /dev/null; then
             fastfetch
+        fi
+        if command -v colorscript &> /dev/null; then
+            colorscript random
         fi
 
     fi
@@ -221,6 +226,22 @@ if command -v nvim > /dev/null 2>&1; then
     alias vi='nvim'
     alias svi='sudo vi'
     alias vis='nvim "+set si"'
+    if [ -d ~/.config/nvchadnvim ]; then
+        alias nvvi="NVIM_APPNAME=nvchadnvim nvim"
+    fi
+    if [ -d ~/.config/lazynvim ]; then
+        alias lavi="NVIM_APPNAME=lazynvim nvim"
+    fi
+    if [ -d ~/.config/astronvim ]; then
+        alias asvi="NVIM_APPNAME=astronvim nvim"
+    fi
+    # alias asvi="NVIM_APPNAME=astronvim nvim"
+    if [ -f ~/.local/bin/lvim ]; then
+    alias luvi="~/.local/bin/lvim"
+    fi
+    if [ -d ~/.config/vimacsnvim ]; then
+        alias vivi="NVIM_APPNAME=vimacsnvim nvim"
+    fi
     # Set the default editor
     export EDITOR=nvim
     export VISUAL=nvim
@@ -242,17 +263,13 @@ fi
 if command -v bat > /dev/null 2>&1; then
     # echo "Program 'bat' exists"
     alias cat='bat'
-fi 
+fi
 # elif command -v batcat > /dev/null 2>&1; then
 #   echo "Program 'bat' exists"
 #   alias cat='batcat'
-# # fi 
+# # fi
 # fi
 # alias cat="bat"
-alias nvvi="NVIM_APPNAME=nvchadnvim nvim"
-alias lavi="NVIM_APPNAME=lazynvim nvim"
-alias asvi="NVIM_APPNAME=astronvim nvim"
-alias luvi="/home/mylordtome/.local/bin/lvim"
 # alias emacs="emacs -nw"
 alias imgcatsh="~/useful_scripts/imgcat.sh"
 # for zoxide
@@ -262,6 +279,7 @@ eval "$(zoxide init bash)"
 if command -v z > /dev/null 2>&1; then
     # echo "Program 'z' exists"
     # Change directory aliases
+    alias cd='z'
     alias home='z ~'
     alias cd..='z ..'
     alias ..='z ..'
@@ -441,7 +459,10 @@ lazyg() {
 	git push
 }
 sessionize_script=~/dotfiles/bash/custom-scripts/sessionize.sh
+# windower_dash_script=$HOME/dotfiles/bash/custom-scripts/windower_dash.sh
+
 if [ -f "$sessionize_script" ]; then
+    # echo "dash not found"
     if [ ! -x "$sessionize_script" ]; then
         chmod +x "$sessionize_script"
     fi
@@ -449,10 +470,30 @@ if [ -f "$sessionize_script" ]; then
     # bind -x '"\C-t":"$sessionize_script"'
     # ble-bind -x '"\C-t":"$sessionize_script"'
     # ble-bind -x '"\C-t": $sessionize_script'
-    bind -x '"\C-t": $sessionize_script'
+    bind -x '"\C-f": $sessionize_script'
 else
     echo "Sessionize script not found"
 fi
+# if command -v dash > /dev/null 2>&1; then
+#     if [ -f "$windower_dash_script" ]; then
+#         if [ ! -x "$windower_dash_script" ]; then
+#             chmod +x "$windower_dash_script"
+#         fi
+#         bind -x '"\C-f": dash $HOME/dotfiles/bash/custom-scripts/windower_dash.sh'
+#     fi
+# elif [ -f "$sessionize_script" ]; then
+#     echo "dash not found"
+#     if [ ! -x "$sessionize_script" ]; then
+#         chmod +x "$sessionize_script"
+#     fi
+#     # bind -x '"\C-t":{ $sessionize_script }'
+#     # bind -x '"\C-t":"$sessionize_script"'
+#     # ble-bind -x '"\C-t":"$sessionize_script"'
+#     # ble-bind -x '"\C-t": $sessionize_script'
+#     bind -x '"\C-f": $sessionize_script'
+# else
+#     echo "Sessionize script not found"
+# fi
 # #!/bin/bash
 #
 # # Function to check if running in WSL
@@ -467,11 +508,65 @@ fi
 #
 # # Run the function
 # check_wsl
+# usage: ex [file]
+# from http://www.gitlab.com/dwt1/
+function ex {
+ if [ -z "$1" ]; then
+    # display usage if no parameters given
+    echo "Usage: ex <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
+    echo "       extract <path/file_name_1.ext> [path/file_name_2.ext] [path/file_name_3.ext]"
+ else
+    for n in "$@"
+    do
+      if [ -f "$n" ] ; then
+          case "${n%,}" in
+            *.cbt|*.tar.bz2|*.tar.gz|*.tar.xz|*.tbz2|*.tgz|*.txz|*.tar)
+                         tar xvf "$n"       ;;
+            *.lzma)      unlzma ./"$n"      ;;
+            *.bz2)       bunzip2 ./"$n"     ;;
+            *.cbr|*.rar)       unrar x -ad ./"$n" ;;
+            *.gz)        gunzip ./"$n"      ;;
+            *.cbz|*.epub|*.zip)       unzip ./"$n"       ;;
+            *.z)         uncompress ./"$n"  ;;
+            *.7z|*.arj|*.cab|*.cb7|*.chm|*.deb|*.dmg|*.iso|*.lzh|*.msi|*.pkg|*.rpm|*.udf|*.wim|*.xar)
+                         7z x ./"$n"        ;;
+            *.xz)        unxz ./"$n"        ;;
+            *.exe)       cabextract ./"$n"  ;;
+            *.cpio)      cpio -id < ./"$n"  ;;
+            *.cba|*.ace)      unace x ./"$n"      ;;
+            *)
+                         echo "ex: '$n' - unknown archive method"
+                         return 1
+                         ;;
+          esac
+      else
+          echo "'$n' - file does not exist"
+          return 1
+      fi
+    done
+fi
+}
+### SET MANPAGER
+### Uncomment only one of these!
+
+### "nvim" as manpager
+# export MANPAGER="nvim --clean +Man!"
+# export MANPAGER="vi +MANPAGER +Man!"
+# change your default USER shell
+# alias tobash="sudo chsh $USER -s /bin/bash && echo 'Log out and log back in for change to take effect.'"  # already set to bash
+alias tozsh="sudo chsh $USER -s /bin/zsh && echo 'Log out and log back in for change to take effect.'"
+alias tofish="sudo chsh $USER -s /bin/fish && echo 'Log out and log back in for change to take effect.'"
+
 
 if command -v tmux &> /dev/null; then
     bind -x '"\C-w": clear'
     bind '"\C-g": "\C-j"'
+    bind '"\ek": "\C-k"'
 fi
 if [ -f ~/.local/share/blesh/ble.sh ]; then
     source ~/.local/share/blesh/ble.sh
 fi
+
+# Generated for envman. Do not edit.
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+export PATH=$PATH:$HOME/go/bin
