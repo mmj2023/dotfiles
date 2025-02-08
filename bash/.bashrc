@@ -235,21 +235,28 @@ if command -v nvim > /dev/null 2>&1; then
     if [ -d ~/.config/astronvim ]; then
         alias asvi="NVIM_APPNAME=astronvim nvim"
     fi
+    if [ -d ~/.config/freshnvim ]; then
+        alias frvi="NVIM_APPNAME=freshnvim nvim"
+    fi
     # alias asvi="NVIM_APPNAME=astronvim nvim"
     if [ -f ~/.local/bin/lvim ]; then
     alias luvi="~/.local/bin/lvim"
     fi
-    if [ -d ~/.config/vimacsnvim ]; then
-        alias vivi="NVIM_APPNAME=vimacsnvim nvim"
-    fi
+    # if [ -d ~/.config/vimacsnvim ]; then
+    #     alias vivi="NVIM_APPNAME=vimacsnvim nvim"
+    # fi
     # Set the default editor
     export EDITOR=nvim
     export VISUAL=nvim
 fi
-# alias vi='nvim'
-# alias svi='sudo vi'
-# alias vis='nvim "+set si"'
 alias less='less -R'
+
+if [ -f ~/.blerc.sh ]; then
+    alias b_c="source ~/.blerc.sh"
+fi
+if command -v x86_64-w64-mingw32-gcc > /dev/null 2>&1; then
+    alias wingcc="x86_64-w64-mingw32-gcc"
+fi
 if command -v xel > /dev/null 2>&1; then
     # echo "Program 'xsel' exists"
     alias xcopy="xsel --input --clipboard"
@@ -288,6 +295,7 @@ if command -v z > /dev/null 2>&1; then
     alias .....='z ../../../..'
     # cd into the old directory
     alias bd='z "$OLDPWD"'
+    alias new_d="z $(ls -td --color=never * | head -n 1)"
 
 else
     # echo "Program 'z' does not exist"
@@ -300,14 +308,23 @@ else
     alias .....='cd ../../../..'
     # cd into the old directory
     alias bd='cd "$OLDPWD"'
+    alias new_d="cd $(ls -td --color=never * | head -n 1)"
 
 fi
 
 # Alias's for multiple directory listing commands
 alias la='ls -Alh'                # show hidden files
 alias ls='ls -aFh --color=always' # add colors and file type extensions
-alias ld='lsd -aFh --color=always' # add colors and file type extensions
-alias ll='lsd -alFh --color=always' # add colors and file type extensions
+if command -v lsd > /dev/null 2>&1; then
+    alias ld='lsd -aFh --color=always' # add colors and file type extensions
+    alias ll='lsd -alFh --color=always' # add colors and file type extensions
+    alias tree='lsd -aFh --color=always --tree'
+else
+    alias ld='ls -aFh --color=always' # add colors and file type extensions
+    alias ll='ls -alFh --color=always' # add colors and file type extensions
+fi
+# alias ld='lsd -aFh --color=always' # add colors and file type extensions
+# alias ll='lsd -alFh --color=always' # add colors and file type extensions
 alias lx='ls -lXBh'               # sort by extension
 alias lk='ls -lSrh'               # sort by size
 alias lc='ls -ltcrh'              # sort by change time
@@ -432,7 +449,9 @@ bind '"\e[B": history-search-forward'
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
-eval "$(starship init bash)"
+if command -v starship &> /dev/null; then
+    eval "$(starship init bash)"
+fi
 FNM_PATH="/home/mylordtome/.local/share/fnm"
 if [ -d "$FNM_PATH" ]; then
   export PATH="$FNM_PATH:$PATH"
@@ -566,7 +585,21 @@ fi
 if [ -f ~/.local/share/blesh/ble.sh ]; then
     source ~/.local/share/blesh/ble.sh
 fi
+# if [ -f ~/ble_colors.sh ]; then
+#     . ~/ble_colors.sh &
+# fi
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
 export PATH=$PATH:$HOME/go/bin
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# # Pre-write a command in the terminal after loading .bashrc
+# if [ -z "$PRE_WRITTEN_COMMAND_DONE" ]; then
+#     export PRE_WRITTEN_COMMAND_DONE=1
+#     # echo -n "tmux" && read -s -n 1
+#     printf "'\e[1;32m'\e[7m'"
+# fi
