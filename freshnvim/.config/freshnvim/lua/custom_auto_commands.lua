@@ -31,17 +31,11 @@ end
 
 -- replace spaces with "•" in visual mode
 function enable_list()
-    -- vim.opt_local.list = true
     vim.cmd('set listchars+=space:•')
     vim.cmd('set list')
-    -- vim.opt_local.listchars:append("space:┬╖")
 end
 
 function disable_list()
-    -- vim.opt_local.list = false
-    -- vim.cmd("set nolist")
-    -- vim.opt_local.listchars:remove("space:┬╖")
-    -- vim.opt_local.list = true
     vim.cmd('set listchars-=space:•')
     vim.cmd('set list')
 end
@@ -118,6 +112,7 @@ function rand_colorscheme()
         'ayu-dark',
         'ayu-mirage',
         'gruber_darker',
+        'night-owl',
     }
 
     local random_less_preferred = {less_preferred_colorschemes[math.random(#less_preferred_colorschemes)],}
@@ -152,4 +147,13 @@ vim.api.nvim_create_autocmd('BufWritePre', {
     --     end
     -- end,
     command = [[%s/\s\+$//e]],
+})
+local spell_check = vim.api.nvim_create_augroup('spellcheck', { clear = true })
+vim.api.nvim_create_autocmd("fileType", {
+    group = spell_check,
+    pattern = {"markdown", "text", "env" },
+    callback = function()
+        -- vim.cmd("setlocal spelllang=en_us,nl,medical")
+        vim.cmd("setlocal spell")
+    end,
 })
