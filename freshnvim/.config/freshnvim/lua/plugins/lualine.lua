@@ -209,7 +209,7 @@ return {
               { 'location', padding = { left = 1, right = 1 } },
           },
         },
-        extensions = { --[[ "neo-tree", ]] "lazy", --[[ "fzf" ]] },
+        extensions = {"lazy",},
       }
       return opts
     end,
