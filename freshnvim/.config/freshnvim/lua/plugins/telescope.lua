@@ -46,7 +46,7 @@ return {
       { "<leader><space>", "<cmd>Telescope find_files<cr>", desc = "[S]earch [F]iles" },
       { "<leader>fs", "<cmd>lua require('telescope.builtin').builtin()<cr>", desc = "[S]earch [S]elect Telescope" },
       { "<leader>fw", "<cmd>lua require('telescope.builtin').grep_string()<cr>", desc = "[S]earch current [W]ord" },
-      { "<leader>fgp", "<cmd>lua require('telescope.builtin').live_grep()<cr>", desc = "[S]earch by [G]rep" },
+      { "<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<cr>", desc = "[S]earch by [G]rep" },
       -- git
       { "<leader>fgg", "<cmd>lua require('telescope.builtin').git_files()<cr>", desc = "Find Files (git-files)" },
       { "()<leader>fgs", "<cmd>Telescope git_status<CR>", desc = "Status" },
@@ -88,7 +88,7 @@ return {
         desc = "[S]earch [/] in Open Files",
       },
       {
-        "<leader>fg",
+        "<leader>fgp",
         function()
           local bufname = vim.api.nvim_buf_get_name(0)
           local cwd = vim.fn.expand("%:p:h")
