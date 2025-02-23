@@ -237,6 +237,7 @@ if command -v nvim > /dev/null 2>&1; then
     fi
     if [ -d ~/.config/freshnvim ]; then
         alias frvi="NVIM_APPNAME=freshnvim nvim"
+        alias v="NVIM_APPNAME=freshnvim nvim"
     fi
     # alias asvi="NVIM_APPNAME=astronvim nvim"
     if [ -f ~/.local/bin/lvim ]; then
@@ -603,3 +604,4 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 #     # echo -n "tmux" && read -s -n 1
 #     printf "'\e[1;32m'\e[7m'"
 # fi
+. "/home/mylordtome/.deno/env"
