@@ -118,7 +118,7 @@ return {
           end
           require("telescope.builtin").live_grep({cwd = cwd})
         end,
-        desc = "[S]earch by [G]rep",
+        desc = "[S]earch by [G]rep based on cwd",
       },
 
       -- Shortcut for searching your Neovim configuration files
