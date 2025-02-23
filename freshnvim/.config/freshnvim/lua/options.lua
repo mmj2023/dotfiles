@@ -60,6 +60,10 @@ vim.opt.undofile = true
 
 -- Don't show the mode, since it's already in the status line
 vim.opt.showmode = false
-
 vim.opt.number = true
 vim.opt.relativenumber = true
+vim.cmd [[set cmdheight=1]]
+-- vim.cmd [[set wildmenu]]
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+-- vim.g.python3_host_prog = "/usr/bin/python"

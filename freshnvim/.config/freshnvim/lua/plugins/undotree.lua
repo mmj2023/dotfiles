@@ -1,6 +1,7 @@
 return {
     'mbbill/undotree',
     -- event = {'VeryLazy','BufReadPost', 'BufWinEnter'},
+    lazy = true,
     opts = {},
     config = function()
         -- vim.keymap.set('n', '<leader>u', vim.cmd.undotreetoggle)

@@ -1,6 +1,5 @@
 -- import all settings
 require('options')
-require('keymaps')
 -- Bootstrap lazy.nvim
  -- put this in your main init.lua file ( before lazy setup )
  -- vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46_cache/"
@@ -42,7 +41,7 @@ local opts = {
     },
     performance = {
         rtp = {
-            reset = false, -- Reset runtime path to improve startup time
+            reset = true, -- Reset runtime path to improve startup time
         },
         cache = {
             enabled = true, -- Enable caching for faster startup
@@ -62,34 +61,18 @@ require("lazy").setup({
   checker = { enabled = false },
   opts,
 })
-vim.api.nvim_create_autocmd('VimEnter', {
-    callback = function()
-        local in_tmux = os.getenv('TMUX') ~= nil
-        if in_tmux then
-            -- vim.fn.system("tmux set-option status-style bg=default")
-            vim.fn.system(
-                'tmux set status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default] 󰃮 %Y-%m-%d 󱑒 %H:%M "'
-            )
-            vim.fn.system('tmux set-option status-style bg=default')
-            -- vim.fn.system("tmux source-file ~/.tmux.conf")
-        end
-    end,
-})
-vim.api.nvim_create_autocmd('VimLeave', {
-    callback = function()
-        local in_tmux = os.getenv('TMUX') ~= nil
-        if in_tmux then
-            vim.fn.system(
-                'tmux set status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default] 󰃮 %Y-%m-%d "'
-            )
-            vim.fn.system('tmux set-option status-style bg=default')
-            -- vim.fn.system("tmux source-file ~/.tmux.conf")εé╛
-        end
-    end,
-})
 -- put this after lazy setup
+-- -- Add support for the LazyFile event
+-- local Event = require("lazy.core.handler.event")
+--
+-- Event.mappings.LazyFile = { id = "LazyFile", event = { "BufReadPost", "BufNewFile", "BufWritePre" } }
+-- Event.mappings["User LazyFile"] = Event.mappings.LazyFile
 
 -- (method 1, For heavy lazyloaders)
  -- dofile(vim.g.base46_cache .. "defaults")
  -- dofile(vim.g.base46_cache .. "statusline")
-require('custom_auto_commands')
+vim.defer_fn(function()
+  -- Your heavy computations here
+    require('keymaps')
+    require('custom_auto_commands')
+end, 100)

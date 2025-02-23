@@ -1,0 +1,82 @@
+return {
+    -- {
+    --     "SmiteshP/nvim-navic",
+    --     lazy = true,
+    --     init = function()
+    --         vim.g.navic_silence = true
+    --         local on_attach = function(client, buffer)
+    --             if client.supports_method("textDocument/documentSymbol") then
+    --                 navic.attach(client, buffer)
+    --             end
+    --         end
+    --         require("lspconfig").setup({
+    --             on_attach = on_attach,
+    --         })
+    --     end,
+    --     opts = function()
+    --         return {
+    --             separator = " ",
+    --             highlight = true,
+    --             depth_limit = 5,
+    --             icons = {
+    --                 Array = ' ',
+    --
+    --                 Boolean = '󰨙 ',
+    --                 Class = ' ',
+    --                 Codeium = '󰘦 ',
+    --                 Color = ' ',
+    --                 Control = ' ',
+    --                 Collapsed = ' ',
+    --                 Constant = '󰏿 ',
+    --                 Constructor = ' ',
+    --                 Copilot = ' ',
+    --                 Enum = ' ',
+    --                 EnumMember = ' ',
+    --                 Event = ' ',
+    --                 Field = ' ',
+    --                 File = ' ',
+    --                 Folder = ' ',
+    --                 Function = '󰊕 ',
+    --                 Interface = ' ',
+    --                 Key = ' ',
+    --                 Keyword = ' ',
+    --
+    --                 Method = '󰊕 ',
+    --                 Module = ' ',
+    --                 Namespace = '󰦮 ',
+    --                 Null = ' ',
+    --                 Number = '󰎠 ',
+    --
+    --                 Object = ' ',
+    --
+    --                 Operator = ' ',
+    --                 Package = ' ',
+    --                 Property = ' ',
+    --                 Reference = ' ',
+    --                 Snippet = ' ',
+    --                 String = ' ',
+    --                 Struct = '󰆼 ',
+    --
+    --                 TabNine = '󰏚 ',
+    --                 Text = ' ',
+    --                 TypeParameter = ' ',
+    --                 Unit = ' ',
+    --
+    --                 Value = ' ',
+    --
+    --                 Variable = '󰀫 ',
+    --             },
+    --             lazy_update_context = true,
+    --         }
+    --     end,
+    -- },
+    -- {
+    --     "nvim-lualine/lualine.nvim",
+    --     optional = true,
+    --     opts = function(_, opts)
+    --             table.insert(opts.sections.lualine_c, { "navic", color_correction = "dynamic" })
+    --     end,
+    -- },
+    --
+    --
+}

@@ -14,8 +14,8 @@ vim.keymap.set('v', '<leader>y', '"+y')
 
 
 -- -- delete text in void
--- vim.keymap.set('n', '<leader>d', '"_d')
--- vim.keymap.set('v', '<leader>d', '"_d')
+vim.keymap.set('n', '<leader>d', '"_d')
+vim.keymap.set('v', '<leader>d', '"_d')
 
 -- move highlighted text down
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", {})
@@ -31,10 +31,9 @@ vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", {})
 vim.keymap.set('v', '>', '>gv', {})
 vim.keymap.set('v', '<', '<gv', {})
 
-vim.keymap.set('n', '<leader>e', "<cmd>lua MiniFiles.open()<CR>", {})
 vim.keymap.set('n', '<leader>pv', vim.cmd.Oil, {})
-vim.keymap.set('n', '<leader>bn', ":bnext<CR>", { silent = true,})
-vim.keymap.set('n', '<leader>bp', ":bprev<CR>", { silent = true,})
+vim.keymap.set('n', '<leader>bn', "<cmd>bnext<CR>", { silent = true,})
+vim.keymap.set('n', '<leader>bp', "<cmd>bprev<CR>", { silent = true,})
 vim.keymap.set('n', '<leader><Tab>', ":b#<CR>", { silent = true,})
 -- -- disable netrw when oil.nvim is installed
 -- vim.g.loaded_netrw = 1
@@ -66,7 +65,8 @@ function toggle_hlsearch()
     end
 end
 
-vim.keymap.set('n', '<leader>hl', ':lua toggle_hlsearch()<CR>', {})
+vim.keymap.set('n', '<leader>hl', '<cmd>lua toggle_hlsearch()<CR>', {})
+vim.keymap.set('i', '<C-a>', '<C-o>', {})
 
 function insert_comment_line()
     -- Get the current line number
