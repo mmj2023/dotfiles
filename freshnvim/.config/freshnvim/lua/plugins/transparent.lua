@@ -38,6 +38,7 @@ return {
         "ColorColumn",
         "colorizer.highlight_buffer",
         "Colorize",
+        "Visual", -- Ensure Visual mode is unaffected
       }, -- table: groups you don't want to clear
     })
     require("transparent").clear_prefix("barbecue")
