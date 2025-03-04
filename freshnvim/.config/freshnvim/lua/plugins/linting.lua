@@ -44,9 +44,9 @@ return {
             return vim.fs.find({ "selene.toml" }, { path = ctx.filename, upward = true })[1]
           end,
         },
-        typos = {
-          args = { "--lang", "en" }, -- Only for English-based files
-        },
+        -- typos = {
+        --   args = { "--lang", "en" }, -- Only for English-based files
+        -- },
       },
     },
     config = function(_, opts)

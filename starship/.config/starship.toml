@@ -111,7 +111,7 @@ disabled = false
 # symbol = "[](black) "
 # style = "fg:#1d2230"
 style = "fg:peach bg:black"
-format = "[ ](black)[$symbol $time]($style) "
+format = "[ ](black)[$symbol $time ]($style) "
 
 # format =  ' [$symbol$branch(:$remote_branch)]($style)[]'
 # style = "fg:lavender bg:black"

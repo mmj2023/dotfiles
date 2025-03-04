@@ -28,6 +28,11 @@ return {
         "CursorLine",
         "SagaNormal",
         "WinBar",
+        -- TabLine
+        "MiniTablineFill",
+        -- "MiniTablineCurrent",
+        "MiniTablineVisible",
+        "MiniTablineHidden",
       },
       exclude_groups = {
         "Comment",
@@ -47,16 +52,7 @@ return {
     -- require('transparent').clear_prefix('BufferLine')
     -- require('transparent').clear_prefix("mason")
     vim.keymap.set("n", "<Space>td", function()
-      -- -- Get the current colorscheme
-      -- -- Function to get the current colorscheme
-      -- local function get_current_colorscheme()
-      --     local current_colorscheme = vim.api.nvim_exec('echo g:colors_name', true)
-      --     return current_colorscheme
-      -- end
-      -- local current_colorscheme = get_current_colorscheme()
       vim.cmd("TransparentDisable")
-      -- vim.cmd('colorscheme nvchad')
-      -- vim.cmd('colorscheme ' .. current_colorscheme)
       local bg_color = vim.fn.synIDattr(vim.fn.hlID("Normal"), "bg")
       vim.fn.system('if [ -n "$TMUX" ]; then tmux set-option status-style bg=' .. bg_color .. "; fi")
     end, { noremap = true, silent = true })
@@ -71,5 +67,17 @@ return {
       vim.fn.system('if [ -n "$TMUX" ]; then tmux set-option status-style bg=default; fi')
     end, { noremap = true, silent = true })
     vim.cmd("TransparentEnable")
+    -- HACK: keeping visual mode from being affected by transparent.nvim when switching focus
+    vim.api.nvim_create_autocmd("FocusGained", {
+      pattern = "*",
+      callback = function()
+        -- vim.cmd("TransparentDisable")
+        -- vim.cmd("TransparentEnable")
+        vim.defer_fn(function()
+          vim.cmd("TransparentToggle")
+          vim.cmd("TransparentToggle")
+        end, 10) -- Delay in milliseconds
+      end,
+    })
   end,
 }

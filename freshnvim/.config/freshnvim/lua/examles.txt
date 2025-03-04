@@ -1,0 +1,41 @@
+        -- local function hi_floating_window()
+        --   -- Create a new buffer (hidden and unlisted)
+        --   local buf = vim.api.nvim_create_buf(false, true)
+        --
+        --   -- Set the size and position of the floating window
+        --   local width = 20
+        --   local height = 5
+        --   local opts = {
+        --     relative = "editor",
+        --     width = width,
+        --     height = height,
+        --     row = math.floor((vim.o.lines - height) / 2), -- Center vertically
+        --     col = math.floor((vim.o.columns - width) / 2), -- Center horizontally
+        --     style = "minimal",
+        --     border = "rounded",
+        --   }
+        --
+        --   -- Open the floating window
+        --   local win = vim.api.nvim_open_win(buf, true, opts)
+        --
+        --   -- Add the "Hi" message to the buffer
+        --   vim.api.nvim_buf_set_lines(buf, 0, -1, false, { "Hi!" })
+        --
+        --   -- Automatically close the window after 2 seconds
+        --   vim.defer_fn(function()
+        --     vim.api.nvim_win_close(win, true)
+        --   end, 20) -- Delay in milliseconds
+        -- end
+        -- -- Call the function
+        -- hi_floating_window()
+
+-- put this after lazy setup
+-- -- Add support for the LazyFile event
+-- local Event = require("lazy.core.handler.event")
+--
+-- Event.mappings.LazyFile = { id = "LazyFile", event = { "BufReadPost", "BufNewFile", "BufWritePre" } }
+-- Event.mappings["User LazyFile"] = Event.mappings.LazyFile
+
+-- (method 1, For heavy lazyloaders)
+ -- dofile(vim.g.base46_cache .. "defaults")
+ -- dofile(vim.g.base46_cache .. "statusline")

@@ -126,6 +126,7 @@ function rand_colorscheme()
     "gruber_darker",
     "night-owl",
     "tokyodark",
+    "vague",
   }
 
   local random_less_preferred = { less_preferred_colorschemes[math.random(#less_preferred_colorschemes)] }
@@ -282,3 +283,12 @@ vim.api.nvim_create_autocmd("VimLeave", {
     end
   end,
 })
+-- vim.api.nvim_create_autocmd("FocusGained", {
+--   pattern = "*",
+--   callback = function()
+--     -- Add any command you want to execute when Neovim regains focus
+--     print("Welcome back to Neovim!") -- Example action (optional)
+--     -- You can also refresh the buffer, reload configs, or synchronize plugins
+--     vim.cmd("checktime") -- Refresh buffers in case files were modified externally
+--   end,
+-- })

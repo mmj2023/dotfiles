@@ -43,7 +43,7 @@ return {
       { "<leader>f:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
       { "<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<cr>", desc = "[S]earch [H]elp" },
       { "<leader>fk", "<cmd>lua require('telescope.builtin').keymaps()<cr>", desc = "[S]earch [K]eymaps" },
-      { "<leader><space>", "<cmd>Telescope find_files<cr>", desc = "[S]earch [F]iles" },
+      { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "[S]earch [F]iles" },
       { "<leader>fs", "<cmd>lua require('telescope.builtin').builtin()<cr>", desc = "[S]earch [S]elect Telescope" },
       { "<leader>fw", "<cmd>lua require('telescope.builtin').grep_string()<cr>", desc = "[S]earch current [W]ord" },
       { "<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<cr>", desc = "[S]earch by [G]rep" },
@@ -131,7 +131,7 @@ return {
       },
       -- Shortcut for searching your my current file or buffers root directory
       {
-        "<leader>ff",
+        "<leader><space>",
         function()
           local bufname = vim.api.nvim_buf_get_name(0)
           local cwd = vim.fn.expand("%:p:h")

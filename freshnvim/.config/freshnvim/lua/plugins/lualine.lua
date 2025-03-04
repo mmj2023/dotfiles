@@ -114,6 +114,21 @@ return {
       local relative_path = vim.fn.fnamemodify(filepath, ":~:.")
       return relative_path
     end
+    -- LSP clients attached to buffer
+    local clients_lsp = function()
+      local bufnr = vim.api.nvim_get_current_buf()
+
+      local clients = vim.lsp.get_clients({ bufnr = bufnr })
+      if next(clients) == nil then
+        return ""
+      end
+
+      local c = {}
+      for _, client in pairs(clients) do
+        table.insert(c, client.name)
+      end
+      return "\u{f085}  " .. table.concat(c, " ")
+    end
     vim.o.laststatus = vim.g.lualine_laststatus
 
     local opts = {
@@ -167,6 +182,7 @@ return {
 
         lualine_c = {
           { "filetype", icon_only = true, separator = "", padding = { left = 2, right = -2 } },
+          { clients_lsp, separator = "" },
           { pretty_path, separator = "" },
           {
             "diagnostics",
@@ -182,24 +198,26 @@ return {
           },
         },
         lualine_x = {
-            -- stylua: ignore
-            -- {
-            --     function()
-            --         return vim.api.nvim_exec('echo getcmdline()', true)
-            --     end,
-            --     separator = '',
-            -- },
-            {
-              function() return "  " .. require("dap").status() end,
-              cond = function() return package.loaded["dap"] and require("dap").status() ~= "" end,
-              color = { fg = "#ff966c"},
-            },
-            -- stylua: ignore
-            {
-              require("lazy.status").updates,
-              cond = require("lazy.status").has_updates,
-              color = { fg = "#ff7d50" },
-            },
+          -- {
+          --     function()
+          --         return vim.api.nvim_exec('echo getcmdline()', true)
+          --     end,
+          --     separator = '',
+          -- },
+          {
+            require("lazy.status").updates,
+            cond = require("lazy.status").has_updates,
+            color = { fg = "#ff7d50" },
+          },
+          {
+            function()
+              return "  " .. require("dap").status()
+            end,
+            cond = function()
+              return package.loaded["dap"] and require("dap").status() ~= ""
+            end,
+            color = { fg = "#ff966c" },
+          },
         },
         lualine_y = {
           { "encoding", color = { bg = "#303030" }, padding = { left = 1, right = 1 } },
@@ -228,7 +246,7 @@ return {
           },
         },
       },
-      extensions = { "lazy", "oil", "fugitive" },
+      extensions = { "lazy", "oil", "fugitive", "quickfix", "mason", "man" },
     }
     local in_tmux = os.getenv("TMUX") ~= nil
     if not in_tmux then

@@ -61,18 +61,8 @@ require("lazy").setup({
   checker = { enabled = false },
   opts,
 })
--- put this after lazy setup
--- -- Add support for the LazyFile event
--- local Event = require("lazy.core.handler.event")
---
--- Event.mappings.LazyFile = { id = "LazyFile", event = { "BufReadPost", "BufNewFile", "BufWritePre" } }
--- Event.mappings["User LazyFile"] = Event.mappings.LazyFile
-
--- (method 1, For heavy lazyloaders)
- -- dofile(vim.g.base46_cache .. "defaults")
- -- dofile(vim.g.base46_cache .. "statusline")
 vim.defer_fn(function()
   -- Your heavy computations here
     require('keymaps')
     require('custom_auto_commands')
-end, 100)
+end, 90)
