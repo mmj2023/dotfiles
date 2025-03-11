@@ -1,3 +1,4 @@
+local mini_files_git = require("config.mini-files-git")
 return {
   "echasnovski/mini.files",
   opts = {
@@ -7,6 +8,11 @@ return {
       width_preview = 30,
     },
     -- General options
+    mappings = {
+      close = "<esc>",
+      -- This opens the file, but quits out of mini.files (default L)
+      go_in_plus = "<CR>",
+    },
     options = {
       -- Whether to delete permanently or move into module-specific trash
       permanent_delete = false,
@@ -120,5 +126,15 @@ return {
         map_split(buf_id, opts.mappings and opts.mappings.go_in_vertical_plus or "<C-w>V", "vertical", true)
       end,
     })
+  end,
+  config = function(_, opts)
+    -- Set up mini.files
+    require("mini.files").setup(opts)
+    -- Load custom keymaps
+    -- mini_files_km.setup(opts)
+
+    -- Load Git integration
+    -- git config is slowing mini.files too much, so disabling it
+    mini_files_git.setup()
   end,
 }
