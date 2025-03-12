@@ -109,6 +109,7 @@ function rand_colorscheme()
   }
 
   local more_preferred_colorschemes = {
+    "eldritch",
     "poimandres",
     "nightfox",
     "nordfox",
