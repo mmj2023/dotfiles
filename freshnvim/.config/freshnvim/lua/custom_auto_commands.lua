@@ -86,7 +86,6 @@ function rand_colorscheme()
     "desert",
     "elflord",
     "evening",
-    "habamax",
     "industry",
     "koehler",
     "lunaperche",
@@ -109,6 +108,7 @@ function rand_colorscheme()
   }
 
   local more_preferred_colorschemes = {
+    "habamax",
     "eldritch",
     "oxocarbon",
     "poimandres",
