@@ -1,3 +1,33 @@
+local function determine_cwd()
+  local bufname = vim.api.nvim_buf_get_name(0)
+  local cwd = vim.fn.expand("%:p:h")
+
+  -- Check for specific file explorer buffers
+  if vim.bo.filetype == "netrw" then
+    cwd = vim.fn.expand("%:p:h")
+  elseif vim.bo.filetype == "oil" then
+    cwd = require("oil").get_current_dir()
+  elseif vim.bo.filetype == "neo-tree" then
+    cwd = require("neo-tree").get_current_node().path
+  elseif vim.bo.filetype == "NvimTree" then
+    cwd = require("nvim-tree.lib").get_node_at_cursor().absolute_path
+  elseif vim.bo.filetype == "minifiles" then
+    cwd = require("minifiles").get_current_dir()
+  else
+    -- Check if LSP is attached and get the root directory
+    for _, client in pairs(vim.lsp.buf_get_clients()) do
+      if client.config.root_dir then
+        local lsp_root_dir = client.config.root_dir
+        if bufname:find(lsp_root_dir, 1, true) then
+          cwd = lsp_root_dir
+          break
+        end
+      end
+    end
+  end
+
+  return cwd
+end
 return {
   {
     "nvim-telescope/telescope.nvim",--[[ tag = '0.1.8', ]]
@@ -62,7 +92,7 @@ return {
         "<cmd>lua require('telescope.builtin').oldfiles()<cr>",
         desc = '[S]earch Recent Files ("." for repeat)',
       },
-      { "<leader>fb", "<cmd>lua require('telescope.builtin').buffers()<cr>", desc = "[ ] Find existing buffers" },
+      { "<leader>fb", "<cmd>Telescope buffers sort_mru=true sort_lastused=true initial_mode=normal theme=ivy<cr>", desc = "[ ] Find existing buffers" },
       { "<leader>col", "<cmd>lua require('telescope.builtin').colorscheme()<cr>", desc = "[S]earch all colorschemes" },
       { '<leader>f"', "<cmd>Telescope registers<cr>", desc = "Registers" },
       { "<leader>fa", "<cmd>Telescope autocommands<cr>", desc = "Auto Commands" },
@@ -85,7 +115,7 @@ return {
         "<leader>fR",
         function()
           require("telescope").extensions.frecency.frecency({
-            workspace = "CWD",
+            workspace = determine_cwd(),
             theme = "ivy",
           })
         end,
@@ -104,32 +134,7 @@ return {
       {
         "<leader>fgp",
         function()
-          local bufname = vim.api.nvim_buf_get_name(0)
-          local cwd = vim.fn.expand("%:p:h")
-
-          -- Check for specific file explorer buffers
-          if vim.bo.filetype == "netrw" then
-            cwd = vim.fn.expand("%:p:h")
-          elseif vim.bo.filetype == "oil" then
-            cwd = require("oil").get_current_dir()
-          elseif vim.bo.filetype == "neo-tree" then
-            cwd = require("neo-tree").get_current_node().path
-          elseif vim.bo.filetype == "NvimTree" then
-            cwd = require("nvim-tree.lib").get_node_at_cursor().absolute_path
-          elseif vim.bo.filetype == "minifiles" then
-            cwd = require("minifiles").get_current_dir()
-          else
-            -- Check if LSP is attached and get the root directory
-            for _, client in pairs(vim.lsp.buf_get_clients()) do
-              if client.config.root_dir then
-                local lsp_root_dir = client.config.root_dir
-                if bufname:find(lsp_root_dir, 1, true) then
-                  cwd = lsp_root_dir
-                  break
-                end
-              end
-            end
-          end
+          local cwd = determine_cwd()
           require("telescope.builtin").live_grep({ cwd = cwd })
         end,
         desc = "[S]earch by [G]rep based on cwd",
@@ -147,33 +152,8 @@ return {
       {
         "<leader><space>",
         function()
-          local bufname = vim.api.nvim_buf_get_name(0)
-          local cwd = vim.fn.expand("%:p:h")
-
-          -- Check for specific file explorer buffers
-          if vim.bo.filetype == "netrw" then
-            cwd = vim.fn.expand("%:p:h")
-          elseif vim.bo.filetype == "oil" then
-            cwd = require("oil").get_current_dir()
-          elseif vim.bo.filetype == "neo-tree" then
-            cwd = require("neo-tree").get_current_node().path
-          elseif vim.bo.filetype == "NvimTree" then
-            cwd = require("nvim-tree.lib").get_node_at_cursor().absolute_path
-          elseif vim.bo.filetype == "minifiles" then
-            cwd = require("minifiles").get_current_dir()
-          else
-            -- Check if LSP is attached and get the root directory
-            for _, client in pairs(vim.lsp.buf_get_clients()) do
-              if client.config.root_dir then
-                local lsp_root_dir = client.config.root_dir
-                if bufname:find(lsp_root_dir, 1, true) then
-                  cwd = lsp_root_dir
-                  break
-                end
-              end
-            end
-          end
-          --   cwd = vim.fn.getcwd()
+            -- cwd = vim.fn.getcwd()
+            local cwd = determine_cwd()
 
           require("telescope.builtin").find_files({ cwd = cwd })
         end,
@@ -202,6 +182,14 @@ return {
           },
           width = 0.87,
           height = 0.80,
+        },
+        mappings = {
+            n = {
+                ["d"] = require("telescope.actions").delete_buffer,
+                -- ["e"] = require("telescope.actions").rename_buffer,
+                -- ["<C-d>"] = require("telescope.actions").delete_buffer,
+                -- ["<C-e>"] = require("telescope.actions").rename_buffer,
+            },
         },
       },
       extensions = {

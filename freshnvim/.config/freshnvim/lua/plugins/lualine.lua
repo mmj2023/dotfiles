@@ -1,6 +1,9 @@
 return {
   "nvim-lualine/lualine.nvim",
   event = "VeryLazy",
+  dependencies = {
+      "folke/snacks.nvim",
+  },
   init = function()
     vim.g.lualine_laststatus = vim.o.laststatus
     -- vim.cmd([[set showcmd]])
@@ -198,6 +201,7 @@ return {
           },
         },
         lualine_x = {
+          Snacks.profiler.status(),
           -- {
           --     function()
           --         return vim.api.nvim_exec('echo getcmdline()', true)
@@ -207,7 +211,9 @@ return {
           {
             require("lazy.status").updates,
             cond = require("lazy.status").has_updates,
-            color = { fg = "#ff7d50" },
+            color = function()
+              return { fg = Snacks.util.color("Special") }
+            end,
           },
           {
             function()
@@ -246,7 +252,7 @@ return {
           },
         },
       },
-      extensions = { "lazy", "oil", "fugitive", "quickfix", "mason", "man" },
+      extensions = { "lazy", "oil", "fugitive", "quickfix", "mason", "man","neo-tree", },
     }
     local in_tmux = os.getenv("TMUX") ~= nil
     if not in_tmux then

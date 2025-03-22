@@ -123,9 +123,6 @@ vim.keymap.set("n", "]e", diagnostic_goto(true, "ERROR"), { desc = "Next Error" 
 vim.keymap.set("n", "[e", diagnostic_goto(false, "ERROR"), { desc = "Prev Error" })
 vim.keymap.set("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next Warning" })
 vim.keymap.set("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
--- -- Try to load the Snacks module
--- local ok, Snacks = pcall(require, "Snacks")
--- if ok then
 Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
 Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
 Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>uL")
@@ -148,7 +145,3 @@ Snacks.toggle.profiler_highlights():map("<leader>dph")
 if vim.lsp.inlay_hint then
   Snacks.toggle.inlay_hints():map("<leader>uh")
 end
--- else
---   -- Print a message if Snacks is not available
---   vim.notify("Snacks module is not available!", vim.log.levels.WARN)
--- end
