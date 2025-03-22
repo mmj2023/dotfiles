@@ -4,8 +4,10 @@ return {
     -- or                              , branch = '0.1.x',
     -- event = 'VeryLazy',
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      { -- If encountering errors, see telescope-fzf-native README for installation instructions
+      { "nvim-lua/plenary.nvim" },
+      { "nvim-telescope/telescope-frecency.nvim" },
+      -- If encountering errors, see telescope-fzf-native README for installation instructions
+      {
         "nvim-telescope/telescope-fzf-native.nvim",
 
         -- `build` is used to run some command when the plugin is installed/updated.
@@ -38,12 +40,14 @@ return {
       "Telescope git_files",
       "Telescope git_status",
       "Telescope git_commits",
+      "Telescope frecency",
     },
     keys = {
       { "<leader>f:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
       { "<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<cr>", desc = "[S]earch [H]elp" },
       { "<leader>fk", "<cmd>lua require('telescope.builtin').keymaps()<cr>", desc = "[S]earch [K]eymaps" },
       { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "[S]earch [F]iles" },
+      { "<leader>fF", "<cmd>Telescope frecency<cr>", desc = "[S]earch [F]rencency" },
       { "<leader>fs", "<cmd>lua require('telescope.builtin').builtin()<cr>", desc = "[S]earch [S]elect Telescope" },
       { "<leader>fw", "<cmd>lua require('telescope.builtin').grep_string()<cr>", desc = "[S]earch current [W]ord" },
       { "<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<cr>", desc = "[S]earch by [G]rep" },
@@ -77,6 +81,16 @@ return {
 
       -- It's also possible to pass additional configuration options.
       --  See `:help telescope.builtin.live_grep()` for information about particular keys
+      {
+        "<leader>fR",
+        function()
+          require("telescope").extensions.frecency.frecency({
+            workspace = "CWD",
+            theme = "ivy",
+          })
+        end,
+        desc = "Frecency in Current Workspace (Ivy Theme)",
+      },
       {
         "<leader>f/",
         function()
@@ -116,7 +130,7 @@ return {
               end
             end
           end
-          require("telescope.builtin").live_grep({cwd = cwd})
+          require("telescope.builtin").live_grep({ cwd = cwd })
         end,
         desc = "[S]earch by [G]rep based on cwd",
       },
@@ -194,6 +208,24 @@ return {
         ["ui-select"] = {
           require("telescope.themes").get_dropdown(),
         },
+        ["frecency"] = {
+          show_scores = true,
+          show_filter_column = false,
+          -- ignore_case = true,
+          -- -- Only show the list of results when the search is finished
+          -- -- and there are no more matches.
+          -- only_show_scores = true,
+          -- -- The maximum number of results to show.
+          -- max_results = 25,
+          -- -- The maximum number of results to show in the preview window.
+          -- preview = 10,
+          -- -- The maximum number of results to show in the quickfix window.
+          -- qflist = 10,
+          -- -- The maximum number of results to show in the prompt window.
+          -- prompt = 10,
+          -- -- The maximum number of results to show in the location list window.
+          -- location = 10,
+        },
       },
     },
     config = function(_, opts)
@@ -201,6 +233,7 @@ return {
       -- Enable Telescope extensions if they are installed
       pcall(require("telescope").load_extension, "fzf")
       pcall(require("telescope").load_extension, "ui-select")
+      pcall(require("telescope").load_extension, "frecency")
     end,
   },
 
