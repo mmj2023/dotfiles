@@ -2,7 +2,7 @@ return {
   "nvim-lualine/lualine.nvim",
   event = "VeryLazy",
   dependencies = {
-      "folke/snacks.nvim",
+    "folke/snacks.nvim",
   },
   init = function()
     vim.g.lualine_laststatus = vim.o.laststatus
@@ -184,9 +184,22 @@ return {
         },
 
         lualine_c = {
+          {
+            clients_lsp,
+            -- icon = "󱏘 ",
+            icon = " ",
+            separator = "",
+          },
           { "filetype", icon_only = true, separator = "", padding = { left = 2, right = -2 } },
-          { clients_lsp, separator = "" },
           { pretty_path, separator = "" },
+          {
+            function()
+              return vim.fn.len(vim.fn.getbufinfo({ buflisted = 1 }))
+            end,
+            -- icon = "󰇘",
+            icon = " ",
+            separator = "",
+          },
           {
             "diagnostics",
             icon = { "  :" },
@@ -224,6 +237,30 @@ return {
             end,
             color = { fg = "#ff966c" },
           },
+          -- {
+          --   function()
+          --     -- Keypress log
+          --     local keypresses = {}
+          --
+          --     -- Log keypresses
+          --     vim.on_key(function(key)
+          --       table.insert(keypresses, vim.fn.keytrans(key)) -- Translate key
+          --       if #keypresses > 10 then -- Limit to last 10 keys
+          --         table.remove(keypresses, 1)
+          --       end
+          --     end)
+          --
+          --     -- Display function for statusline
+          --     local function keylogger_status()
+          --       return "Keys: " .. table.concat(keypresses, " ")
+          --     end
+          --     keylogger_status()
+          --     -- require("lualine").refresh()
+          --   end,
+          --   color = function()
+          --     return { fg = Snacks.util.color("Special") }
+          --   end,
+          -- },
         },
         lualine_y = {
           { "encoding", color = { bg = "#303030" }, padding = { left = 1, right = 1 } },
@@ -252,7 +289,7 @@ return {
           },
         },
       },
-      extensions = { "lazy", "oil", "fugitive", "quickfix", "mason", "man","neo-tree", },
+      extensions = { "lazy", "oil", "fugitive", "quickfix", "mason", "man", "neo-tree" },
     }
     local in_tmux = os.getenv("TMUX") ~= nil
     if not in_tmux then

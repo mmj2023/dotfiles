@@ -30,7 +30,7 @@ local opts = {
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver , if you want to.
   },
-  checker = { enabled = true, notify = false },
+  checker = { enabled = true, notify = true },
   ui = {
     icons = {
       ft = "",
