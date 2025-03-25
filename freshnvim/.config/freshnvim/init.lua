@@ -27,7 +27,7 @@ local opts = {
     lazy = true,
     -- It's recommended to leave version=false for now, since a lot the plugin that support versioning,
     -- have outdated releases, which may break your Neovim install.
-    version = false, -- always use the latest git commit
+    version = true, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver , if you want to.
   },
   checker = { enabled = true, notify = true },
@@ -58,7 +58,7 @@ require("lazy").setup({
   -- colorscheme that will be used when installing plugins.
   -- install = { colorscheme = { "habamax" } },
   -- automatically check for plugin updates
-  checker = { enabled = false },
+  -- checker = { enabled = false },
   opts,
 })
 vim.defer_fn(function()

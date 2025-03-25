@@ -193,14 +193,6 @@ return {
           { "filetype", icon_only = true, separator = "", padding = { left = 2, right = -2 } },
           { pretty_path, separator = "" },
           {
-            function()
-              return vim.fn.len(vim.fn.getbufinfo({ buflisted = 1 }))
-            end,
-            -- icon = "󰇘",
-            icon = " ",
-            separator = "",
-          },
-          {
             "diagnostics",
             icon = { "  :" },
             symbols = {
@@ -209,11 +201,19 @@ return {
               info = icons.diagnostics.Info,
               hint = icons.diagnostics.Hint,
             },
-            padding = { left = 0, right = 0 },
+            padding = { left = 0, right = 1 },
             separator = "",
           },
         },
         lualine_x = {
+          {
+            function()
+              return vim.fn.len(vim.fn.getbufinfo({ buflisted = 1 }))
+            end,
+            -- icon = "󰇘",
+            icon = " ",
+            separator = "",
+          },
           Snacks.profiler.status(),
           -- {
           --     function()
