@@ -252,17 +252,17 @@ return {
           draw = {
             treesitter = { "lsp" },
             components = {
-              kind_icon = {
-                text = function(ctx)
-                  local kind_icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
-                  return kind_icon
-                end,
-                -- (optional) use highlights from mini.icons
-                highlight = function(ctx)
-                  local _, hl, _ = require("mini.icons").get("lsp", ctx.kind)
-                  return hl
-                end,
-              },
+              -- kind_icon = {
+              --   text = function(ctx)
+              --     local kind_icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
+              --     return kind_icon
+              --   end,
+              --   -- (optional) use highlights from mini.icons
+              --   highlight = function(ctx)
+              --     local _, hl, _ = require("mini.icons").get("lsp", ctx.kind)
+              --     return hl
+              --   end,
+              -- },
               -- kind = {
               --   -- (optional) use highlights from mini.icons
               --   highlight = function(ctx)
@@ -317,7 +317,7 @@ return {
       -- the completion will be accepted
       -- https://cmp.saghen.dev/configuration/keymap.html#default
       opts.keymap = {
-        preset = "default",
+        preset = "none",
         -- ["<Tab>"] = { "snippet_forward", "fallback" },
         -- ["<S-Tab>"] = { "snippet_backward", "fallback" },
         ["<C-p>"] = { "snippet_forward", "fallback" },
