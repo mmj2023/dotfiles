@@ -63,6 +63,6 @@ require("lazy").setup({
 })
 vim.defer_fn(function()
   -- Your heavy computations here
-  require("keymaps")
   require("custom_auto_commands")
+  require("keymaps")
 end, 90)

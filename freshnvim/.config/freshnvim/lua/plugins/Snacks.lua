@@ -1,6 +1,6 @@
 local root = require("config.snacks_git")
 -- Terminal Mappings
-function term_nav(dir)
+local term_nav = function(dir)
   ---@param self snacks.terminal
   return function(self)
     return self:is_floating() and "<c-" .. dir .. ">" or vim.schedule(function()
@@ -10,7 +10,7 @@ function term_nav(dir)
 end
 return {
   "snacks.nvim",
---   -- event = {"VeryLazy", "VimEnter"},
+  --   -- event = {"VeryLazy", "VimEnter"},
   opts = {
     bigfile = { enabled = true },
     quickfile = { enabled = true },
@@ -63,6 +63,30 @@ return {
         desc = "Profiler Scratch Buffer",
       },
     }
+    -- {"<leader>us",Snacks.toggle.option("spell", { name = "Spelling" }),desc = "toggle spell"},
+    -- {"<leader>uw",Snacks.toggle.option("wrap", { name = "Wrap" }),desc = "toggle wrap"},
+    -- {"<leader>uL",Snacks.toggle.option("relativenumber", { name = "Relative Number" }),desc = "toggle relativenumber"},
+    -- {"<leader>ud",Snacks.toggle.diagnostics(),desc = "toggle diagnostics"},
+    -- {"<leader>ul",Snacks.toggle.line_number(),desc = "toggle line number"},
+    -- {"<leader>uc",Snacks.toggle.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2, name = "Conceal Level" }),desc = "toggle conceallevel"},
+    -- {"<leader>uA",Snacks.toggle.option("showtabline", { off = 0, on = vim.o.showtabline > 0 and vim.o.showtabline or 2, name = "Tabline" }),desc = "toggle tabline"},
+    -- {"<leader>uT",Snacks.toggle.treesitter(),desc = "toggle treesitter"},
+    -- {"<leader>ub",Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }),desc = "toggle background"},
+    -- {"<leader>uD",Snacks.toggle.dim(),desc = "toggle dim"},
+    -- {"<leader>ua",Snacks.toggle.animate(),desc = "toggle animate"},
+    -- {"<leader>ug",Snacks.toggle.indent(),desc = "toggle indent"},
+    -- {"<leader>uS",Snacks.toggle.scroll(),desc = "toggle scroll"},
+    -- {"<leader>dpp",Snacks.toggle.profiler(),desc = "toggle profiler"},
+    -- {"<leader>dph",Snacks.toggle.profiler_highlights(),desc = "toggle profiler highlights"}
+    -- if vim.lsp.inlay_hint then
+    --   table.insert(keys, {
+    --       "<leader>uh",
+    --       function()
+    --   Snacks.toggle.inlay_hints()
+    --   end,
+    --   desc = "Toggle Inlay Hints",
+    --   })
+    -- end
     if vim.fn.executable("lazygit") == 1 then
       table.insert(keys, {
         "<leader>gg",
