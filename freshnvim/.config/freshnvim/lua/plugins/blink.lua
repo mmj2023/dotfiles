@@ -14,6 +14,13 @@ return {
     -- working release
     -- https://github.com/Saghen/blink.cmp/releases
     -- version = "v0.13.1",
+    version = "*",
+    opts_extend = {
+      "sources.completion.enabled_providers",
+      "sources.compat",
+      "sources.default",
+    },
+
     dependencies = {
       "moyiz/blink-emoji.nvim",
       "Kaiser-Yang/blink-cmp-dictionary",
@@ -21,10 +28,8 @@ return {
         "kristijanhusak/vim-dadbod-completion",
         dependencies = { "kristijanhusak/vim-dadbod-ui", "tpope/vim-dadbod" },
       },
-      {
-        "rafamadriz/friendly-snippets",
-        dependencies = { "L3MON4D3/LuaSnip" }, -- Make sure LuaSnip is installed
-      },
+      { "L3MON4D3/LuaSnip", lazy = true }, -- Make sure LuaSnip is installed
+      { "rafamadriz/friendly-snippets", lazy = true },
       {
         "saghen/blink.compat",
         optional = true, -- make optional so it's only enabled if any extras need it
@@ -232,15 +237,15 @@ return {
       }
 
       opts.completion = {
-        -- accept = {
-        --   auto_brackets = {
-        --     enabled = true,
-        --     default_brackets = { ";", "" },
-        --     override_brackets_for_filetypes = {
-        --       markdown = { ";", "" },
-        --     },
-        --   },
-        -- },
+        accept = {
+          auto_brackets = {
+            enabled = true,
+            -- default_brackets = { ";", "" },
+            -- override_brackets_for_filetypes = {
+            --   markdown = { ";", "" },
+            -- },
+          },
+        },
         --   keyword = {
         --     -- 'prefix' will fuzzy match on the text before the cursor
         --     -- 'full' will fuzzy match on the text before *and* after the cursor
@@ -275,6 +280,7 @@ return {
         },
         documentation = {
           auto_show = true,
+          auto_show_delay_ms = 200,
           window = {
             border = "single",
           },
@@ -318,10 +324,10 @@ return {
       -- https://cmp.saghen.dev/configuration/keymap.html#default
       opts.keymap = {
         preset = "none",
-        -- ["<Tab>"] = { "snippet_forward", "fallback" },
-        -- ["<S-Tab>"] = { "snippet_backward", "fallback" },
-        ["<C-p>"] = { "snippet_forward", "fallback" },
-        ["<C-n>"] = { "snippet_backward", "fallback" },
+        ["<Tab>"] = { "snippet_forward", "fallback" },
+        ["<S-Tab>"] = { "snippet_backward", "fallback" },
+        -- ["<C-p>"] = { "snippet_forward", "fallback" },
+        -- ["<C-n>"] = { "snippet_backward", "fallback" },
 
         -- ["<Up>"] = { "select_prev", "fallback" },
         -- ["<Down>"] = { "select_next", "fallback" },
@@ -347,6 +353,8 @@ return {
       end
       -- Unset custom prop to pass blink.cmp validation
       opts.sources.compat = nil
+      -- print(vim.inspect(opts.sources.providers))
+      -- print(vim.inspect(enable))
       local icons = {
         misc = {
           dots = "󰇘",

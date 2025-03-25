@@ -213,6 +213,7 @@ return {
             -- icon = "󰇘",
             icon = " ",
             separator = "",
+            -- separator = { left = "", right = "" },
           },
           Snacks.profiler.status(),
           -- {
@@ -227,6 +228,8 @@ return {
             color = function()
               return { fg = Snacks.util.color("Special") }
             end,
+            -- separator = "",
+            -- separator = { right = "", --[[ left = "" ]] },
           },
           {
             function()

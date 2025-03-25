@@ -1,4 +1,4 @@
-local function determine_cwd()
+local determine_cwd = function()
   local bufname = vim.api.nvim_buf_get_name(0)
   local cwd = vim.fn.expand("%:p:h")
 
@@ -92,7 +92,11 @@ return {
         "<cmd>lua require('telescope.builtin').oldfiles()<cr>",
         desc = '[S]earch Recent Files ("." for repeat)',
       },
-      { "<leader>fb", "<cmd>Telescope buffers sort_mru=true sort_lastused=true initial_mode=normal theme=ivy<cr>", desc = "[ ] Find existing buffers" },
+      {
+        "<leader>fb",
+        "<cmd>Telescope buffers sort_mru=true sort_lastused=true initial_mode=normal theme=ivy<cr>",
+        desc = "[ ] Find existing buffers",
+      },
       { "<leader>col", "<cmd>lua require('telescope.builtin').colorscheme()<cr>", desc = "[S]earch all colorschemes" },
       { '<leader>f"', "<cmd>Telescope registers<cr>", desc = "Registers" },
       { "<leader>fa", "<cmd>Telescope autocommands<cr>", desc = "Auto Commands" },
@@ -152,8 +156,8 @@ return {
       {
         "<leader><space>",
         function()
-            -- cwd = vim.fn.getcwd()
-            local cwd = determine_cwd()
+          -- cwd = vim.fn.getcwd()
+          local cwd = determine_cwd()
 
           require("telescope.builtin").find_files({ cwd = cwd })
         end,
@@ -184,12 +188,12 @@ return {
           height = 0.80,
         },
         mappings = {
-            n = {
-                ["d"] = require("telescope.actions").delete_buffer,
-                -- ["e"] = require("telescope.actions").rename_buffer,
-                -- ["<C-d>"] = require("telescope.actions").delete_buffer,
-                -- ["<C-e>"] = require("telescope.actions").rename_buffer,
-            },
+          n = {
+            ["d"] = require("telescope.actions").delete_buffer,
+            -- ["e"] = require("telescope.actions").rename_buffer,
+            -- ["<C-d>"] = require("telescope.actions").delete_buffer,
+            -- ["<C-e>"] = require("telescope.actions").rename_buffer,
+          },
         },
       },
       extensions = {
