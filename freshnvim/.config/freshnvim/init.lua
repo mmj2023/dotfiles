@@ -22,15 +22,19 @@ vim.opt.rtp:prepend(lazypath)
 
 local opts = {
   defaults = {
-    -- By default, all plugins will be lazy-loaded.
-    -- it's set to true for lazy loading the plugins, setting it to true can cause speed issues.
+    -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
+    -- If you know what you're doing, you can set this to `true` to have all your custom plugins lazy-loaded by default.
     lazy = true,
     -- It's recommended to leave version=false for now, since a lot the plugin that support versioning,
     -- have outdated releases, which may break your Neovim install.
-    version = true, -- always use the latest git commit
-    -- version = "*", -- try installing the latest stable version for plugins that support semver , if you want to.
+    version = false, -- always use the latest git commit
+    -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
-  checker = { enabled = true, notify = true },
+  -- install = { colorscheme = { "tokyonight", "habamax" } },
+  checker = {
+    enabled = true, -- check for plugin updates periodically
+    notify = false, -- notify on update
+  }, -- automatically check for plugin updates
   ui = {
     icons = {
       ft = "",
@@ -41,11 +45,22 @@ local opts = {
   },
   performance = {
     rtp = {
-      reset = true, -- Reset runtime path to improve startup time
+      -- reset = true, -- Reset runtime path to improve startup time
+      -- disable some rtp plugins
+      disabled_plugins = {
+        -- "gzip",
+        -- "matchit",
+        -- "matchparen",
+        -- "netrwPlugin",
+        -- "tarPlugin",
+        -- "tohtml",
+        -- "tutor",
+        -- "zipPlugin",
+      },
     },
-    cache = {
-      enabled = true, -- Enable caching for faster startup
-    },
+    -- cache = {
+    --   enabled = true, -- Enable caching for faster startup
+    -- },
   },
 }
 -- Setup lazy.nvim

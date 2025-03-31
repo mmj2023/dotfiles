@@ -6,10 +6,13 @@ return {
     enabled = false,
   },
   {
+    "Kaiser-Yang/blink-cmp-avante",
+  },
+  {
     "saghen/blink.cmp",
     enabled = true,
-    event = "InsertEnter",
-    build = "cargo build --release",
+    event = { "InsertEnter", "CmdlineEnter" },
+    build = "cargo clean; cargo build --release",
     -- In case there are breaking changes and you want to go back to the last
     -- working release
     -- https://github.com/Saghen/blink.cmp/releases
@@ -229,6 +232,13 @@ return {
           --   score_offset = -100, -- the higher the number, the higher the priority
           --   async = true,
           -- },
+          avante = {
+            module = "blink-cmp-avante",
+            name = "Avante",
+            opts = {
+              -- options for blink-cmp-avante
+            },
+          },
         },
       })
 
@@ -240,10 +250,10 @@ return {
         accept = {
           auto_brackets = {
             enabled = true,
-            -- default_brackets = { ";", "" },
-            -- override_brackets_for_filetypes = {
-            --   markdown = { ";", "" },
-            -- },
+            default_brackets = { ";", "" },
+            override_brackets_for_filetypes = {
+              markdown = { ";", "" },
+            },
           },
         },
         --   keyword = {
@@ -328,6 +338,7 @@ return {
         ["<S-Tab>"] = { "snippet_backward", "fallback" },
         -- ["<C-p>"] = { "snippet_forward", "fallback" },
         -- ["<C-n>"] = { "snippet_backward", "fallback" },
+        ["<C-y>"] = { "select_and_accept" },
 
         -- ["<Up>"] = { "select_prev", "fallback" },
         -- ["<Down>"] = { "select_next", "fallback" },

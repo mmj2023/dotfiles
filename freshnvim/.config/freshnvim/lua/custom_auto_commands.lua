@@ -262,14 +262,17 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     end
   end,
 })
--- vim.api.nvim_create_autocmd('VimEnter', {
---     callback = function()
+-- vim.api.nvim_create_autocmd('VeryLazy', {
+-- pattern = '*',
+-- callback = function()
 local in_tmux = os.getenv("TMUX") ~= nil
+-- local bg_color = vim.fn.synIDattr(vim.fn.hlID("Normal"), "bg")
 if in_tmux then
   -- vim.fn.system("tmux set-option status-style bg=default")
   vim.fn.system(
     'tmux set status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default] 󰃮 %Y-%m-%d 󱑒 %H:%M "'
   )
+  -- vim.fn.system('if [ -n "$TMUX" ]; then tmux set-option status-style bg=' .. bg_color .. "; fi")
   vim.fn.system("tmux set-option status-style bg=default")
   -- vim.fn.system("tmux source-file ~/.tmux.conf")
 end
