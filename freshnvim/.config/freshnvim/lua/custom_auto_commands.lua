@@ -343,3 +343,9 @@ vim.api.nvim_create_autocmd("VimLeave", {
 --     end
 --   end,
 -- })
+-- vim.api.nvim_create_autocmd("VeryLazy", {
+--   callback = function()
+--     -- Your code here
+--     vim.notify("VeryLazy")
+--   end,
+-- })

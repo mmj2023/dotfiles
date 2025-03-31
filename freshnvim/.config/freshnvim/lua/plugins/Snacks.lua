@@ -10,7 +10,7 @@ local term_nav = function(dir)
 end
 return {
   "snacks.nvim",
-  --   -- event = {"VeryLazy", "VimEnter"},
+    -- event = {"VeryLazy", "VimEnter"},
   opts = {
     bigfile = { enabled = true },
     quickfile = { enabled = true },

@@ -56,7 +56,7 @@ return {
     local bg_color = vim.fn.synIDattr(vim.fn.hlID("Normal"), "bg")
     vim.keymap.set("n", "<Space>td", function()
       vim.cmd("TransparentDisable")
-      vim.notify("Transparencies disabled")
+      -- vim.notify("Transparencies disabled")
       bg_color = vim.fn.synIDattr(vim.fn.hlID("Normal"), "bg")
       vim.fn.system('if [ -n "$TMUX" ]; then tmux set-option status-style bg=' .. bg_color .. "; fi")
     end, { noremap = true, silent = true, desc = "Transparent Disable" })
@@ -64,7 +64,7 @@ return {
       vim.cmd("Lazy load transparent.nvim")
       vim.cmd("set nocursorcolumn")
       vim.cmd("TransparentEnable")
-      vim.notify("Transparencies enabled")
+      -- vim.notify("Transparencies enabled")
     end
     vim.keymap.set("n", "<leader>te", function()
       vim.cmd("lua TE()")

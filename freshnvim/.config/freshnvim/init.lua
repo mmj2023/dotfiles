@@ -67,6 +67,7 @@ local opts = {
 require("lazy").setup({
   spec = {
     -- import your plugins
+    { "folke/snacks.nvim", event = "VeryLazy" },
     { import = "plugins" },
   },
   -- Configure any other settings here. See the documentation for more details.
@@ -80,4 +81,4 @@ vim.defer_fn(function()
   -- Your heavy computations here
   require("custom_auto_commands")
   require("keymaps")
-end, 90)
+end, 10)
