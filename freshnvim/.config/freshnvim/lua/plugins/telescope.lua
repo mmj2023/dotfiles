@@ -126,6 +126,11 @@ return {
         desc = "Frecency in Current Workspace (Ivy Theme)",
       },
       {
+        "<leader>sf",
+        "<cmd>Telescope aerial<cr>",
+        desc = "Goto Symbol (Aerial)",
+      },
+      {
         "<leader>f/",
         function()
           require("telescope.builtin").live_grep({
@@ -226,6 +231,7 @@ return {
       pcall(require("telescope").load_extension, "fzf")
       pcall(require("telescope").load_extension, "ui-select")
       pcall(require("telescope").load_extension, "frecency")
+      pcall(require("telescope").load_extension, "aerial")
     end,
   },
 

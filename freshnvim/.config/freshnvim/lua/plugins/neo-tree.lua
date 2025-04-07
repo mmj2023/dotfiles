@@ -47,14 +47,14 @@ return {
         function()
           require("neo-tree.command").execute({ toggle = true, dir = get_root() })
         end,
-        desc = "Explorer NeoTree (Root Dir)",
+        desc = "Explorer NeoTree (cwd)",
       },
       {
         "<leader>fE",
         function()
           require("neo-tree.command").execute({ toggle = true, dir = vim.uv.cwd() })
         end,
-        desc = "Explorer NeoTree (cwd)",
+        desc = "Explorer NeoTree (Root Dir)",
       },
       {
         "<leader>ge",

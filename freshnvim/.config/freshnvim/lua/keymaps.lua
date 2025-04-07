@@ -13,13 +13,13 @@ vim.keymap.set("n", "<leader>y", '"+y')
 vim.keymap.set("v", "<leader>y", '"+y')
 
 -- -- delete text in void
-vim.keymap.set("n", "<leader>d", '"_d')
-vim.keymap.set("v", "<leader>d", '"_d')
+vim.keymap.set("n", "<leader>d", '"_d', {desc = "delete text in void"})
+vim.keymap.set("v", "<leader>d", '"_d', {desc = "delete text in void"})
 
 -- move highlighted text down
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", {})
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", {desc = "move highlighted text down"})
 -- move highlighted text up
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", {})
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", {desc = "move highlighted text up"})
 
 -- -- Move selected text left
 -- vim.keymap.set('v', 'H', ":'<,'>d<Esc>:normal! hp<CR>")
@@ -27,13 +27,14 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", {})
 -- vim.keymap.set('v', 'L', ":'<,'>d<Esc>:normal! p<CR>")
 
 -- keep selected text highlighted when indenting
-vim.keymap.set("v", ">", ">gv", {})
-vim.keymap.set("v", "<", "<gv", {})
+vim.keymap.set("v", ">", ">gv", {desc = "indent selected text and keep it highlighted"})
+vim.keymap.set("v", "<", "<gv", {desc = "unindent selected text and keep it highlighted"})
 
 vim.keymap.set("n", "<leader>pv", vim.cmd.Oil, {})
-vim.keymap.set("n", "<leader>bn", "<cmd>bnext<CR>", { silent = true })
-vim.keymap.set("n", "<leader>bp", "<cmd>bprev<CR>", { silent = true })
-vim.keymap.set("n", "<leader><Tab>", ":b#<CR>", { silent = true })
+vim.keymap.set("n", "<leader>bn", "<cmd>bnext<CR>", { silent = true, desc = "change with next buffer" })
+vim.keymap.set("n", "<leader>bp", "<cmd>bprev<CR>", { silent = true, desc = "change with previous buffer" })
+-- vim.keymap.set("n", "<leader><Tab>", ":b#<CR>", { silent = true })
+vim.keymap.set("n", "<leader><Tab>", "<C-6>", { silent = true, desc = "change with previous buffer" })
 
 vim.keymap.set("n", "<C-Left>", ":vertical resize +2<CR>", { silent = true })
 vim.keymap.set("n", "<C-Right>", ":vertical resize -2<CR>", { silent = true })
@@ -63,7 +64,7 @@ end
 
 vim.keymap.set("n", "<leader>hl", "<cmd>lua toggle_hlsearch()<CR>", { silent = true, desc = "Toggle HLSearch" })
 vim.keymap.set("i", "<C-a>", "<C-o>", {})
-vim.keymap.set("n", "<leader>K", "<cmd>norm! K<cr>", { desc = "Keywordprg" })
+-- vim.keymap.set("n", "<leader>K", "<cmd>norm! K<cr>", { desc = "Keywordprg" })
 -- lazy
 vim.keymap.set("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
 

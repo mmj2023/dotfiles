@@ -32,9 +32,12 @@ return {
         "WinBar",
         -- TabLine
         "MiniTablineFill",
-        -- "MiniTablineCurrent",
+        "MiniTablineCurrent",
         "MiniTablineVisible",
         "MiniTablineHidden",
+        "TabLine",
+        "TabLineSel ",
+        "TabLineFill",
       },
       exclude_groups = {
         "Comment",

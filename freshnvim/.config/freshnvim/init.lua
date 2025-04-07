@@ -1,3 +1,27 @@
+--[[
+=====================================================================
+==================== READ THIS BEFORE CONTINUING ====================
+========                                    .-----.          ========
+========         .----------------------.   | === |          ========
+========         |.-''''''''''''''''''-.|   |-----|          ========
+========         ||                    ||   | === |          ========
+========         ||                    ||   | === |          ========
+========         ||     FreshNVIM      ||   |-----|          ========
+========         ||                    ||   | === |          ========
+========         ||                    ||   |-----|          ========
+========         ||:Tutor              ||   |:::::|          ========
+========         |'-..................-'|   |____o|          ========
+========         `"")----------------(""`   ___________      ========
+========        /::::::::::|  |::::::::::\  \ no mouse \     ========
+========       /:::========|  |==hjkl==:::\  \ required \    ========
+========      '""""""""""""'  '""""""""""""'  '""""""""""'   ========
+========                                                     ========
+=====================================================================
+=====================================================================
+=====================================================================
+=====================================================================
+=====================================================================
+--]]
 -- import all settings
 require("options")
 -- Bootstrap lazy.nvim
@@ -21,16 +45,20 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local opts = {
-  defaults = {
-    -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
-    -- If you know what you're doing, you can set this to `true` to have all your custom plugins lazy-loaded by default.
-    lazy = true,
-    -- It's recommended to leave version=false for now, since a lot the plugin that support versioning,
-    -- have outdated releases, which may break your Neovim install.
-    version = false, -- always use the latest git commit
-    -- version = "*", -- try installing the latest stable version for plugins that support semver
+  --   -- install = { colorscheme = { "tokyonight", "habamax" } },
+}
+-- Setup lazy.nvim
+require("lazy").setup({
+  spec = {
+    -- import your plugins
+    { "folke/snacks.nvim", event = "VeryLazy" },
+    { import = "plugins" },
   },
-  -- install = { colorscheme = { "tokyonight", "habamax" } },
+  -- Configure any other settings here. See the documentation for more details.
+  -- colorscheme that will be used when installing plugins.
+  -- install = { colorscheme = { "habamax" } },
+  -- automatically check for plugin updates
+  -- checker = { enabled = false },
   checker = {
     enabled = true, -- check for plugin updates periodically
     notify = false, -- notify on update
@@ -42,6 +70,18 @@ local opts = {
       loaded = "",
       not_loaded = "",
     },
+  },
+  cache = {
+    enabled = true, -- Enable caching for faster startup
+  },
+  defaults = {
+    -- By default, only FreshVim plugins will be lazy-loaded. Your custom plugins will load during startup.
+    -- If you know what you're doing, you can set this to `true` to have all your custom plugins lazy-loaded by default.
+    lazy = false,
+    -- It's recommended to leave version=false for now, since a lot the plugin that support versioning,
+    -- have outdated releases, which may break your Neovim install.
+    version = false, -- always use the latest git commit
+    -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
   performance = {
     rtp = {
@@ -58,27 +98,11 @@ local opts = {
         -- "zipPlugin",
       },
     },
-    -- cache = {
-    --   enabled = true, -- Enable caching for faster startup
-    -- },
   },
-}
--- Setup lazy.nvim
-require("lazy").setup({
-  spec = {
-    -- import your plugins
-    { "folke/snacks.nvim", event = "VeryLazy" },
-    { import = "plugins" },
-  },
-  -- Configure any other settings here. See the documentation for more details.
-  -- colorscheme that will be used when installing plugins.
-  -- install = { colorscheme = { "habamax" } },
-  -- automatically check for plugin updates
-  -- checker = { enabled = false },
   opts,
 })
 vim.defer_fn(function()
   -- Your heavy computations here
   require("custom_auto_commands")
   require("keymaps")
-end, 10)
+end, 40)
