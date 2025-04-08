@@ -113,35 +113,49 @@ return {
       end
       local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 
+      -- signs = {
+      --   [vim.diagnostic.severity.ERROR] = "  ",
+      --   [vim.diagnostic.severity.WARN] = "  ",
+      --   [vim.diagnostic.severity.INFO] = "  ",
+      --   [vim.diagnostic.severity.HINT] = "  ",
+      -- }
+      -- local signs = {
+      --   -- Define diagnostic signs per severity level
+      --   [vim.diagnostic.severity.ERROR] = { text = "  ", texthl = "DiagnosticError", numhl = "DiagnosticError" },
+      --   [vim.diagnostic.severity.WARN] = { text = "  ", texthl = "DiagnosticWarn", numhl = "DiagnosticWarn" },
+      --   [vim.diagnostic.severity.INFO] = { text = "  ", texthl = "DiagnosticInfo", numhl = "DiagnosticInfo" },
+      --   [vim.diagnostic.severity.HINT] = { text = "  ", texthl = "DiagnosticHint", numhl = "DiagnosticHint" },
+      -- }
+      -- for type, icon in pairs(signs) do
+      --   local hl = "DiagnosticSign" .. type
+      --   if vim.fn.has("nvim-0.11") == 1 then
+      --     vim.sign.define(hl, {
+      --       text = icon, -- The sign text
+      --       texthl = hl, -- Highlight group
+      --       numhl = hl, -- numberhighlight group
+      --     })
+      --   else
+      --     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+      --   end
+      -- end
       for type, icon in pairs(signs) do
-        local hl = "DiagnosticSign" .. type
-        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-      end
+      local hl = "DiagnosticSign" .. type
 
-      vim.diagnostic.config({
-        virtual_text = {
-          prefix = "▎", -- Could be '●', '▎', 'x', '■ ', '• ', '◆ ', '∙ ', '✗ ', '✓ ', etc.
-          severity = {
-            min = vim.diagnostic.severity.HINT,
-          },
-          format = function(diagnostic)
-            local icons = {
-              [vim.diagnostic.severity.ERROR] = "  ",
-              [vim.diagnostic.severity.WARN] = "  ",
-              [vim.diagnostic.severity.INFO] = "  ",
-              [vim.diagnostic.severity.HINT] = "  ",
-            }
-            return icons[diagnostic.severity] .. diagnostic.message
-          end,
-        },
-        signs = true,
-        update_in_insert = false,
-        underline = true,
-        severity_sort = true,
-        float = {
-          source = "always", -- Or "if_many"
-        },
-      })
+        -- if vim.diagnostic.config then
+        --     -- New API in Neovim 0.11+
+        --     -- vim.sign.define(hl, {
+        --     --   text = icon, -- Sign text
+        --     --   texthl = hl, -- Highlight group
+        --     --   numhl = hl, -- Number highlight group
+        --     -- })
+        --   vim.diagnostic.config({
+        --     signs = signs,
+        --   })
+        -- else
+          -- Legacy API for older versions
+          vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+        -- end
+      end
       vim.api.nvim_create_autocmd(opts.events, {
         group = vim.api.nvim_create_augroup("nvim-lint", { clear = true }),
         callback = M.debounce(100, M.lint),

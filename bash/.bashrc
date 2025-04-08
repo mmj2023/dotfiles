@@ -1,63 +1,63 @@
 #!/usr/bin/env bash
 # impovised from GitHub; ChrisTitus's mybash
 case $- in
-    *i*) ;;
-      *) return;;
+*i*) ;;
+*) return ;;
 esac
 
 # Returns the last 2 fields of the working directory
-distribution () {
-    local dtype="unknown"  # Default to unknown
+distribution() {
+    local dtype="unknown" # Default to unknown
 
     # Use /etc/os-release for modern distro identification
     if [ -r /etc/os-release ]; then
         source /etc/os-release
         case $ID in
-            fedora|rhel|centos)
-                dtype="redhat"
-                ;;
-            sles|opensuse*)
-                dtype="suse"
-                ;;
-            ubuntu|debian)
-                dtype="debian"
-                ;;
-            gentoo)
-                dtype="gentoo"
-                ;;
-            arch|manjaro)
-                dtype="arch"
-                ;;
-            slackware)
-                dtype="slackware"
-                ;;
-            *)
-                # Check ID_LIKE only if dtype is still unknown
-                if [ -n "$ID_LIKE" ]; then
-                    case $ID_LIKE in
-                        *fedora*|*rhel*|*centos*)
-                            dtype="redhat"
-                            ;;
-                        *sles*|*opensuse*)
-                            dtype="suse"
-                            ;;
-                        *ubuntu*|*debian*)
-                            dtype="debian"
-                            ;;
-                        *gentoo*)
-                            dtype="gentoo"
-                            ;;
-                        *arch*)
-                            dtype="arch"
-                            ;;
-                        *slackware*)
-                            dtype="slackware"
-                            ;;
-                    esac
-                fi
+        fedora | rhel | centos)
+            dtype="redhat"
+            ;;
+        sles | opensuse*)
+            dtype="suse"
+            ;;
+        ubuntu | debian)
+            dtype="debian"
+            ;;
+        gentoo)
+            dtype="gentoo"
+            ;;
+        arch | manjaro)
+            dtype="arch"
+            ;;
+        slackware)
+            dtype="slackware"
+            ;;
+        *)
+            # Check ID_LIKE only if dtype is still unknown
+            if [ -n "$ID_LIKE" ]; then
+                case $ID_LIKE in
+                *fedora* | *rhel* | *centos*)
+                    dtype="redhat"
+                    ;;
+                *sles* | *opensuse*)
+                    dtype="suse"
+                    ;;
+                *ubuntu* | *debian*)
+                    dtype="debian"
+                    ;;
+                *gentoo*)
+                    dtype="gentoo"
+                    ;;
+                *arch*)
+                    dtype="arch"
+                    ;;
+                *slackware*)
+                    dtype="slackware"
+                    ;;
+                esac
+            fi
 
-                # If ID or ID_LIKE is not recognized, keep dtype as unknown
-                ;;
+            # If ID or ID_LIKE is not recognized, keep dtype as unknown
+            ;;
         esac
     fi
 
@@ -67,9 +67,9 @@ distribution () {
 DISTRIBUTION=$(distribution)
 # IP address lookup
 alias whatismyip="whatsmyip"
-function whatsmyip () {
+function whatsmyip() {
     # Internal IP Lookup.
-    if command -v ip &> /dev/null; then
+    if command -v ip &>/dev/null; then
         echo -n "Internal IP: "
         ip addr show wlan0 | grep "inet " | awk '{print $2}' | cut -d/ -f1
     else
@@ -82,7 +82,6 @@ function whatsmyip () {
     curl -s ifconfig.me
 }
 
-
 iatest=$(expr index "$-" i)
 # if [ -f /usr/bin/fastfetch ]; then
 # 	fastfetch
@@ -94,10 +93,10 @@ if [ -z "$BASHRC_SOURCED" ]; then
     # Run your command here
     if [[ -z "$TMUX" ]]; then
         # Run fastfetch only if not in a tmux session
-        if command -v fastfetch &> /dev/null; then
+        if command -v fastfetch &>/dev/null; then
             fastfetch
         fi
-        if command -v colorscript &> /dev/null; then
+        if command -v colorscript &>/dev/null; then
             colorscript random
         fi
 
@@ -109,50 +108,50 @@ ver() {
     dtype=$(distribution)
 
     case $dtype in
-        "redhat")
-            if [ -s /etc/redhat-release ]; then
-                cat /etc/redhat-release
-            else
-                cat /etc/issue
-            fi
-            uname -a
-            ;;
-        "suse")
-            cat /etc/SuSE-release
-            ;;
-        "debian")
-            lsb_release -a
-            ;;
-        "gentoo")
-            cat /etc/gentoo-release
-            ;;
-        "arch")
-            cat /etc/os-release
-            ;;
-        "slackware")
-            cat /etc/slackware-version
-            ;;
-        *)
-            if [ -s /etc/issue ]; then
-                cat /etc/issue
-            else
-                echo "Error: Unknown distribution"
-                exit 1
-            fi
-            ;;
+    "redhat")
+        if [ -s /etc/redhat-release ]; then
+            cat /etc/redhat-release
+        else
+            cat /etc/issue
+        fi
+        uname -a
+        ;;
+    "suse")
+        cat /etc/SuSE-release
+        ;;
+    "debian")
+        lsb_release -a
+        ;;
+    "gentoo")
+        cat /etc/gentoo-release
+        ;;
+    "arch")
+        cat /etc/os-release
+        ;;
+    "slackware")
+        cat /etc/slackware-version
+        ;;
+    *)
+        if [ -s /etc/issue ]; then
+            cat /etc/issue
+        else
+            echo "Error: Unknown distribution"
+            exit 1
+        fi
+        ;;
     esac
 }
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
+    . /etc/bashrc
 fi
 
 # Enable bash programmable completion features in interactive shells
 if [ -f /usr/share/bash-completion/bash_completion ]; then
-	. /usr/share/bash-completion/bash_completion
+    . /usr/share/bash-completion/bash_completion
 elif [ -f /etc/bash_completion ]; then
-	. /etc/bash_completion
+    . /etc/bash_completion
 fi
 # Disable the bell
 if [[ $iatest -gt 0 ]]; then bind "set bell-style visible"; fi
@@ -188,7 +187,7 @@ export LS_COLORS='no=00:fi=00:di=00;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40
 #export GREP_OPTIONS='--color=auto' #deprecated
 
 # Check if ripgrep is installed
-if command -v rg &> /dev/null; then
+if command -v rg &>/dev/null; then
     # Alias grep to rg if ripgrep is installed
     alias grep='rg'
 else
@@ -219,7 +218,7 @@ alias cls='clear'
 alias apt-get='sudo apt-get'
 alias multitail='multitail --no-repeat -c'
 alias freshclam='sudo freshclam'
-if command -v nvim > /dev/null 2>&1; then
+if command -v nvim >/dev/null 2>&1; then
     # Edit this .bashrc file
     alias ebrc='nvim ~/.bashrc'
     # echo "Program 'nvim' exists"
@@ -241,34 +240,36 @@ if command -v nvim > /dev/null 2>&1; then
     fi
     # alias asvi="NVIM_APPNAME=astronvim nvim"
     if [ -f ~/.local/bin/lvim ]; then
-    alias luvi="~/.local/bin/lvim"
+        alias luvi="~/.local/bin/lvim"
     fi
     # if [ -d ~/.config/vimacsnvim ]; then
     #     alias vivi="NVIM_APPNAME=vimacsnvim nvim"
     # fi
     # Set the default editor
-    export EDITOR=nvim
-    export VISUAL=nvim
+    alias freshnvim='NVIM_APPNAME=freshnvim nvim'
+    export EDITOR=freshnvim
+    # export EDITOR=v
+    export VISUAL=freshnvim
 fi
 alias less='less -R'
 
 if [ -f ~/.blerc.sh ]; then
     alias b_c="source ~/.blerc.sh"
 fi
-if command -v x86_64-w64-mingw32-gcc > /dev/null 2>&1; then
+if command -v x86_64-w64-mingw32-gcc >/dev/null 2>&1; then
     alias wingcc="x86_64-w64-mingw32-gcc"
 fi
-if command -v xel > /dev/null 2>&1; then
+if command -v xel >/dev/null 2>&1; then
     # echo "Program 'xsel' exists"
     alias xcopy="xsel --input --clipboard"
     alias xpaste="xsel --output --clipboard"
 fi
-if command -v nala > /dev/null 2>&1; then
+if command -v nala >/dev/null 2>&1; then
     # echo "Program 'nala' exists"
     alias apt="sudo nala"
 fi
 # if [ "$DISTRIBUTION" = "redhat" ] || [ "$DISTRIBUTION" = "arch" ]; then
-if command -v bat > /dev/null 2>&1; then
+if command -v bat >/dev/null 2>&1; then
     # echo "Program 'bat' exists"
     alias cat='bat'
 fi
@@ -284,7 +285,7 @@ alias imgcatsh="~/useful_scripts/imgcat.sh"
 eval "$(zoxide init bash)"
 
 # check z exists
-if command -v z > /dev/null 2>&1; then
+if command -v z >/dev/null 2>&1; then
     # echo "Program 'z' exists"
     # Change directory aliases
     alias cd='z'
@@ -316,31 +317,31 @@ fi
 # Alias's for multiple directory listing commands
 alias la='ls -Alh'                # show hidden files
 alias ls='ls -aFh --color=always' # add colors and file type extensions
-if command -v lsd > /dev/null 2>&1; then
-    alias ld='lsd -aFh --color=always' # add colors and file type extensions
+if command -v lsd >/dev/null 2>&1; then
+    alias ld='lsd -aFh --color=always'  # add colors and file type extensions
     alias ll='lsd -alFh --color=always' # add colors and file type extensions
     alias tree='lsd -aFh --color=always --tree'
 else
-    alias ld='ls -aFh --color=always' # add colors and file type extensions
+    alias ld='ls -aFh --color=always'  # add colors and file type extensions
     alias ll='ls -alFh --color=always' # add colors and file type extensions
 fi
 # alias ld='lsd -aFh --color=always' # add colors and file type extensions
 # alias ll='lsd -alFh --color=always' # add colors and file type extensions
-alias lx='ls -lXBh'               # sort by extension
-alias lk='ls -lSrh'               # sort by size
-alias lc='ls -ltcrh'              # sort by change time
-alias lu='ls -lturh'              # sort by access time
-alias lr='ls -lRh'                # recursive ls
-alias lt='ls -ltrh'               # sort by date
-alias lm='ls -alh |more'          # pipe through 'more'
-alias lw='ls -xAh'                # wide listing format
+alias lx='ls -lXBh'      # sort by extension
+alias lk='ls -lSrh'      # sort by size
+alias lc='ls -ltcrh'     # sort by change time
+alias lu='ls -lturh'     # sort by access time
+alias lr='ls -lRh'       # recursive ls
+alias lt='ls -ltrh'      # sort by date
+alias lm='ls -alh |more' # pipe through 'more'
+alias lw='ls -xAh'       # wide listing format
 # alias ll='ls -Fls'                # long listing format
-alias labc='ls -lap'              # alphabetical sort
-alias lf="ls -l | egrep -v '^d'"  # files only
-alias ldir="ls -l | egrep '^d'"   # directories only
-alias lla='ls -Al'                # List and Hidden Files
-alias las='ls -A'                 # Hidden Files
-alias lls='ls -l'                 # List
+alias labc='ls -lap'             # alphabetical sort
+alias lf="ls -l | egrep -v '^d'" # files only
+alias ldir="ls -l | egrep '^d'"  # directories only
+alias lla='ls -Al'               # List and Hidden Files
+alias las='ls -A'                # Hidden Files
+alias lls='ls -l'                # List
 
 # alias chmod commands
 alias mx='chmod a+x'
@@ -417,7 +418,7 @@ alias clickpaste='sleep 3; xdotool type "$(xclip -o -selection clipboard)"'
 alias kssh="kitty +kitten ssh"
 # Function to check if running in WSL
 check_wsl() {
-    if grep -qEi "(Microsoft|WSL)" /proc/version &> /dev/null ; then
+    if grep -qEi "(Microsoft|WSL)" /proc/version &>/dev/null; then
         # echo "Running in WSL"
         alias wssh="wezterm.exe ssh"
     else
@@ -429,7 +430,6 @@ check_wsl() {
 # Run the function
 check_wsl
 
-
 # alias to cleanup unused docker containers, images, networks, and volumes
 
 alias docker-clean=' \
@@ -437,7 +437,6 @@ alias docker-clean=' \
   docker image prune -f ; \
   docker network prune -f ; \
   docker volume prune -f '
-
 
 # Enable history search with up and down arrows
 bind '"\e[A": history-search-backward'
@@ -450,13 +449,13 @@ bind '"\e[B": history-search-forward'
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
-if command -v starship &> /dev/null; then
+if command -v starship &>/dev/null; then
     eval "$(starship init bash)"
 fi
 FNM_PATH="/home/mylordtome/.local/share/fnm"
 if [ -d "$FNM_PATH" ]; then
-  export PATH="$FNM_PATH:$PATH"
-  eval "`fnm env`"
+    export PATH="$FNM_PATH:$PATH"
+    eval "$(fnm env)"
 fi
 # for cargo
 . "$HOME/.cargo/env"
@@ -470,13 +469,13 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 export GDK_BACKEND=wayland
 
 gcom() {
-	git add .
-	git commit -m "$1"
+    git add .
+    git commit -m "$1"
 }
 lazyg() {
-	git add .
-	git commit -m "$1"
-	git push
+    git add .
+    git commit -m "$1"
+    git push
 }
 sessionize_script=~/dotfiles/bash/custom-scripts/sessionize.sh
 # windower_dash_script=$HOME/dotfiles/bash/custom-scripts/windower_dash.sh
@@ -531,40 +530,41 @@ fi
 # usage: ex [file]
 # from http://www.gitlab.com/dwt1/
 function ex {
- if [ -z "$1" ]; then
-    # display usage if no parameters given
-    echo "Usage: ex <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
-    echo "       extract <path/file_name_1.ext> [path/file_name_2.ext] [path/file_name_3.ext]"
- else
-    for n in "$@"
-    do
-      if [ -f "$n" ] ; then
-          case "${n%,}" in
-            *.cbt|*.tar.bz2|*.tar.gz|*.tar.xz|*.tbz2|*.tgz|*.txz|*.tar)
-                         tar xvf "$n"       ;;
-            *.lzma)      unlzma ./"$n"      ;;
-            *.bz2)       bunzip2 ./"$n"     ;;
-            *.cbr|*.rar)       unrar x -ad ./"$n" ;;
-            *.gz)        gunzip ./"$n"      ;;
-            *.cbz|*.epub|*.zip)       unzip ./"$n"       ;;
-            *.z)         uncompress ./"$n"  ;;
-            *.7z|*.arj|*.cab|*.cb7|*.chm|*.deb|*.dmg|*.iso|*.lzh|*.msi|*.pkg|*.rpm|*.udf|*.wim|*.xar)
-                         7z x ./"$n"        ;;
-            *.xz)        unxz ./"$n"        ;;
-            *.exe)       cabextract ./"$n"  ;;
-            *.cpio)      cpio -id < ./"$n"  ;;
-            *.cba|*.ace)      unace x ./"$n"      ;;
-            *)
-                         echo "ex: '$n' - unknown archive method"
-                         return 1
-                         ;;
-          esac
-      else
-          echo "'$n' - file does not exist"
-          return 1
-      fi
-    done
-fi
+    if [ -z "$1" ]; then
+        # display usage if no parameters given
+        echo "Usage: ex <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
+        echo "       extract <path/file_name_1.ext> [path/file_name_2.ext] [path/file_name_3.ext]"
+    else
+        for n in "$@"; do
+            if [ -f "$n" ]; then
+                case "${n%,}" in
+                *.cbt | *.tar.bz2 | *.tar.gz | *.tar.xz | *.tbz2 | *.tgz | *.txz | *.tar)
+                    tar xvf "$n"
+                    ;;
+                *.lzma) unlzma ./"$n" ;;
+                *.bz2) bunzip2 ./"$n" ;;
+                *.cbr | *.rar) unrar x -ad ./"$n" ;;
+                *.gz) gunzip ./"$n" ;;
+                *.cbz | *.epub | *.zip) unzip ./"$n" ;;
+                *.z) uncompress ./"$n" ;;
+                *.7z | *.arj | *.cab | *.cb7 | *.chm | *.deb | *.dmg | *.iso | *.lzh | *.msi | *.pkg | *.rpm | *.udf | *.wim | *.xar)
+                    7z x ./"$n"
+                    ;;
+                *.xz) unxz ./"$n" ;;
+                *.exe) cabextract ./"$n" ;;
+                *.cpio) cpio -id <./"$n" ;;
+                *.cba | *.ace) unace x ./"$n" ;;
+                *)
+                    echo "ex: '$n' - unknown archive method"
+                    return 1
+                    ;;
+                esac
+            else
+                echo "'$n' - file does not exist"
+                return 1
+            fi
+        done
+    fi
 }
 ### SET MANPAGER
 ### Uncomment only one of these!
@@ -577,8 +577,7 @@ fi
 alias tozsh="sudo chsh $USER -s /bin/zsh && echo 'Log out and log back in for change to take effect.'"
 alias tofish="sudo chsh $USER -s /bin/fish && echo 'Log out and log back in for change to take effect.'"
 
-
-if command -v tmux &> /dev/null; then
+if command -v tmux &>/dev/null; then
     bind -x '"\C-w": clear'
     bind '"\C-g": "\C-j"'
     bind '"\ek": "\C-k"'
@@ -604,4 +603,20 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 #     # echo -n "tmux" && read -s -n 1
 #     printf "'\e[1;32m'\e[7m'"
 # fi
-. "/home/mylordtome/.deno/env"
+# function y_z() {
+#     local tmp="$(mktemp -t "yazi-cwd-XXXXXX")" cwd
+#     yazi "$@" --cwd-file="$tmp"
+#     if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+#         cd -- "$cwd"
+#     fi
+#     \rm -f -- "$tmp"
+# }
+function y() {
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+    yazi "$@" --cwd-file="$tmp"
+    if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+        builtin cd -- "$cwd"
+    fi
+    \rm -f -- "$tmp"
+}
+export PATH="$HOME/.local/bin:$PATH"

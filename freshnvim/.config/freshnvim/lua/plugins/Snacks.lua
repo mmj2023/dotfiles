@@ -10,8 +10,27 @@ local term_nav = function(dir)
 end
 return {
   "snacks.nvim",
-    -- event = {"VeryLazy", "VimEnter"},
+  -- event = {"VeryLazy", "VimEnter"},
   opts = {
+    ---@class snacks.image
+    ---@field terminal snacks.image.terminal
+    ---@field image snacks.Image
+    ---@field placement snacks.image.Placement
+    ---@field util snacks.image.util
+    ---@field buf snacks.image.buf
+    ---@field doc snacks.image.doc
+    ---@field convert snacks.image.convert
+    ---@field inline snacks.image.inline
+    images = {
+      enabled = true,
+      -- max_width = 100,
+      -- max_height = 100,
+      -- (Optional) A function to resolve image paths in markdown or another document.
+        -- When nil, the image path is resolved relative to the current file.
+        resolve = function(file, src)
+          return vim.fn.fnamemodify(src, ":p")
+        end,
+    },
     bigfile = { enabled = true },
     quickfile = { enabled = true },
     terminal = {

@@ -102,16 +102,21 @@ return {
       local root_dir = cwd
 
       -- If using LSP, get the root directory
-
-      local clients = vim.lsp.get_clients()
-      if next(clients) ~= nil then
-        for _, client in pairs(clients) do
-          if client.config.root_dir then
-            root_dir = client.config.root_dir
-            break
-          end
-        end
-      end
+      -- if vim.fn.has("nvim-0.9") == 1 then
+      --   if vim.lsp.buf.server_ready() then
+      --     local clients = vim.lsp.get_clients({ bufnr = 0 }) -- Get active LSP clients for the current buffer
+      --   else
+      --     local clients = vim.lsp.buf_get_clients() -- Get active LSP clients for the current buffer
+      --   end
+      -- end
+      -- if next(clients) ~= nil then
+      --   for _, client in pairs(clients) do
+      --     if client.config.root_dir then
+      --       root_dir = client.config.root_dir
+      --       break
+      --     end
+      --   end
+      -- end
 
       -- Make the path relative to the root directory
       local relative_path = vim.fn.fnamemodify(filepath, ":~:.")
@@ -184,14 +189,14 @@ return {
         },
 
         lualine_c = {
+          { "filetype", icon_only = true, separator = "", padding = { left = 2, right = -2 } },
+          { pretty_path, separator = "" },
           {
             clients_lsp,
             -- icon = "󱏘 ",
-            icon = " ",
+            -- icon = " ",
             separator = "",
           },
-          { "filetype", icon_only = true, separator = "", padding = { left = 2, right = -2 } },
-          { pretty_path, separator = "" },
           {
             "diagnostics",
             icon = { "  :" },
@@ -295,21 +300,108 @@ return {
       extensions = { "lazy", "oil", "fugitive", "quickfix", "mason", "man", "neo-tree" },
     }
     local in_tmux = os.getenv("TMUX") ~= nil
-    if not in_tmux then
+    if not vim.g.transparent_enabled then
+      opts.sections.lualine_a = {
+        {
+          "mode",
+          icon = "",
+          -- color = { fg = "#b4b4b4" },
+          color = { fg = "#303030" },
+          separator = {
+            right = "",
+            right_padding = 2,
+          },
+        },
+      }
+      opts.sections.lualine_z = {
+        {
+          "location",
+          -- color = { fg = "#b4b4b4" },
+          color = { fg = "#303030" },
+          padding = {
+            left = 1,
+            right = 1,
+          },
+        },
+      }
+    else
+      opts.sections.lualine_a = {
+        {
+          "mode",
+          icon = "",
+          color = { fg = "#b4b4b4" },
+          -- color = { fg = "#303030" },
+          separator = {
+            right = "",
+            right_padding = 2,
+          },
+        },
+      }
       opts.sections.lualine_z = {
         {
           "location",
           color = { fg = "#b4b4b4" },
+          -- color = { fg = "#303030" },
           padding = {
             left = 1,
-            right = 0,
+            right = 1,
           },
         },
-        function()
-          return " " .. os.date("%R")
-        end,
       }
     end
+    if not in_tmux then
+      if not vim.g.transparent_enabled then
+        opts.sections.lualine_z = {
+          {
+            "location",
+            -- color = { fg = "#b4b4b4" },
+            color = { fg = "#303030" },
+            padding = {
+              left = 1,
+              right = 0,
+            },
+          },
+          function()
+            return " " .. os.date("%R")
+          end,
+        }
+      else
+        opts.sections.lualine_z = {
+          {
+            "location",
+            color = { fg = "#b4b4b4" },
+            padding = {
+              left = 1,
+              right = 0,
+            },
+          },
+          function()
+            return " " .. os.date("%R")
+          end,
+        }
+      end
+    end
+    -- table.insert(opts.sections.lualine_c, {
+    --   "aerial",
+    --   sep = " ", -- separator between symbols
+    --   sep_icon = "", -- separator between icon and symbol
+    --
+    --   -- The number of symbols to render top-down. In order to render only 'N' last
+    --   -- symbols, negative numbers may be supplied. For instance, 'depth = -1' can
+    --   -- be used in order to render only current symbol.
+    --   depth = 5,
+    --
+    --   -- When 'dense' mode is on, icons are not rendered near their symbols. Only
+    --   -- a single icon that represents the kind of current symbol is rendered at
+    --   -- the beginning of status line.
+    --   dense = false,
+    --
+    --   -- The separator to be used to separate symbols in dense mode.
+    --   dense_sep = ".",
+    --
+    --   -- Color the symbol icons.
+    --   colored = true,
+    -- })
     return opts
   end,
 }
