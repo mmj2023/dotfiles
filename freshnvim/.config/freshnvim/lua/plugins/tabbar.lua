@@ -1,7 +1,8 @@
 return {
   "echasnovski/mini.tabline",
   version = false,
-  event = "VeryLazy",
+  -- event = "VeryLazy",
+  event = "TabNew",
   opts = {
     show_icons = true,
 
