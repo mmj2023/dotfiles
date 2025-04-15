@@ -10,6 +10,11 @@ return {
         "NeoTreeNormal",
         -- "NeoTreeNormalNC",
         "BufferLineTabClose",
+        "WinBar",
+        "WinBarNC",
+        "WinBarSep",
+        "WinBarSepNC",
+        "BufferLineIndicatorSelected",
         "BufferlineBufferSelected",
         "BufferLineFill",
         "BufferLineBackground",
@@ -104,5 +109,9 @@ return {
         end
       end,
     })
+    vim.defer_fn(function()
+      vim.cmd("TransparentToggle")
+      vim.cmd("TransparentToggle")
+    end, 30) -- Delay in milliseconds
   end,
 }

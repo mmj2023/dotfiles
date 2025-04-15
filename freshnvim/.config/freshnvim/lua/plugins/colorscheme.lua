@@ -1,5 +1,20 @@
 return {
-  { "oneslash/helix-nvim", lazy = false, priority = 1000, },
+  { "oneslash/helix-nvim", lazy = false, priority = 1000 },
+  { "gmr458/cold.nvim", lazy = false, priority = 1000 },
+  {
+    "zenbones-theme/zenbones.nvim",
+    -- Optionally install Lush. Allows for more configuration or extending the colorscheme
+    -- If you don't want to install lush, make sure to set g:zenbones_compat = 1
+    -- In Vim, compat mode is turned on as Lush only works in Neovim.
+    dependencies = "rktjmp/lush.nvim",
+    lazy = false,
+    priority = 1000,
+    -- you can set set configuration options here
+    -- config = function()
+    --     vim.g.zenbones_darken_comments = 45
+    --     vim.cmd.colorscheme('zenbones')
+    -- end
+  },
   {
     "uloco/bluloco.nvim",
     lazy = false,
@@ -93,15 +108,16 @@ return {
       })
     end,
   },
-  {
-    "hwadii/gruber_darker.nvim",
-    dependencies = {
-      "rktjmp/lush.nvim", -- this theme depends on lush.nvim
-    },
-    priority = 1000,
-    -- config = true,
-    -- opts = {},
-  },
+  -- {
+  --   "hwadii/gruber_darker.nvim",
+  --   dependencies = {
+  --     "rktjmp/lush.nvim", -- this theme depends on lush.nvim
+  --   },
+  --   priority = 1000,
+  --   -- config = true,
+  --   -- opts = {},
+  -- },
+  { "blazkowolf/gruber-darker.nvim" },
   {
     "gbprod/nord.nvim",
     lazy = false,
@@ -156,5 +172,8 @@ return {
         -- optional configuration here
       })
     end,
+  },
+  {
+    "RRethy/base16-nvim",
   },
 }

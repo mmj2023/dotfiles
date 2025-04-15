@@ -22,8 +22,46 @@
 =====================================================================
 =====================================================================
 --]]
+-- -- Helper: check if a file exists
+-- local function file_exists(path)
+--   local f = io.open(path, "rb")
+--   if f then
+--     f:close()
+--   end
+--   return f ~= nil
+-- end
+
+-- -- Helper: get modification time (in seconds) of a file using Neovim’s libuv
+-- local function get_mod_time(path)
+--   local stat = vim.loop.fs_stat(path)
+--   return stat and stat.mtime.sec or 0
+-- end
+
+-- -- Helper: compile a Lua source file into bytecode using LuaJIT.
+-- -- It uses vim.fn.system for synchronous execution.
+-- local function compile_file(src, dst)
+--   local cmd = string.format('luajit -b %q %q', src, dst)
+--   vim.fn.system(cmd)
+-- end
+
+-- local function require_or_dofile(path)
+--   if file_exists(path .. ".luac") then
+--     dofile(path .. ".luac")
+--     --   vim.notify("Error: file not found: " .. path)
+--     -- return
+--   else
+--     path = path .. ".lua"
+--     local ok, mod = pcall(require, path)
+--     if not ok then
+--       vim.notify("Error: failed to load file: " .. path)
+--       return
+--     end
+--   end
+--   return mod
+-- end
 -- import all settings
 require("options")
+-- dofile("compiled_options.luac")
 -- Bootstrap lazy.nvim
 -- put this in your main init.lua file ( before lazy setup )
 -- vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46_cache/"
@@ -51,7 +89,7 @@ local opts = {
 require("lazy").setup({
   spec = {
     -- import your plugins
-    { "folke/snacks.nvim", event = "VeryLazy" },
+    { "folke/snacks.nvim", event = "VeryLazy", priority = 10000 },
     { import = "plugins" },
   },
   -- Configure any other settings here. See the documentation for more details.
@@ -85,7 +123,7 @@ require("lazy").setup({
   },
   performance = {
     rtp = {
-      -- reset = true, -- Reset runtime path to improve startup time
+      reset = true, -- Reset runtime path to improve startup time
       -- disable some rtp plugins
       disabled_plugins = {
         -- "gzip",
@@ -101,8 +139,14 @@ require("lazy").setup({
   },
   opts,
 })
-vim.defer_fn(function()
-  -- Your heavy computations here
-  require("custom_auto_commands")
-  require("keymaps")
-end, 40)
+-- vim.defer_fn(function()
+-- Your heavy computations here
+-- require("lazy_setup")
+-- dofile("~/.config/freshnvim/lua/compiled_lazy_setup.luac")
+require("custom_auto_commands")
+require("keymaps")
+-- require_or_dofile("compiled_custom_auto_commands.luac")
+-- require_or_dofile("compiled_keymaps.luac")
+-- dofile("compiled_custom_auto_commands.luac")
+-- dofile("~/.config/freshnvim/lua/compiled_keymaps.luac")
+-- end, 40)

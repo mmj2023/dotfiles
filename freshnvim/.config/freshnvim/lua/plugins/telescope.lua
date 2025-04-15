@@ -79,7 +79,7 @@ return {
       { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "[S]earch [F]iles" },
       { "<leader>fF", "<cmd>Telescope frecency<cr>", desc = "[S]earch [F]rencency" },
       { "<leader>fs", "<cmd>lua require('telescope.builtin').builtin()<cr>", desc = "[S]earch [S]elect Telescope" },
-      { "<leader>fw", "<cmd>lua require('telescope.builtin').grep_string()<cr>", desc = "[S]earch current [W]ord" },
+      { "<leader>fw", "<cmd>lua require('telescope.builtin').grep_string({ search = vim.fn.expand('<cword>') })<cr>", desc = "[S]earch current [W]ord" },
       { "<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<cr>", desc = "[S]earch by [G]rep" },
       -- git
       { "<leader>fgg", "<cmd>lua require('telescope.builtin').git_files()<cr>", desc = "Find Files (git-files)" },

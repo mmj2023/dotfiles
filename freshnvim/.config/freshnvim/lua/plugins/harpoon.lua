@@ -13,19 +13,20 @@ return {
     keys = function()
         local keys = {
             {
-                '<leader>H',
+                '<leader>+',
                 function()
                     require('harpoon'):list():add()
+                    vim.notify('󱡅 Harpoon: Harpooned File Added')
                 end,
                 desc = 'Harpoon File',
             },
             {
-                '<leader>h',
+                '<leader>fl',
                 function()
                     local harpoon = require('harpoon')
                     harpoon.ui:toggle_quick_menu(harpoon:list())
                 end,
-                desc = 'Harpoon Quick Menu',
+                desc = 'Harpoon Toggle Quick Menu',
             },
         }
 
@@ -38,6 +39,7 @@ return {
                 '<leader>' .. p,
                 function()
                     require('harpoon'):list():select(p)
+                    -- vim.notify('Harpoon to File ' .. p)
                 end,
                 desc = 'Harpoon to File ' .. p,
             })

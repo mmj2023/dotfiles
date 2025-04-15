@@ -1,7 +1,15 @@
 return {
   "yetone/avante.nvim",
-  event = "VeryLazy",
+  -- event = "VeryLazy",
   version = false, -- Never set this value to "*"! Never!
+  cmd = { "Avante" },
+  keys = {
+    { "<leader>aa", "<cmd>Avante<cr>", desc = "Avante" },
+    { "<leader>aC", "<cmd>Avanteclose<cr>", desc = "Avante (close tab)" },
+    { "<leader>aA", "<cmd>Avante<cr>", desc = "Avante (with autocompletion)" },
+    { "<leader>aR", "<cmd>AvanteReplace<cr>", desc = "Avante (replace mode)" },
+    { "<leader>aS", "<cmd>AvanteReplace<cr>", desc = "Avante (replace mode)" },
+  },
   opts = {
     -- add any opts here
     -- for example
@@ -23,12 +31,29 @@ return {
       temperature = 0, -- adjust if needed
       max_tokens = 4096,
     },
+    vendors = {
+      groq = {
+        __inherited_from = "openai",
+        -- model = "grok-3-mini-fast-0404",
+        -- model = "grok-2-latest",
+        model = "llama-3.1-70b-versatile",
+        endpoint = "https://api.x.ai/v1/chat/completions", -- your Grok API endpoint
+        -- endpoint = "https://api.groq.com/openai/v1/",
+        api_key_name = "GROQ_API_KEY", --[[ or "YOUR_GROK_API_KEY", -- place your API key here, ]]
+        timeout = 30000, -- optional timeout in milliseconds
+        temperature = 0, -- additional Grok settings if supported
+        max_tokens = 8192,
+        max_completion_tokens = 8192,
+        model = "grok-3-mini-fast-latest",
+        stream = false, -- optional, defaults to false
+      },
+    },
     -- behaviour = {
-      -- auto_suggestions = false, -- Experimental stage
-      -- auto_set_highlight_group = true,
-      -- auto_set_keymaps = true,
-      -- auto_apply_diff_after_generation = false,
-      -- support_paste_from_clipboard = false,
+    -- auto_suggestions = false, -- Experimental stage
+    -- auto_set_highlight_group = true,
+    -- auto_set_keymaps = true,
+    -- auto_apply_diff_after_generation = false,
+    -- support_paste_from_clipboard = false,
     -- },
     file_selector = {
       --- @alias FileSelectorProvider "native" | "fzf" | "mini.pick" | "snacks" | "telescope" | string | fun(params: avante.file_selector.IParams|nil): nil

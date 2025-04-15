@@ -3,16 +3,25 @@
 -- end
 
 return {
-      -- disable builtin snippet support
-      { "garymjr/nvim-snippets", enabled = false },
+  -- disable builtin snippet support
+  { "garymjr/nvim-snippets", enabled = false },
   {
     "L3MON4D3/LuaSnip",
     -- event = {"VeryLazy", "BufRead", "BufNewFile", "BufEnter", "InsertEnter"},
     enabled = true,
     lazy = true,
-    build = (not vim.uv.os_uname().sysname:find("Windows") ~= nil)
-        and "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build'; make install_jsregexp"
-      or nil,
+    -- build = (not vim.uv.os_uname().sysname:find("Windows") ~= nil)
+    --     and "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build'; make install_jsregexp"
+    --   or nil,
+    build = (function()
+      -- Build Step is needed for regex support in snippets.
+      -- This step is not supported in many windows environments.
+      -- Remove the below condition to re-enable on windows.
+      if vim.fn.has("win32") == 1 or vim.fn.executable("make") == 0 then
+        return
+      end
+      return "make install_jsregexp"
+    end)(),
     dependencies = {
       {
         "rafamadriz/friendly-snippets",

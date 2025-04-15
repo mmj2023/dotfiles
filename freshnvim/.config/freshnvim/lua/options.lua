@@ -4,6 +4,8 @@
 vim.opt.mouse = "a"
 vim.o.mousemoveevent = true
 vim.opt.scrolloff = 8
+-- preview live
+vim.opt.inccommand = "split"
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
@@ -156,3 +158,10 @@ vim.lsp.config["jdtls"] = {
   },
 }
 vim.lsp.enable("jdtls")
+vim.lsp.config["ocamllsp"] = {
+  cmd = { "ocamllsp" },
+  filetypes = { "ocaml", "ocamlinterface", "ocamllex" },
+  root_markers = { "dune-project", "dune-workspace" },
+  settings = {},
+}
+vim.lsp.enable("ocamllsp")

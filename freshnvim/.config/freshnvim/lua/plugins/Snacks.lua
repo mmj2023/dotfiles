@@ -10,7 +10,17 @@ local term_nav = function(dir)
 end
 return {
   "snacks.nvim",
-  -- event = {"VeryLazy", "VimEnter"},
+  event = {"VeryLazy"--[[ , "VimEnter" ]]},
+  init = function()
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "OilActionsPost",
+      callback = function(event)
+        if event.data.actions.type == "move" then
+          Snacks.rename.on_rename_file(event.data.actions.src_url, event.data.actions.dest_url)
+        end
+      end,
+    })
+  end,
   opts = {
     ---@class snacks.image
     ---@field terminal snacks.image.terminal
@@ -26,12 +36,16 @@ return {
       -- max_width = 100,
       -- max_height = 100,
       -- (Optional) A function to resolve image paths in markdown or another document.
-        -- When nil, the image path is resolved relative to the current file.
-        resolve = function(file, src)
-          return vim.fn.fnamemodify(src, ":p")
-        end,
+      -- When nil, the image path is resolved relative to the current file.
+      resolve = function(file, src)
+        return vim.fn.fnamemodify(src, ":p")
+      end,
     },
     bigfile = { enabled = true },
+    notifier = {
+        enabled = true,
+        timeout = 1500,
+    },
     quickfile = { enabled = true },
     terminal = {
       win = {
@@ -124,28 +138,29 @@ return {
     end
     return keys
   end,
-  -- config = function(_, opts)
-  --   Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
-  --   Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
-  --   Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>uL")
-  --   Snacks.toggle.diagnostics():map("<leader>ud")
-  --   Snacks.toggle.line_number():map("<leader>ul")
-  --   Snacks.toggle
-  --     .option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2, name = "Conceal Level" })
-  --     :map("<leader>uc")
-  --   Snacks.toggle
-  --     .option("showtabline", { off = 0, on = vim.o.showtabline > 0 and vim.o.showtabline or 2, name = "Tabline" })
-  --     :map("<leader>uA")
-  --   Snacks.toggle.treesitter():map("<leader>uT")
-  --   Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>ub")
-  --   Snacks.toggle.dim():map("<leader>uD")
-  --   Snacks.toggle.animate():map("<leader>ua")
-  --   Snacks.toggle.indent():map("<leader>ug")
-  --   Snacks.toggle.scroll():map("<leader>uS")
-  --   Snacks.toggle.profiler():map("<leader>dpp")
-  --   Snacks.toggle.profiler_highlights():map("<leader>dph")
-  --   if vim.lsp.inlay_hint then
-  --     Snacks.toggle.inlay_hints():map("<leader>uh")
-  --   end
-  -- end,
+  config = function(_, opts)
+      require("snacks").setup(opts)
+    Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
+    Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
+    Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>uL")
+    Snacks.toggle.diagnostics():map("<leader>ud")
+    Snacks.toggle.line_number():map("<leader>ul")
+    Snacks.toggle
+      .option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2, name = "Conceal Level" })
+      :map("<leader>uc")
+    Snacks.toggle
+      .option("showtabline", { off = 0, on = vim.o.showtabline > 0 and vim.o.showtabline or 2, name = "Tabline" })
+      :map("<leader>uA")
+    Snacks.toggle.treesitter():map("<leader>uT")
+    Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>ub")
+    Snacks.toggle.dim():map("<leader>uD")
+    Snacks.toggle.animate():map("<leader>ua")
+    Snacks.toggle.indent():map("<leader>ug")
+    Snacks.toggle.scroll():map("<leader>uS")
+    Snacks.toggle.profiler():map("<leader>dpp")
+    Snacks.toggle.profiler_highlights():map("<leader>dph")
+    if vim.lsp.inlay_hint then
+      Snacks.toggle.inlay_hints():map("<leader>uh")
+    end
+  end,
 }
