@@ -63,7 +63,7 @@ vim.opt.undofile = true
 vim.opt.showmode = false
 vim.opt.number = true
 vim.opt.relativenumber = true
-vim.cmd([[set cmdheight=1]])
+vim.cmd([[set cmdheight=0]])
 -- vim.cmd [[set wildmenu]]
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
