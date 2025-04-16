@@ -122,6 +122,15 @@ return {
       local relative_path = vim.fn.fnamemodify(filepath, ":~:.")
       return relative_path
     end
+    -- local function macro_recording_indicator()
+    --   -- local reg = vim.fn.reg_recording()
+    --   -- if reg ~= "" then
+    --   -- Return a custom message; you might want to add some visual flair (like an icon)
+    --   return vim.fn.reg_recording()
+    --   -- end
+    --   -- return ""
+    -- end
+
     -- LSP clients attached to buffer
     local clients_lsp = function()
       local bufnr = vim.api.nvim_get_current_buf()
@@ -161,6 +170,15 @@ return {
           },
         },
         lualine_b = {
+          {
+            function()
+                return vim.fn.reg_recording()
+            end,
+            icon = { "󱄔 rec@" },
+            color = function()
+              return { fg = Snacks.util.color("Special") }
+            end,
+          },
           {
             "branch",
             icon = { "" },
