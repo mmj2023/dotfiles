@@ -122,7 +122,9 @@ vim.diagnostic.config({
     source = "always", -- Or "if_many"
   },
 })
-vim.lsp.enable("clangd")
+if vim.fn.has("nvim-0.11") == 1 then
+  vim.lsp.enable("clangd")
+end
 if vim.fn.has("nvim-0.10") == 1 then
   vim.opt.smoothscroll = true
 end
@@ -155,22 +157,30 @@ vim.opt.formatoptions = "jcroqlnt" -- tcqj
 -- vim.opt.wildmode = "longest:full,full" -- Command-line completion mode
 -- vim.opt.winminwidth = 5 -- Minimum window width
 
-vim.lsp.config["jdtls"] = {
-  cmd = { "jdtls" },
-  filetypes = { "java" },
-  root_markers = { ".git", "pom.xml", "build.gradle" },
-  settings = {
-    java = {
-      signatureHelp = { enabled = true },
-      contentProvider = { preferred = "fernflower" },
+if vim.fn.has("nvim-0.11") == 1 then
+  vim.lsp.config["jdtls"] = {
+    cmd = { "jdtls" },
+    filetypes = { "java" },
+    root_markers = { ".git", "pom.xml", "build.gradle" },
+    settings = {
+      java = {
+        signatureHelp = { enabled = true },
+        contentProvider = { preferred = "fernflower" },
+      },
     },
-  },
-}
-vim.lsp.enable("jdtls")
-vim.lsp.config["ocamllsp"] = {
-  cmd = { "ocamllsp" },
-  filetypes = { "ocaml", "ocamlinterface", "ocamllex" },
-  root_markers = { "dune-project", "dune-workspace" },
-  settings = {},
-}
-vim.lsp.enable("ocamllsp")
+  }
+end
+if vim.fn.has("nvim-0.11") == 1 then
+  vim.lsp.enable("jdtls")
+end
+if vim.fn.has("nvim-0.11") == 1 then
+  vim.lsp.config["ocamllsp"] = {
+    cmd = { "ocamllsp" },
+    filetypes = { "ocaml", "ocamlinterface", "ocamllex" },
+    root_markers = { "dune-project", "dune-workspace" },
+    settings = {},
+  }
+end
+if vim.fn.has("nvim-0.11") == 1 then
+  vim.lsp.enable("ocamllsp")
+end
