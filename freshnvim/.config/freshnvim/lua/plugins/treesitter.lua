@@ -146,6 +146,10 @@ return { -- Highlight, edit, and navigate code
       end
     end,
   },
+  {
+    "https://gitlab.com/HiPhish/rainbow-delimiters.nvim",
+    event = { "BufReadPost", "BufNewFile", "BufWritePre", "VeryLazy" },
+  },
   -- Automatically add closing tags for HTML and JSX
   {
     "windwp/nvim-ts-autotag",

@@ -56,7 +56,16 @@ vim.opt.incsearch = true
 -- Save undo history
 vim.opt.swapfile = false
 vim.opt.backup = false
-vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+-- check if os is windows or android
+-- vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+if os.getenv("OS") == "Windows_NT" then
+  -- vim.opt.undodir = os.getenv("HOME") .. "/AppData/Local/nvim/undodir"
+elseif os.getenv("OS") == "Android" then
+  -- vim.opt.undodir = os.getenv("HOME") .. "/.config/nvim/undodir"
+else
+  vim.opt.undodir = os.getenv("HOME") .. "/.config/nvim/undodir"
+end
+
 vim.opt.undofile = true
 
 -- Don't show the mode, since it's already in the status line
