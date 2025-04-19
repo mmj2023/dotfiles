@@ -1,6 +1,7 @@
 return {
   "nvzone/showkeys",
   event = "VeryLazy",
+  -- event = { "BufReadPost", "BufNewFile", "BufWritePre", "VeryLazy" },
   cmd = "ShowkeysToggle",
   opts = {
     timeout = 0.17,
