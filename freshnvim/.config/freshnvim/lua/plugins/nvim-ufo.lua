@@ -84,10 +84,10 @@ return {
       require("ufo").setup(opts)
     end,
     keys = {
-      { "zR", "<cmd>lua require('ufo').openAllFolds()<cr>", desc = "Open all folds" },
-      { "zM", "<cmd>lua require('ufo').closeAllFolds()<cr>", desc = "Close all folds" },
+      { "zO", "<cmd>lua require('ufo').openAllFolds()<cr>", desc = "Open all folds" },
+      { "zC", "<cmd>lua require('ufo').closeAllFolds()<cr>", desc = "Close all folds" },
       {
-        "zK",
+        "zP",
         function()
           local winid = require("ufo").peekFoldedLinesUnderCursor()
           if not winid then

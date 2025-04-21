@@ -172,7 +172,7 @@ return {
         lualine_b = {
           {
             function()
-                return vim.fn.reg_recording()
+              return vim.fn.reg_recording()
             end,
             icon = { "󱄔 rec@" },
             color = function()
@@ -315,7 +315,16 @@ return {
           },
         },
       },
-      extensions = { "lazy", "oil", "fugitive", "quickfix", "mason", "man", "neo-tree" },
+      extensions = {
+        "lazy",
+        "oil",
+        "fugitive",
+        "quickfix",
+        "mason",
+        "man",
+        "neo-tree",
+        "nvim-tree",
+      },
     }
     local in_tmux = os.getenv("TMUX") ~= nil
     if not vim.g.transparent_enabled then

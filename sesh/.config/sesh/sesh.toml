@@ -1,0 +1,94 @@
+[[session]]
+name = "Downloads 📥"
+path = "~/Downloads"
+startup_command = "lsd -l"
+
+[[session]]
+name = "Projects 📂"
+path = "~/projects"
+startup_command = "lsd -l"
+
+[[session]]
+name = "Projects 📂"
+path = "~/projects"
+startup_command = "lsd -l"
+
+[[session]]
+name = "Projects lua  📂"
+path = "~/projects/lua_Projects"
+startup_command = "lsd -l"
+
+[[session]]
+name = "Projects rust  📂"
+path = "~/projects/rust_Projects"
+startup_command = "lsd -l"
+
+[[session]]
+name = "Projects go  📂"
+path = "~/projects/go_Projects"
+startup_command = "lsd -l"
+
+[[session]]
+name = "Projects python  📂"
+path = "~/projects/python_Projects"
+startup_command = "lsd -l"
+
+[[session]]
+name = "Projects cpp  📂"
+path = "~/projects/cpp_Projects"
+startup_command = "lsd -l"
+
+[[session]]
+name = "Projects ocaml  📂"
+path = "~/projects/ocaml_Projects"
+startup_command = "lsd -l"
+
+[[session]]
+name = "Projects java  📂"
+path = "~/projects/java_Projects"
+startup_command = "lsd -l"
+
+[[session]]
+name = "Projects js  📂"
+path = "~/projects/js_Projects"
+startup_command = "lsd -l"
+
+[[session]]
+name = "Projects asm  📂" # 🔧
+path = "~/projects/asm_Projects"
+startup_command = "lsd -l"
+
+[[session]]
+name = "Projects bend  📂"
+path = "~/projects/bend_Projects"
+startup_command = "lsd -l"
+
+[[session]]
+name = "Projects C  📂"
+path = "~/projects/c_Projects"
+startup_command = "lsd -l"
+
+[[session]]
+name = "Projects haskell  📂"
+path = "~/projects/haskell_Projects"
+startup_command = "lsd -l"
+
+[[session]]
+name = "Projects elixir  📂"
+path = "~/projects/elixir_Projects"
+startup_command = "lsd -l"
+
+[[session]]
+name = "Projects latex  📂" #
+path = "~/projects/LaTex_Projects"
+startup_command = "lsd -l"
+
+[[session]]
+name = "Dotfiles  📂"
+path = "~/dotfiles"
+startup_command = "lsd -l"
+
+[[session]]
+name = "Casual ⚒️"
+path = "~/"
+startup_command = "lsd -l"

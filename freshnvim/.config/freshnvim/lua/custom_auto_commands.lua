@@ -171,6 +171,8 @@ function rand_colorscheme()
     "base16-ayu-light",
     "base16-atelier-seaside-light",
     "base16-atelier-sulphurpool-light",
+    "catppuccin-latte",
+    "base16-catppuccin-latte",
   }
 
   local more_preferred_colorschemes = {
@@ -445,14 +447,12 @@ function rand_colorscheme()
     "base16-ayu-mirage",
     -- "ayu-dark",
     -- "ayu-mirage",
-    "catppuccin-latte",
     "catppuccin-mocha",
     "catppuccin-macchiato",
     "catppuccin-frappe",
     "catppuccin",
     "base16-catppuccin",
     "base16-catppuccin-frappe",
-    "base16-catppuccin-latte",
     "base16-catppuccin-macchiato",
     "base16-catppuccin-mocha",
     "gruber-darker",
