@@ -47,6 +47,12 @@ return {
         timeout = 1500,
     },
     quickfile = { enabled = true },
+    zen = {
+      -- your zen configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+      enabled = true,
+    },
     terminal = {
       win = {
         keys = {
@@ -94,6 +100,13 @@ return {
           Snacks.profiler.scratch()
         end,
         desc = "Profiler Scratch Buffer",
+      },
+      {
+        "<leader>z",
+        function()
+          Snacks.zen()
+        end,
+        desc = "Toggle Zen Mode",
       },
     }
     -- {"<leader>us",Snacks.toggle.option("spell", { name = "Spelling" }),desc = "toggle spell"},

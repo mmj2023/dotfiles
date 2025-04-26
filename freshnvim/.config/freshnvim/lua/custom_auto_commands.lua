@@ -652,11 +652,54 @@ vim.api.nvim_create_autocmd("LspAttach", {
       -- group = vim.api.nvim_create_augroup("kickstart-lsp-detach", { clear = true }),
       callback = function(event2)
         vim.lsp.buf.clear_references()
-        vim.api.nvim_clear_autocmds({ group = "kickstart-lsp-highlight", buffer = event2.buf })
+        vim.api.nvim_clear_autocmds({ group = "freshnvim-lsp-highlight", buffer = event2.buf })
       end,
     })
   end,
 })
+-- -- Create (or reuse) a namespace for our extmarks
+-- local ns = vim.api.nvim_create_namespace("search_info_ns")
+--
+-- -- Function to clear any previous virtual text from our namespace
+-- local function clear_search_info()
+--   vim.api.nvim_buf_clear_namespace(0, ns, 0, -1)
+-- end
+--
+-- -- Function to show search information as virtual text
+-- local function show_search_info()
+--   -- Clear previous extmarks so that we don't accumulate multiple messages
+--   clear_search_info()
+--
+--   -- Get search count info; this returns a dictionary with keys like 'current' and 'total'
+--   local count = vim.fn.searchcount({ recompute = 1 })
+--   local current = count.current or 0
+--   local total = count.total or 0
+--
+--   -- Format your message however you like.
+--   local msg = string.format(" [%d/%d] ", current, total)
+--
+--   -- Find the current line (convert to 0-indexed)
+--   local pos = vim.api.nvim_win_get_cursor(0)
+--   local row = pos[1] - 1
+--
+--   -- Set virtual text on the current line at the end of the line ("eol")
+--   vim.api.nvim_buf_set_extmark(0, ns, row, -1, {
+--     virt_text = { { msg, "Search" } },
+--     virt_text_pos = "eol", -- you can adjust this option (e.g., "overlay")
+--     hl_mode = "combine",
+--   })
+-- end
+--
+-- -- Create an autocommand that triggers when you leave the search command line.
+-- vim.api.nvim_create_autocmd("CmdlineLeave", {
+--   pattern = { "/", "?" },
+--   callback = function()
+--     -- Use vim.schedule to ensure that the virtual text is set after the search has executed.
+--     vim.schedule(function()
+--       show_search_info()
+--     end)
+--   end,
+-- })
 -- vim.api.nvim_create_autocmd("FocusGained", {
 --   pattern = "*",
 --   callback = function()

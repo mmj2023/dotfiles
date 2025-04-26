@@ -16,7 +16,10 @@ return {
         "<leader>+",
         function()
           require("harpoon"):list():add()
-          vim.notify("Harpooned File Added", {}, { title = "󱡅 Harpoon" })
+          vim.notify("Harpooned File Added", {}, {
+            title = "󱡅 Harpoon" --[[ , border = "rounded" ]],
+            align = "center",
+          })
         end,
         desc = "Harpoon File",
       },

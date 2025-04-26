@@ -216,8 +216,15 @@ alias mkdir='mkdir -p'
 alias ps='ps auxf'
 alias cls='clear'
 alias apt-get='sudo apt-get'
-alias multitail='multitail --no-repeat -c'
-alias freshclam='sudo freshclam'
+if command -v freshclam >/dev/null 2>&1; then
+    alias freshclam='sudo freshclam'
+fi
+if command -v multitail >/dev/null 2>&1; then
+    alias multitail='multitail --no-repeat -c'
+fi
+if command -v lazygit >/dev/null 2>&1; then
+    alias lg='lazygit'
+fi
 if command -v nvim >/dev/null 2>&1; then
     # Edit this .bashrc file
     alias ebrc='nvim ~/.bashrc'
@@ -619,4 +626,5 @@ function y() {
     fi
     \rm -f -- "$tmp"
 }
+# export NODE_COMPILE_CACHE=~/.cache/nodejs-compile-cache
 export PATH="$HOME/.local/bin:$PATH"

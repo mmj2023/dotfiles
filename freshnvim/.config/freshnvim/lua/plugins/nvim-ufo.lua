@@ -2,7 +2,8 @@ return {
   {
     "kevinhwang91/nvim-ufo",
     dependencies = { "kevinhwang91/promise-async" },
-    -- event = { "BufReadPre", "BufNewFile", "VeryLazy", "BufRead", "BufNew", "BufAdd", "BufEnter", "BufWinEnter" },
+    -- event = { --[[ "BufReadPre", "BufNewFile", ]] "VeryLazy", --[[ "BufRead", "BufNew", "BufAdd", "BufEnter", "BufWinEnter" ]] },
+    -- lazy = false,
     ---@module "ufo"
     ---@type ufo.Setup
     opts = {
@@ -60,8 +61,14 @@ return {
       vim.o.foldcolumn = "1"
       vim.o.foldlevel = 99
       vim.o.foldlevelstart = 99
-      vim.cmd([[set nofoldenable]])
-      vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+      -- vim.cmd([[set nofoldenable]])
+      vim.o.foldenable = true
+      vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]] --       
+      -- local capabilities = vim.lsp.protocol.make_client_capabilities()
+      -- capabilities.textDocument.foldingRange = {
+      --   dynamicRegistration = false,
+      --   lineFoldingOnly = true,
+      -- }
       -- vim.opt.statuscolumn = "%=%{v:lnum} %{%foldlevel(v:lnum)>0?'▶':''%}"
       -- local function show_folds()
       --   local ns = vim.api.nvim_create_namespace("fold_markers")
@@ -118,5 +125,6 @@ return {
         desc = "Peek fold",
       },
     },
+    cmd = { "UfoEnable", "UfoDisable", "UfoInspect", "UfoAttach", "UfoDetach", "UfoEnableFold", "UfoDisableFold" },
   },
 }
