@@ -1,23 +1,32 @@
 return {
   {
     "mfussenegger/nvim-lint",
-    event = { --[[ "BufReadPost", "BufNewFile", "BufWritePre",  ]]
-      "VeryLazy",
-    },
+    -- event = { --[[ "BufReadPost", "BufNewFile", "BufWritePre",  ]]
+    --   "VeryLazy",
+    -- },
+    event = "FreshFile",
     dependencies = {
       {
         "williamboman/mason.nvim",
-        build = ":MasonUpdate",
-        opts = {
-          ui = {
-            icons = {
-              package_pending = " ",
-              package_installed = " ",
-              package_uninstalled = " ",
-            },
-          },
-          max_concurrent_installers = 10,
-        },
+      --   build = ":MasonUpdate",
+      --   opts = {
+      --     ui = {
+      --       icons = {
+      --         package_pending = " ",
+      --         package_installed = " ",
+      --         package_uninstalled = " ",
+      --       },
+      --     },
+      --     max_concurrent_installers = 10,
+      --   },
+      --   config = function(_, opts)
+      --     require("mason").setup(opts)
+      --     -- add binaries installed by mason.nvim to path
+      --     local is_windows = vim.fn.has("win32") ~= 0
+      --     local sep = is_windows and "\\" or "/"
+      --     local delim = is_windows and ";" or ":"
+      --     vim.env.PATH = table.concat({ vim.fn.stdpath("data"), "mason", "bin" }, sep) .. delim .. vim.env.PATH
+      --   end,
       },
     },
     opts = {
@@ -139,7 +148,7 @@ return {
       --   end
       -- end
       for type, icon in pairs(signs) do
-      local hl = "DiagnosticSign" .. type
+        local hl = "DiagnosticSign" .. type
 
         -- if vim.diagnostic.config then
         --     -- New API in Neovim 0.11+
@@ -152,8 +161,8 @@ return {
         --     signs = signs,
         --   })
         -- else
-          -- Legacy API for older versions
-          vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+        -- Legacy API for older versions
+        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
         -- end
       end
       vim.api.nvim_create_autocmd(opts.events, {

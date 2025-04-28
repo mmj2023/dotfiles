@@ -475,6 +475,7 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 
 export GDK_BACKEND=wayland
 
+[ command -v git ] &>/dev/null && alias gits='git status'
 gcom() {
     git add .
     git commit -m "$1"
@@ -484,22 +485,55 @@ lazyg() {
     git commit -m "$1"
     git push
 }
-sessionize_script=~/dotfiles/bash/custom-scripts/sessionize.sh
+# sessionize_script=~/dotfiles/bash/custom-scripts/sessionize.sh
 # windower_dash_script=$HOME/dotfiles/bash/custom-scripts/windower_dash.sh
 
-if [ -f "$sessionize_script" ]; then
-    # echo "dash not found"
-    if [ ! -x "$sessionize_script" ]; then
-        chmod +x "$sessionize_script"
-    fi
-    # bind -x '"\C-t":{ $sessionize_script }'
-    # bind -x '"\C-t":"$sessionize_script"'
-    # ble-bind -x '"\C-t":"$sessionize_script"'
-    # ble-bind -x '"\C-t": $sessionize_script'
-    bind -x '"\C-f": $sessionize_script'
-else
-    echo "Sessionize script not found"
+# if [ -f "$sessionize_script" ]; then
+#     # echo "dash not found"
+#     if [ ! -x "$sessionize_script" ]; then
+#         chmod +x "$sessionize_script"
+#     fi
+# bind -x '"\C-t":{ $sessionize_script }'
+# bind -x '"\C-t":"$sessionize_script"'
+# ble-bind -x '"\C-t":"$sessionize_script"'
+# ble-bind -x '"\C-t": $sessionize_script'
+if command -v sesh &>/dev/null; then
+    # bind -x '"\C-f": sesh connect "$(
+    #     sesh list --icons | fzf-tmux -p 80%,70% \
+    #         --no-sort --ansi --border-label ' sesh ' --prompt '⚡  ' \
+    #         --header '  ^a all ^t tmux ^g configs ^x zoxide ^d tmux kill ^f find' \
+    #         --bind 'tab:down,btab:up' \
+    #         --bind 'ctrl-a:change-prompt(⚡  )+reload(sesh list --icons)' \
+    #         --bind 'ctrl-t:change-prompt(🪟  )+reload(sesh list -t --icons)' \
+    #         --bind 'ctrl-g:change-prompt(⚙️  )+reload(sesh list -c --icons)' \
+    #         --bind 'ctrl-x:change-prompt(📁  )+reload(sesh list -z --icons)' \
+    #         --bind 'ctrl-f:change-prompt(🔎  )+reload(fd -H -d 2 -t d -E .Trash . ~)' \
+    #         --bind 'ctrl-d:execute(tmux kill-session -t {2..})+change-prompt(⚡  )+reload(sesh list --icons)' \
+    #         --preview-window 'right:55%' \
+    #         --preview 'sesh preview {}'
+    # )"'
+    sesh_script() {
+    sesh connect \"$(
+  sesh list --icons | fzf-tmux -p 80%,70% \
+    --no-sort --ansi --border-label ' sesh ' --prompt '⚡  ' \
+    --header '  ^a all ^t tmux ^g configs ^x zoxide ^d tmux kill ^f find' \
+    --bind 'tab:down,btab:up' \
+    --bind 'ctrl-a:change-prompt(⚡  )+reload(sesh list --icons)' \
+    --bind 'ctrl-t:change-prompt(🪟  )+reload(sesh list -t --icons)' \
+    --bind 'ctrl-g:change-prompt(⚙️  )+reload(sesh list -c --icons)' \
+    --bind 'ctrl-x:change-prompt(📁  )+reload(sesh list -z --icons)' \
+    --bind 'ctrl-f:change-prompt(🔎  )+reload(fd -H -d 2 -t d -E .Trash . ~)' \
+    --bind 'ctrl-d:execute(tmux kill-session -t {2..})+change-prompt(⚡  )+reload(sesh list --icons)' \
+    --preview-window 'right:55%' \
+    --preview 'sesh preview {}'
+)\"
+}
+    bind -x '"\C-sT": sesh_script'
+
 fi
+# else
+#     echo "Sessionize script not found"
+# fi
 # if command -v dash > /dev/null 2>&1; then
 #     if [ -f "$windower_dash_script" ]; then
 #         if [ ! -x "$windower_dash_script" ]; then

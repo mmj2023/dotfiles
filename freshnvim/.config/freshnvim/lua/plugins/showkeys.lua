@@ -4,13 +4,13 @@ return {
   -- event = { "BufReadPost", "BufNewFile", "BufWritePre", "VeryLazy" },
   cmd = "ShowkeysToggle",
   opts = {
-    timeout = 0.17,
-    maxkeys = 5,
+    -- timeout = 0.5,
+    -- maxkeys = 5,
     -- more opts
     positon = "bottom-right",
   },
   config = function(_, opts)
     require("showkeys").setup(opts)
-        vim.cmd([[ShowkeysToggle]])
-  end
+    vim.cmd([[ShowkeysToggle]])
+  end,
 }

@@ -150,6 +150,9 @@ vim.opt.foldlevel = 99
 vim.opt.grepformat = "%f:%l:%c:%m"
 vim.opt.grepprg = "rg --vimgrep"
 vim.opt.formatoptions = "jcroqlnt" -- tcqj
+-- disable nvim intro
+vim.opt.shortmess:append "sI"
+vim.o.ruler = false
 -- vim.opt.pumblend = 10 -- Popup blend
 -- vim.opt.pumheight = 10 -- Maximum number of entries in a popup
 -- vim.opt.undolevels = 10000

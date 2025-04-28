@@ -85,6 +85,14 @@ vim.opt.rtp:prepend(lazypath)
 local opts = {
   --   -- install = { colorscheme = { "tokyonight", "habamax" } },
 }
+local fresh_file_events = { "BufReadPost", "BufNewFile", "BufWritePre" }
+
+-- Add support for the LazyFile event
+local Event = require("lazy.core.handler.event")
+
+Event.mappings.FreshFile = { id = "FreshFile", event = fresh_file_events }
+Event.mappings["User FreshFile"] = Event.mappings.FreshFile
+
 -- Setup lazy.nvim
 require("lazy").setup({
   spec = {
@@ -139,12 +147,14 @@ require("lazy").setup({
   },
   opts,
 })
+require("custom_auto_commands")
 -- vim.defer_fn(function()
 -- Your heavy computations here
 -- require("lazy_setup")
 -- dofile("~/.config/freshnvim/lua/compiled_lazy_setup.luac")
-require("custom_auto_commands")
-require("keymaps")
+vim.schedule(function()
+  require("keymaps")
+end)
 -- require_or_dofile("compiled_custom_auto_commands.luac")
 -- require_or_dofile("compiled_keymaps.luac")
 -- dofile("compiled_custom_auto_commands.luac")
