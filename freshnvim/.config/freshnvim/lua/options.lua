@@ -122,12 +122,12 @@ vim.diagnostic.config({
     source = "always", -- Or "if_many"
   },
 })
-if vim.fn.has("nvim-0.11") == 1 then
-  vim.lsp.enable("clangd")
-end
-if vim.fn.has("nvim-0.10") == 1 then
-  vim.opt.smoothscroll = true
-end
+-- if vim.fn.has("nvim-0.11") == 1 then
+--   vim.lsp.enable("clangd")
+-- end
+-- if vim.fn.has("nvim-0.10") == 1 then
+--   vim.opt.smoothscroll = true
+-- end
 
 -- Fix markdown indentation settings
 vim.g.markdown_recommended_style = 0
@@ -160,22 +160,22 @@ vim.o.ruler = false
 -- vim.opt.wildmode = "longest:full,full" -- Command-line completion mode
 -- vim.opt.winminwidth = 5 -- Minimum window width
 
-if vim.fn.has("nvim-0.11") == 1 then
-  vim.lsp.config["jdtls"] = {
-    cmd = { "jdtls" },
-    filetypes = { "java" },
-    root_markers = { ".git", "pom.xml", "build.gradle" },
-    settings = {
-      java = {
-        signatureHelp = { enabled = true },
-        contentProvider = { preferred = "fernflower" },
-      },
-    },
-  }
-end
-if vim.fn.has("nvim-0.11") == 1 then
-  vim.lsp.enable("jdtls")
-end
+-- if vim.fn.has("nvim-0.11") == 1 then
+--   vim.lsp.config["jdtls"] = {
+--     cmd = { "jdtls" },
+--     filetypes = { "java" },
+--     root_markers = { ".git", "pom.xml", "build.gradle" },
+--     settings = {
+--       java = {
+--         signatureHelp = { enabled = true },
+--         contentProvider = { preferred = "fernflower" },
+--       },
+--     },
+--   }
+-- end
+-- if vim.fn.has("nvim-0.11") == 1 then
+--   vim.lsp.enable("jdtls")
+-- end
 if vim.fn.has("nvim-0.11") == 1 then
   vim.lsp.config["ocamllsp"] = {
     cmd = { "ocamllsp" },

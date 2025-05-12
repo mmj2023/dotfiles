@@ -117,7 +117,10 @@ return {
   --   -- config = true,
   --   -- opts = {},
   -- },
-  { "blazkowolf/gruber-darker.nvim" },
+  { "blazkowolf/gruber-darker.nvim",
+    opts = {
+    },
+  },
   {
     "gbprod/nord.nvim",
     lazy = false,

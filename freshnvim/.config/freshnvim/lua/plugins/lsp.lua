@@ -41,6 +41,7 @@ return {
         -- LSP Server Settings
         ---@type lspconfig.options
         servers = {
+          -- Lua LS configuration
           lua_ls = {
             -- mason = false, -- set to false if you don't want this server to be installed with mason
             -- Use this to add any additional keymaps
@@ -70,6 +71,74 @@ return {
                   arrayIndex = "Disable",
                 },
               },
+            },
+          },
+          -- JDTLS (Java language server) configuration with many features enabled
+          jdtls = {
+            root_markers = { ".git", "pom.xml", "build.gradle" },
+            settings = {
+              java = {
+                signatureHelp = { enabled = true },
+                contentProvider = { preferred = "fernflower" }, -- Use Fernflower for enhanced code decompiling
+                codeGeneration = {
+                  generateComments = true, -- Generate Javadoc style comments automatically
+                  useBlocks = true, -- Wrap code generation in code blocks where applicable
+                },
+                completion = {
+                  favoriteStaticMembers = {
+                    "org.junit.Assert",
+                    "org.mockito.Mockito",
+                  },
+                },
+                referencesCodeLens = { enabled = true }, -- Show references as CodeLens
+                implementationsCodeLens = { enabled = true }, -- Show implementations as CodeLens
+                inlayHints = { enabled = true }, -- Inlay hints for parameter names etc.
+                format = { enabled = true }, -- Enable formatting
+                configuration = {
+                  updateBuildConfiguration = "interactive", -- Auto-update project configuration when required
+                },
+              },
+            },
+            init_options = {
+              bundles = {}, -- Here you might add Java debugger bundles, if desired.
+            },
+          },
+          -- OCaml LSP configuration with inlay hints, formatting, diagnostics, and completion fully enabled.
+          ocamllsp = {
+            root_markers = { "dune-project", "dune-workspace" },
+            settings = {
+              ocaml = {
+                inlayHints = { enabled = true },
+                diagnostics = { enabled = true },
+                format = { enabled = true },
+                completion = { enabled = true },
+                -- Add other ocaml-specific settings here as needed.
+              },
+            },
+          },
+          -- Clangd (C/C++ language server) configuration with full features enabled.
+          clangd = {
+            -- Adjust the 'cmd' options as needed for your environment.
+            cmd = {
+              "clangd",
+              "--background-index",
+              "--clang-tidy",
+              "--completion-style=detailed",
+              "--header-insertion=iwyu",
+            },
+            settings = {
+              clangd = {
+                semanticHighlighting = true, -- Dynamic semantic colors for enhanced code readability.
+                inlayHints = { enabled = true },
+                codeLens = { enabled = true },
+              },
+            },
+            init_options = {
+              clangdFileStatus = true, -- Provides clangd with file status feedback.
+              usePlaceholders = true, -- Enables placeholders in completion items.
+              completeUnimported = true, -- Automatically complete symbols from unimported headers.
+              semanticHighlighting = true,
+              codeLens = { enabled = true },
             },
           },
         },
@@ -366,7 +435,14 @@ return {
       -- get all the servers that are available through mason-lspconfig
       local have_mason, mlsp = pcall(require, "mason-lspconfig")
       local all_mslp_servers = {}
-      if have_mason then
+      -- if have_mason then
+      --   -- all_mslp_servers = vim.tbl_keys(require("mason-lspconfig").get_available_servers())
+      --   all_mslp_servers =require("mason-lspconfig.mappings").get_mason_map().lspconfig_to_package
+      -- end
+      if have_mason and vim.fn.has("nvim-0.11") == 1 then
+        -- all_mslp_servers = vim.tbl_keys(require("mason-lspconfig").get_mappings().lspconfig_to_package)
+        all_mslp_servers = vim.tbl_keys(require("mason-lspconfig").get_available_servers())
+      elseif have_mason then
         all_mslp_servers = vim.tbl_keys(require("mason-lspconfig.mappings.server").lspconfig_to_package)
       end
 
@@ -399,7 +475,7 @@ return {
         -- Merge the two lists. The "force" mode ensures that if there are conflicting keys,
         -- values from custom_mason_config take precedence.
         local merged_ensure_installed =
-          vim.tbl_deep_extend("force", base_ensure_installed, custom_mason_config.ensure_installed or {})
+          vim.tbl_deep_extend("force", ensure_installed, custom_mason_config.ensure_installed or {})
 
         -- Define a generic setup handler for configuring each LSP server.
         -- You can customize this function to add server-specific settings.
