@@ -288,8 +288,6 @@ fi
 # alias cat="bat"
 # alias emacs="emacs -nw"
 alias imgcatsh="~/useful_scripts/imgcat.sh"
-# for zoxide
-eval "$(zoxide init bash)"
 
 # check z exists
 if command -v z >/dev/null 2>&1; then
@@ -678,3 +676,5 @@ function y() {
 }
 # export NODE_COMPILE_CACHE=~/.cache/nodejs-compile-cache
 export PATH="$HOME/.local/bin:$PATH"
+# for zoxide
+eval "$(zoxide init bash)"
