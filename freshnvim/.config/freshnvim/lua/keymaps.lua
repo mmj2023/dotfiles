@@ -128,24 +128,24 @@ vim.keymap.set("n", "]e", diagnostic_goto(true, "ERROR"), { desc = "Next Error" 
 vim.keymap.set("n", "[e", diagnostic_goto(false, "ERROR"), { desc = "Prev Error" })
 vim.keymap.set("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next Warning" })
 vim.keymap.set("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
-vim.keymap.set("n", "/", function()
-  -- Use a custom prompt icon, e.g., "🔍 " instead of "/"
-  local query = vim.fn.input("🔍󰄼 ") -- 
-  -- If the user entered a query, start searching
-  if query and query ~= "" then
-    -- Start search in the forward direction using the input
-    vim.cmd("normal! /" .. query .. "\n")
-  end
-  -- Return empty string to prevent the default behavior
-  return ""
-end, { noremap = true, silent = true, expr = false })
-vim.keymap.set("n", "?", function()
-  -- Use a custom prompt icon, for example "❓ " instead of "?"
-  local query = vim.fn.input("🔍󰄿 ") -- ❓
-  if query and query ~= "" then
-    -- Start a backward search using the input
-    vim.cmd("normal! ?" .. query .. "\n")
-  end
-  return ""
-end, { noremap = true, silent = true, expr = false })
+-- vim.keymap.set("n", "/", function()
+--   -- Use a custom prompt icon, e.g., "🔍 " instead of "/"
+--   local query = vim.fn.input("🔍󰄼 ") -- 
+--   -- If the user entered a query, start searching
+--   if query and query ~= "" then
+--     -- Start search in the forward direction using the input
+--     vim.cmd("normal! /" .. query .. "\n")
+--   end
+--   -- Return empty string to prevent the default behavior
+--   return ""
+-- end, { noremap = true, silent = true, expr = false })
+-- vim.keymap.set("n", "?", function()
+--   -- Use a custom prompt icon, for example "❓ " instead of "?"
+--   local query = vim.fn.input("🔍󰄿 ") -- ❓
+--   if query and query ~= "" then
+--     -- Start a backward search using the input
+--     vim.cmd("normal! ?" .. query .. "\n")
+--   end
+--   return ""
+-- end, { noremap = true, silent = true, expr = false })
 
