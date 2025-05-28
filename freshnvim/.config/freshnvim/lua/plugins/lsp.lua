@@ -116,6 +116,15 @@ return {
               },
             },
           },
+          -- intelephense = {
+          --   settings = {
+          --     intelephense = {
+          --       files = {
+          --         maxSize = 5000000, -- Set file size limit
+          --       },
+          --     },
+          --   },
+          -- },
           -- Clangd (C/C++ language server) configuration with full features enabled.
           clangd = {
             -- Adjust the 'cmd' options as needed for your environment.

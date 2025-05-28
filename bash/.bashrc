@@ -7,79 +7,79 @@ esac
 
 # Returns the last 2 fields of the working directory
 distribution() {
-    local dtype="unknown" # Default to unknown
+ local dtype="unknown" # Default to unknown
 
-    # Use /etc/os-release for modern distro identification
-    if [ -r /etc/os-release ]; then
-        source /etc/os-release
-        case $ID in
-        fedora | rhel | centos)
-            dtype="redhat"
-            ;;
-        sles | opensuse*)
-            dtype="suse"
-            ;;
-        ubuntu | debian)
-            dtype="debian"
-            ;;
-        gentoo)
-            dtype="gentoo"
-            ;;
-        arch | manjaro)
-            dtype="arch"
-            ;;
-        slackware)
-            dtype="slackware"
-            ;;
-        *)
-            # Check ID_LIKE only if dtype is still unknown
-            if [ -n "$ID_LIKE" ]; then
-                case $ID_LIKE in
-                *fedora* | *rhel* | *centos*)
-                    dtype="redhat"
-                    ;;
-                *sles* | *opensuse*)
-                    dtype="suse"
-                    ;;
-                *ubuntu* | *debian*)
-                    dtype="debian"
-                    ;;
-                *gentoo*)
-                    dtype="gentoo"
-                    ;;
-                *arch*)
-                    dtype="arch"
-                    ;;
-                *slackware*)
-                    dtype="slackware"
-                    ;;
-                esac
-            fi
+ # Use /etc/os-release for modern distro identification
+ if [ -r /etc/os-release ]; then
+  source /etc/os-release
+  case $ID in
+  fedora | rhel | centos)
+   dtype="redhat"
+   ;;
+  sles | opensuse*)
+   dtype="suse"
+   ;;
+  ubuntu | debian)
+   dtype="debian"
+   ;;
+  gentoo)
+   dtype="gentoo"
+   ;;
+  arch | manjaro)
+   dtype="arch"
+   ;;
+  slackware)
+   dtype="slackware"
+   ;;
+  *)
+   # Check ID_LIKE only if dtype is still unknown
+   if [ -n "$ID_LIKE" ]; then
+    case $ID_LIKE in
+    *fedora* | *rhel* | *centos*)
+     dtype="redhat"
+     ;;
+    *sles* | *opensuse*)
+     dtype="suse"
+     ;;
+    *ubuntu* | *debian*)
+     dtype="debian"
+     ;;
+    *gentoo*)
+     dtype="gentoo"
+     ;;
+    *arch*)
+     dtype="arch"
+     ;;
+    *slackware*)
+     dtype="slackware"
+     ;;
+    esac
+   fi
 
-            # If ID or ID_LIKE is not recognized, keep dtype as unknown
-            ;;
-        esac
-    fi
+   # If ID or ID_LIKE is not recognized, keep dtype as unknown
+   ;;
+  esac
+ fi
 
-    echo $dtype
+ echo $dtype
 }
 # setting a distro variable for potential future use
 DISTRIBUTION=$(distribution)
 # IP address lookup
 alias whatismyip="whatsmyip"
 function whatsmyip() {
-    # Internal IP Lookup.
-    if command -v ip &>/dev/null; then
-        echo -n "Internal IP: "
-        ip addr show wlan0 | grep "inet " | awk '{print $2}' | cut -d/ -f1
-    else
-        echo -n "Internal IP: "
-        ifconfig wlan0 | grep "inet " | awk '{print $2}'
-    fi
+ # Internal IP Lookup.
+ if command -v ip &>/dev/null; then
+  echo -n "Internal IP: "
+  ip addr show wlan0 | grep "inet " | awk '{print $2}' | cut -d/ -f1
+ else
+  echo -n "Internal IP: "
+  ifconfig wlan0 | grep "inet " | awk '{print $2}'
+ fi
 
-    # External IP Lookup
-    echo -n "External IP: "
-    curl -s ifconfig.me
+ # External IP Lookup
+ echo -n "External IP: "
+ curl -s ifconfig.me
 }
 
 iatest=$(expr index "$-" i)
@@ -89,69 +89,69 @@ iatest=$(expr index "$-" i)
 # Running colorscript and fastfetch only if not in a tmux session
 # and if bashrc has not been sourced before
 if [ -z "$BASHRC_SOURCED" ]; then
-    export BASHRC_SOURCED=1
-    # Run your command here
-    if [[ -z "$TMUX" ]]; then
-        # Run fastfetch only if not in a tmux session
-        if command -v fastfetch &>/dev/null; then
-            fastfetch
-        fi
-        if command -v colorscript &>/dev/null; then
-            colorscript random
-        fi
+ export BASHRC_SOURCED=1
+ # Run your command here
+ if [[ -z "$TMUX" ]]; then
+  # Run fastfetch only if not in a tmux session
+  if command -v fastfetch &>/dev/null; then
+   fastfetch
+  fi
+  if command -v colorscript &>/dev/null; then
+   colorscript random
+  fi
 
-    fi
+ fi
 fi
 # Show the current version of the operating system
 ver() {
-    local dtype
-    dtype=$(distribution)
+ local dtype
+ dtype=$(distribution)
 
-    case $dtype in
-    "redhat")
-        if [ -s /etc/redhat-release ]; then
-            cat /etc/redhat-release
-        else
-            cat /etc/issue
-        fi
-        uname -a
-        ;;
-    "suse")
-        cat /etc/SuSE-release
-        ;;
-    "debian")
-        lsb_release -a
-        ;;
-    "gentoo")
-        cat /etc/gentoo-release
-        ;;
-    "arch")
-        cat /etc/os-release
-        ;;
-    "slackware")
-        cat /etc/slackware-version
-        ;;
-    *)
-        if [ -s /etc/issue ]; then
-            cat /etc/issue
-        else
-            echo "Error: Unknown distribution"
-            exit 1
-        fi
-        ;;
-    esac
+ case $dtype in
+ "redhat")
+  if [ -s /etc/redhat-release ]; then
+   cat /etc/redhat-release
+  else
+   cat /etc/issue
+  fi
+  uname -a
+  ;;
+ "suse")
+  cat /etc/SuSE-release
+  ;;
+ "debian")
+  lsb_release -a
+  ;;
+ "gentoo")
+  cat /etc/gentoo-release
+  ;;
+ "arch")
+  cat /etc/os-release
+  ;;
+ "slackware")
+  cat /etc/slackware-version
+  ;;
+ *)
+  if [ -s /etc/issue ]; then
+   cat /etc/issue
+  else
+   echo "Error: Unknown distribution"
+   exit 1
+  fi
+  ;;
+ esac
 }
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
-    . /etc/bashrc
+ . /etc/bashrc
 fi
 
 # Enable bash programmable completion features in interactive shells
 if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
+ . /usr/share/bash-completion/bash_completion
 elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
+ . /etc/bash_completion
 fi
 # Disable the bell
 if [[ $iatest -gt 0 ]]; then bind "set bell-style visible"; fi
@@ -188,11 +188,11 @@ export LS_COLORS='no=00:fi=00:di=00;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40
 
 # Check if ripgrep is installed
 if command -v rg &>/dev/null; then
-    # Alias grep to rg if ripgrep is installed
-    alias grep='rg'
+ # Alias grep to rg if ripgrep is installed
+ alias grep='rg'
 else
-    # Alias grep to /usr/bin/grep with GREP_OPTIONS if ripgrep is not installed
-    alias grep="/usr/bin/grep $GREP_OPTIONS"
+ # Alias grep to /usr/bin/grep with GREP_OPTIONS if ripgrep is not installed
+ alias grep="/usr/bin/grep $GREP_OPTIONS"
 fi
 unset GREP_OPTIONS
 # Color for manpages in less makes manpages a little easier to read
@@ -217,68 +217,69 @@ alias ps='ps auxf'
 alias cls='clear'
 alias apt-get='sudo apt-get'
 if command -v freshclam >/dev/null 2>&1; then
-    alias freshclam='sudo freshclam'
+ alias freshclam='sudo freshclam'
 fi
 if command -v multitail >/dev/null 2>&1; then
-    alias multitail='multitail --no-repeat -c'
+ alias multitail='multitail --no-repeat -c'
 fi
 if command -v lazygit >/dev/null 2>&1; then
-    alias lg='lazygit'
+ alias lg='lazygit'
 fi
 if command -v nvim >/dev/null 2>&1; then
-    # Edit this .bashrc file
-    alias ebrc='nvim ~/.bashrc'
-    # echo "Program 'nvim' exists"
-    alias vi='nvim'
-    alias svi='sudo vi'
-    alias vis='nvim "+set si"'
-    if [ -d ~/.config/nvchadnvim ]; then
-        alias nvvi="NVIM_APPNAME=nvchadnvim nvim"
-    fi
-    if [ -d ~/.config/lazynvim ]; then
-        alias lavi="NVIM_APPNAME=lazynvim nvim"
-    fi
-    if [ -d ~/.config/astronvim ]; then
-        alias asvi="NVIM_APPNAME=astronvim nvim"
-    fi
-    if [ -d ~/.config/freshnvim ]; then
-        alias frvi="NVIM_APPNAME=freshnvim nvim"
-        alias v="NVIM_APPNAME=freshnvim nvim"
-    fi
-    # alias asvi="NVIM_APPNAME=astronvim nvim"
-    if [ -f ~/.local/bin/lvim ]; then
-        alias luvi="~/.local/bin/lvim"
-    fi
-    # if [ -d ~/.config/vimacsnvim ]; then
-    #     alias vivi="NVIM_APPNAME=vimacsnvim nvim"
-    # fi
-    # Set the default editor
-    alias freshnvim='NVIM_APPNAME=freshnvim nvim'
-    export EDITOR=freshnvim
-    # export EDITOR=v
-    export VISUAL=freshnvim
+ # Edit this .bashrc file
+ alias ebrc='nvim ~/.bashrc'
+ # echo "Program 'nvim' exists"
+ alias vi='nvim'
+ alias svi='sudo vi'
+ alias vis='nvim "+set si"'
+ if [ -d ~/.config/nvchadnvim ]; then
+  alias nvvi="NVIM_APPNAME=nvchadnvim nvim"
+ fi
+ if [ -d ~/.config/lazynvim ]; then
+  alias lavi="NVIM_APPNAME=lazynvim nvim"
+ fi
+ if [ -d ~/.config/astronvim ]; then
+  alias asvi="NVIM_APPNAME=astronvim nvim"
+ fi
+ if [ -d ~/.config/freshnvim ]; then
+  alias frvi="NVIM_APPNAME=freshnvim nvim"
+  alias v="NVIM_APPNAME=freshnvim nvim"
+ fi
+ # alias asvi="NVIM_APPNAME=astronvim nvim"
+ if [ -f ~/.local/bin/lvim ]; then
+  alias luvi="~/.local/bin/lvim"
+ fi
+ # if [ -d ~/.config/vimacsnvim ]; then
+ #     alias vivi="NVIM_APPNAME=vimacsnvim nvim"
+ # fi
+ # Set the default editor
+ alias freshnvim='NVIM_APPNAME=freshnvim nvim'
+ # export EDITOR=freshnvim
+ export EDITOR=nvim
+ # export VISUAL=freshnvim
+ export VISUAL=nvim
 fi
 alias less='less -R'
 
 if [ -f ~/.blerc.sh ]; then
-    alias b_c="source ~/.blerc.sh"
+ alias b_c="source ~/.blerc.sh"
 fi
 if command -v x86_64-w64-mingw32-gcc >/dev/null 2>&1; then
-    alias wingcc="x86_64-w64-mingw32-gcc"
+ alias wingcc="x86_64-w64-mingw32-gcc"
 fi
 if command -v xel >/dev/null 2>&1; then
-    # echo "Program 'xsel' exists"
-    alias xcopy="xsel --input --clipboard"
-    alias xpaste="xsel --output --clipboard"
+ # echo "Program 'xsel' exists"
+ alias xcopy="xsel --input --clipboard"
+ alias xpaste="xsel --output --clipboard"
 fi
 if command -v nala >/dev/null 2>&1; then
-    # echo "Program 'nala' exists"
-    alias apt="sudo nala"
+ # echo "Program 'nala' exists"
+ alias apt="sudo nala"
 fi
 # if [ "$DISTRIBUTION" = "redhat" ] || [ "$DISTRIBUTION" = "arch" ]; then
 if command -v bat >/dev/null 2>&1; then
-    # echo "Program 'bat' exists"
-    alias cat='bat'
+ # echo "Program 'bat' exists"
+ alias cat='bat'
 fi
 # elif command -v batcat > /dev/null 2>&1; then
 #   echo "Program 'bat' exists"
@@ -291,31 +292,31 @@ alias imgcatsh="~/useful_scripts/imgcat.sh"
 
 # check z exists
 if command -v z >/dev/null 2>&1; then
-    # echo "Program 'z' exists"
-    # Change directory aliases
-    alias cd='z'
-    alias home='z ~'
-    alias cd..='z ..'
-    alias ..='z ..'
-    alias ...='z ../..'
-    alias ....='z ../../..'
-    alias .....='z ../../../..'
-    # cd into the old directory
-    alias bd='z "$OLDPWD"'
-    alias new_d="z $(ls -td --color=never * | head -n 1)"
+ # echo "Program 'z' exists"
+ # Change directory aliases
+ alias cd='z'
+ alias home='z ~'
+ alias cd..='z ..'
+ alias ..='z ..'
+ alias ...='z ../..'
+ alias ....='z ../../..'
+ alias .....='z ../../../..'
+ # cd into the old directory
+ alias bd='z "$OLDPWD"'
+ alias new_d="z $(ls -td --color=never * | head -n 1)"
 
 else
-    # echo "Program 'z' does not exist"
-    # Change directory aliases
-    alias home='cd ~'
-    alias cd..='cd ..'
-    alias ..='cd ..'
-    alias ...='cd ../..'
-    alias ....='cd ../../..'
-    alias .....='cd ../../../..'
-    # cd into the old directory
-    alias bd='cd "$OLDPWD"'
-    alias new_d="cd $(ls -td --color=never * | head -n 1)"
+ # echo "Program 'z' does not exist"
+ # Change directory aliases
+ alias home='cd ~'
+ alias cd..='cd ..'
+ alias ..='cd ..'
+ alias ...='cd ../..'
+ alias ....='cd ../../..'
+ alias .....='cd ../../../..'
+ # cd into the old directory
+ alias bd='cd "$OLDPWD"'
+ alias new_d="cd $(ls -td --color=never * | head -n 1)"
 
 fi
 
@@ -323,12 +324,12 @@ fi
 alias la='ls -Alh'                # show hidden files
 alias ls='ls -aFh --color=always' # add colors and file type extensions
 if command -v lsd >/dev/null 2>&1; then
-    alias ld='lsd -aFh --color=always'  # add colors and file type extensions
-    alias ll='lsd -alFh --color=always' # add colors and file type extensions
-    alias tree='lsd -aFh --color=always --tree'
+ alias ld='lsd -aFh --color=always'  # add colors and file type extensions
+ alias ll='lsd -alFh --color=always' # add colors and file type extensions
+ alias tree='lsd -aFh --color=always --tree'
 else
-    alias ld='ls -aFh --color=always'  # add colors and file type extensions
-    alias ll='ls -alFh --color=always' # add colors and file type extensions
+ alias ld='ls -aFh --color=always'  # add colors and file type extensions
+ alias ll='ls -alFh --color=always' # add colors and file type extensions
 fi
 # alias ld='lsd -aFh --color=always' # add colors and file type extensions
 # alias ll='lsd -alFh --color=always' # add colors and file type extensions
@@ -423,13 +424,13 @@ alias clickpaste='sleep 3; xdotool type "$(xclip -o -selection clipboard)"'
 alias kssh="kitty +kitten ssh"
 # Function to check if running in WSL
 check_wsl() {
-    if grep -qEi "(Microsoft|WSL)" /proc/version &>/dev/null; then
-        # echo "Running in WSL"
-        alias wssh="wezterm.exe ssh"
-    else
-        # echo "Not running in WSL"
-        alias wssh="wezterm ssh"
-    fi
+ if grep -qEi "(Microsoft|WSL)" /proc/version &>/dev/null; then
+  # echo "Running in WSL"
+  alias wssh="wezterm.exe ssh"
+ else
+  # echo "Not running in WSL"
+  alias wssh="wezterm ssh"
+ fi
 }
 
 # Run the function
@@ -452,20 +453,30 @@ bind '"\e[B": history-search-forward'
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
 if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+ . ~/.bash_aliases
 fi
 if command -v starship &>/dev/null; then
-    eval "$(starship init bash)"
+ eval "$(starship init bash)"
 fi
 FNM_PATH="/home/mylordtome/.local/share/fnm"
 if [ -d "$FNM_PATH" ]; then
-    export PATH="$FNM_PATH:$PATH"
-    eval "$(fnm env)"
+ export PATH="$FNM_PATH:$PATH"
+ eval "$(fnm env)"
 fi
 # for cargo
-. "$HOME/.cargo/env"
+# Check if Cargo env file exists before sourcing
+if [ -f "$HOME/.cargo/env" ]; then
+ . "$HOME/.cargo/env"
+ # else
+ # echo "Cargo environment file not found: $HOME/.cargo/env"
+fi
 # For linuxbrew
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# Check if Linuxbrew exists before running
+if [ -x "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
+ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# else
+#     echo "Linuxbrew not found at /home/linuxbrew/.linuxbrew/bin/brew"
+fi
 # colored GCC warnings and errors
 export COLORTERM=truecolor
 
@@ -475,13 +486,13 @@ export GDK_BACKEND=wayland
 
 [ command -v git ] &>/dev/null && alias gits='git status'
 gcom() {
-    git add .
-    git commit -m "$1"
+ git add .
+ git commit -m "$1"
 }
 lazyg() {
-    git add .
-    git commit -m "$1"
-    git push
+ git add .
+ git commit -m "$1"
+ git push
 }
 # sessionize_script=~/dotfiles/bash/custom-scripts/sessionize.sh
 # windower_dash_script=$HOME/dotfiles/bash/custom-scripts/windower_dash.sh
@@ -496,53 +507,53 @@ lazyg() {
 # ble-bind -x '"\C-t":"$sessionize_script"'
 # ble-bind -x '"\C-t": $sessionize_script'
 if command -v sesh &>/dev/null; then
-    # bind -x '"\C-f": sesh connect "$(
-    #     sesh list --icons | fzf-tmux -p 80%,70% \
-    #         --no-sort --ansi --border-label ' sesh ' --prompt '⚡  ' \
-    #         --header '  ^a all ^t tmux ^g configs ^x zoxide ^d tmux kill ^f find' \
-    #         --bind 'tab:down,btab:up' \
-    #         --bind 'ctrl-a:change-prompt(⚡  )+reload(sesh list --icons)' \
-    #         --bind 'ctrl-t:change-prompt(🪟  )+reload(sesh list -t --icons)' \
-    #         --bind 'ctrl-g:change-prompt(⚙️  )+reload(sesh list -c --icons)' \
-    #         --bind 'ctrl-x:change-prompt(📁  )+reload(sesh list -z --icons)' \
-    #         --bind 'ctrl-f:change-prompt(🔎  )+reload(fd -H -d 2 -t d -E .Trash . ~)' \
-    #         --bind 'ctrl-d:execute(tmux kill-session -t {2..})+change-prompt(⚡  )+reload(sesh list --icons)' \
-    #         --preview-window 'right:55%' \
-    #         --preview 'sesh preview {}'
-    # )"'
-    sesh_tmux_script() {
-        sesh connect \"$(
-            sesh list --icons | fzf-tmux -p 80%,70% \
-                --no-sort --ansi --border-label ' sesh ' --prompt '⚡  ' \
-                --header '  ^a all ^t tmux ^g configs ^x zoxide ^d tmux kill ^f find' \
-                --bind 'tab:down,btab:up' \
-                --bind 'ctrl-a:change-prompt(⚡  )+reload(sesh list --icons)' \
-                --bind 'ctrl-t:change-prompt(🪟  )+reload(sesh list -t --icons)' \
-                --bind 'ctrl-g:change-prompt(⚙️  )+reload(sesh list -c --icons)' \
-                --bind 'ctrl-x:change-prompt(📁  )+reload(sesh list -z --icons)' \
-                --bind 'ctrl-f:change-prompt(🔎  )+reload(fd -H -d 2 -t d -E .Trash . ~)' \
-                --bind 'ctrl-d:execute(tmux kill-session -t {2..})+change-prompt(⚡  )+reload(sesh list --icons)' \
-                --preview-window 'right:55%' \
-                --preview 'sesh preview {}'
-        )\"
-    }
-    sesh_script() {
-        sesh connect \"$(
-            sesh list --icons | fzf \
-                --no-sort --ansi --border-label ' sesh ' --prompt '⚡  ' \
-                --header '  ^a all ^t tmux ^g configs ^x zoxide ^d tmux kill ^f find' \
-                --bind 'tab:down,btab:up' \
-                --bind 'ctrl-a:change-prompt(⚡  )+reload(sesh list --icons)' \
-                --bind 'ctrl-t:change-prompt(🪟  )+reload(sesh list -t --icons)' \
-                --bind 'ctrl-g:change-prompt(⚙️  )+reload(sesh list -c --icons)' \
-                --bind 'ctrl-x:change-prompt(📁  )+reload(sesh list -z --icons)' \
-                --bind 'ctrl-f:change-prompt(🔎  )+reload(fd -H -d 2 -t d -E .Trash . ~)' \
-                --bind 'ctrl-d:execute(tmux kill-session -t {2..})+change-prompt(⚡  )+reload(sesh list --icons)' \
-                --preview-window 'right:55%' \
-                --preview 'sesh preview {}'
-        )\"
-    }
-    bind -x '"\C-sT": sesh_script'
+ # bind -x '"\C-f": sesh connect "$(
+ #     sesh list --icons | fzf-tmux -p 80%,70% \
+ #         --no-sort --ansi --border-label ' sesh ' --prompt '⚡  ' \
+ #         --header '  ^a all ^t tmux ^g configs ^x zoxide ^d tmux kill ^f find' \
+ #         --bind 'tab:down,btab:up' \
+ #         --bind 'ctrl-a:change-prompt(⚡  )+reload(sesh list --icons)' \
+ #         --bind 'ctrl-t:change-prompt(🪟  )+reload(sesh list -t --icons)' \
+ #         --bind 'ctrl-g:change-prompt(⚙️  )+reload(sesh list -c --icons)' \
+ #         --bind 'ctrl-x:change-prompt(📁  )+reload(sesh list -z --icons)' \
+ #         --bind 'ctrl-f:change-prompt(🔎  )+reload(fd -H -d 2 -t d -E .Trash . ~)' \
+ #         --bind 'ctrl-d:execute(tmux kill-session -t {2..})+change-prompt(⚡  )+reload(sesh list --icons)' \
+ #         --preview-window 'right:55%' \
+ #         --preview 'sesh preview {}'
+ # )"'
+ sesh_tmux_script() {
+  sesh connect \"$(
+   sesh list --icons | fzf-tmux -p 80%,70% \
+    --no-sort --ansi --border-label ' sesh ' --prompt '⚡  ' \
+    --header '  ^a all ^t tmux ^g configs ^x zoxide ^d tmux kill ^f find' \
+    --bind 'tab:down,btab:up' \
+    --bind 'ctrl-a:change-prompt(⚡  )+reload(sesh list --icons)' \
+    --bind 'ctrl-t:change-prompt(🪟  )+reload(sesh list -t --icons)' \
+    --bind 'ctrl-g:change-prompt(⚙️  )+reload(sesh list -c --icons)' \
+    --bind 'ctrl-x:change-prompt(📁  )+reload(sesh list -z --icons)' \
+    --bind 'ctrl-f:change-prompt(🔎  )+reload(fd -H -d 2 -t d -E .Trash . ~)' \
+    --bind 'ctrl-d:execute(tmux kill-session -t {2..})+change-prompt(⚡  )+reload(sesh list --icons)' \
+    --preview-window 'right:55%' \
+    --preview 'sesh preview {}'
+  )\"
+ }
+ sesh_script() {
+  sesh connect \"$(
+   sesh list --icons | fzf \
+    --no-sort --ansi --border-label ' sesh ' --prompt '⚡  ' \
+    --header '  ^a all ^t tmux ^g configs ^x zoxide ^d tmux kill ^f find' \
+    --bind 'tab:down,btab:up' \
+    --bind 'ctrl-a:change-prompt(⚡  )+reload(sesh list --icons)' \
+    --bind 'ctrl-t:change-prompt(🪟  )+reload(sesh list -t --icons)' \
+    --bind 'ctrl-g:change-prompt(⚙️  )+reload(sesh list -c --icons)' \
+    --bind 'ctrl-x:change-prompt(📁  )+reload(sesh list -z --icons)' \
+    --bind 'ctrl-f:change-prompt(🔎  )+reload(fd -H -d 2 -t d -E .Trash . ~)' \
+    --bind 'ctrl-d:execute(tmux kill-session -t {2..})+change-prompt(⚡  )+reload(sesh list --icons)' \
+    --preview-window 'right:55%' \
+    --preview 'sesh preview {}'
+  )\"
+ }
+ bind -x '"\C-sT": sesh_script'
 
 fi
 # else
@@ -585,41 +596,41 @@ fi
 # usage: ex [file]
 # from http://www.gitlab.com/dwt1/
 function ex {
-    if [ -z "$1" ]; then
-        # display usage if no parameters given
-        echo "Usage: ex <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
-        echo "       extract <path/file_name_1.ext> [path/file_name_2.ext] [path/file_name_3.ext]"
-    else
-        for n in "$@"; do
-            if [ -f "$n" ]; then
-                case "${n%,}" in
-                *.cbt | *.tar.bz2 | *.tar.gz | *.tar.xz | *.tbz2 | *.tgz | *.txz | *.tar)
-                    tar xvf "$n"
-                    ;;
-                *.lzma) unlzma ./"$n" ;;
-                *.bz2) bunzip2 ./"$n" ;;
-                *.cbr | *.rar) unrar x -ad ./"$n" ;;
-                *.gz) gunzip ./"$n" ;;
-                *.cbz | *.epub | *.zip) unzip ./"$n" ;;
-                *.z) uncompress ./"$n" ;;
-                *.7z | *.arj | *.cab | *.cb7 | *.chm | *.deb | *.dmg | *.iso | *.lzh | *.msi | *.pkg | *.rpm | *.udf | *.wim | *.xar)
-                    7z x ./"$n"
-                    ;;
-                *.xz) unxz ./"$n" ;;
-                *.exe) cabextract ./"$n" ;;
-                *.cpio) cpio -id <./"$n" ;;
-                *.cba | *.ace) unace x ./"$n" ;;
-                *)
-                    echo "ex: '$n' - unknown archive method"
-                    return 1
-                    ;;
-                esac
-            else
-                echo "'$n' - file does not exist"
-                return 1
-            fi
-        done
-    fi
+ if [ -z "$1" ]; then
+  # display usage if no parameters given
+  echo "Usage: ex <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
+  echo "       extract <path/file_name_1.ext> [path/file_name_2.ext] [path/file_name_3.ext]"
+ else
+  for n in "$@"; do
+   if [ -f "$n" ]; then
+    case "${n%,}" in
+    *.cbt | *.tar.bz2 | *.tar.gz | *.tar.xz | *.tbz2 | *.tgz | *.txz | *.tar)
+     tar xvf "$n"
+     ;;
+    *.lzma) unlzma ./"$n" ;;
+    *.bz2) bunzip2 ./"$n" ;;
+    *.cbr | *.rar) unrar x -ad ./"$n" ;;
+    *.gz) gunzip ./"$n" ;;
+    *.cbz | *.epub | *.zip) unzip ./"$n" ;;
+    *.z) uncompress ./"$n" ;;
+    *.7z | *.arj | *.cab | *.cb7 | *.chm | *.deb | *.dmg | *.iso | *.lzh | *.msi | *.pkg | *.rpm | *.udf | *.wim | *.xar)
+     7z x ./"$n"
+     ;;
+    *.xz) unxz ./"$n" ;;
+    *.exe) cabextract ./"$n" ;;
+    *.cpio) cpio -id <./"$n" ;;
+    *.cba | *.ace) unace x ./"$n" ;;
+    *)
+     echo "ex: '$n' - unknown archive method"
+     return 1
+     ;;
+    esac
+   else
+    echo "'$n' - file does not exist"
+    return 1
+   fi
+  done
+ fi
 }
 ### SET MANPAGER
 ### Uncomment only one of these!
@@ -633,12 +644,12 @@ alias tozsh="sudo chsh $USER -s /bin/zsh && echo 'Log out and log back in for ch
 alias tofish="sudo chsh $USER -s /bin/fish && echo 'Log out and log back in for change to take effect.'"
 
 if command -v tmux &>/dev/null; then
-    bind -x '"\C-w": clear'
-    bind '"\C-g": "\C-j"'
-    bind '"\ek": "\C-k"'
+ bind -x '"\C-w": clear'
+ bind '"\C-g": "\C-j"'
+ bind '"\ek": "\C-k"'
 fi
 if [ -f ~/.local/share/blesh/ble.sh ]; then
-    source ~/.local/share/blesh/ble.sh
+ source ~/.local/share/blesh/ble.sh
 fi
 # if [ -f ~/ble_colors.sh ]; then
 #     . ~/ble_colors.sh &
@@ -667,14 +678,24 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 #     \rm -f -- "$tmp"
 # }
 function y() {
-    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-    yazi "$@" --cwd-file="$tmp"
-    if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-        builtin cd -- "$cwd"
-    fi
-    \rm -f -- "$tmp"
+ local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+ yazi "$@" --cwd-file="$tmp"
+ if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+  builtin cd -- "$cwd"
+ fi
+ \rm -f -- "$tmp"
 }
 # export NODE_COMPILE_CACHE=~/.cache/nodejs-compile-cache
 export PATH="$HOME/.local/bin:$PATH"
 # for zoxide
 eval "$(zoxide init bash)"
+if [ -f "/home/mylordtome/.deno/env" ]; then
+ . "/home/mylordtome/.deno/env"
+fi
+# if [ command -v opam &>/dev/null]; then
+ eval $(opam env --switch=default)
+# fi
+
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

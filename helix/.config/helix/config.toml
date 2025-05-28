@@ -1,0 +1,19 @@
+theme = "ayu_dark"
+
+[editor]
+cursorline = true
+color-modes = true
+# rainbow-brackets = true
+scroll-lines = 3
+line-number = "relative"
+
+[editor.statusline]
+left = ["mode", "spinner"]
+right = ["file-name"]
+center = ["diagnostics", "version-control"]
+
+[editor.cursor-shape]
+normal = "block"
+insert = "bar"
+# select = "underline"
+select = "block"

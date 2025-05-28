@@ -50,6 +50,7 @@ return {
           javascript = { "prettierd", "prettier", stop_after_first = true },
           -- ocaml = { "ocamlformat" },
           ocaml = { "ocamlformat", "ocamlformat-rpc", stop_after_first = true },
+          php = { "duster", },
         },
         -- The options you set here will be merged with the builtin formatters.
         -- You can also define any custom formatters here.

@@ -27,7 +27,10 @@ return { -- Highlight, edit, and navigate code
   "nvim-treesitter/nvim-treesitter",
   version = false, -- last release is way too old and doesn't work on Windows
   lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
-  event = { --[[ "BufReadPost", "BufNewFile", "BufWritePre", ]]"FreshFile", "VeryLazy" },
+  event = { --[[ "BufReadPost", "BufNewFile", "BufWritePre", ]]
+    "FreshFile",
+    "VeryLazy",
+  },
   cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
   build = ":TSUpdate",
   main = "nvim-treesitter.configs", -- Sets main module to use for opts
@@ -148,12 +151,23 @@ return { -- Highlight, edit, and navigate code
   },
   {
     "https://gitlab.com/HiPhish/rainbow-delimiters.nvim",
-    event = { "BufReadPost", "BufNewFile", "BufWritePre", "VeryLazy" },
+    event = { --[[ "BufReadPost", "BufNewFile", "BufWritePre", ]]
+      "VeryLazy",
+      "FreshFile",
+    },
   },
   -- Automatically add closing tags for HTML and JSX
   {
     "windwp/nvim-ts-autotag",
-    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-    opts = {},
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    event = {
+      "FreshFile",
+    },
+    opts = {
+      -- Defaults
+      -- enable_close = true, -- Auto close tags
+      -- enable_rename = true, -- Auto rename pairs of tags
+      -- enable_close_on_slash = false, -- Auto close on trailing </
+    },
   },
 }
