@@ -290,36 +290,6 @@ fi
 # alias emacs="emacs -nw"
 alias imgcatsh="~/useful_scripts/imgcat.sh"
 
-# check z exists
-if command -v z >/dev/null 2>&1; then
- # echo "Program 'z' exists"
- # Change directory aliases
- alias cd='z'
- alias home='z ~'
- alias cd..='z ..'
- alias ..='z ..'
- alias ...='z ../..'
- alias ....='z ../../..'
- alias .....='z ../../../..'
- # cd into the old directory
- alias bd='z "$OLDPWD"'
- alias new_d="z $(ls -td --color=never * | head -n 1)"
-
-else
- # echo "Program 'z' does not exist"
- # Change directory aliases
- alias home='cd ~'
- alias cd..='cd ..'
- alias ..='cd ..'
- alias ...='cd ../..'
- alias ....='cd ../../..'
- alias .....='cd ../../../..'
- # cd into the old directory
- alias bd='cd "$OLDPWD"'
- alias new_d="cd $(ls -td --color=never * | head -n 1)"
-
-fi
-
 # Alias's for multiple directory listing commands
 alias la='ls -Alh'                # show hidden files
 alias ls='ls -aFh --color=always' # add colors and file type extensions
@@ -689,13 +659,42 @@ function y() {
 export PATH="$HOME/.local/bin:$PATH"
 # for zoxide
 eval "$(zoxide init bash)"
+# check z exists
+if command -v z >/dev/null 2>&1; then
+ # echo "Program 'z' exists"
+ # Change directory aliases
+ alias cd='z'
+ alias home='z ~'
+ alias cd..='z ..'
+ alias ..='z ..'
+ alias ...='z ../..'
+ alias ....='z ../../..'
+ alias .....='z ../../../..'
+ # cd into the old directory
+ alias bd='z "$OLDPWD"'
+ alias new_d="z $(ls -td --color=never * | head -n 1)"
+
+else
+ # echo "Program 'z' does not exist"
+ # Change directory aliases
+ alias home='cd ~'
+ alias cd..='cd ..'
+ alias ..='cd ..'
+ alias ...='cd ../..'
+ alias ....='cd ../../..'
+ alias .....='cd ../../../..'
+ # cd into the old directory
+ alias bd='cd "$OLDPWD"'
+ alias new_d="cd $(ls -td --color=never * | head -n 1)"
+
+fi
 if [ -f "/home/mylordtome/.deno/env" ]; then
  . "/home/mylordtome/.deno/env"
 fi
 # if [ command -v opam &>/dev/null]; then
- eval $(opam env --switch=default)
+eval $(opam env --switch=default)
 # fi
 
 export NVM_DIR="$HOME/.config/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion

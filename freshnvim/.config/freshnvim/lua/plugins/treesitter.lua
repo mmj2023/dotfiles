@@ -38,8 +38,8 @@ return { -- Highlight, edit, and navigate code
   ---@type TSConfig
   ---@diagnostic disable-next-line: missing-fields
   opts = {
-    highlight = { enable = true },
-    indent = { enable = true },
+    -- highlight = { enable = true },
+    -- indent = { enable = true },
     ensure_installed = {
       "bash",
       "c",
@@ -77,7 +77,7 @@ return { -- Highlight, edit, and navigate code
       },
     },
     -- Install parsers synchronously (only applied to `ensure_installed`)
-    sync_install = false,
+    sync_install = true,
     -- Autoinstall languages that are not installed
     auto_install = true,
     highlight = {
@@ -104,6 +104,16 @@ return { -- Highlight, edit, and navigate code
       vim.opt.foldmethod = "manual" -- or another fallback method
       vim.opt.foldtext = "v:lua.M.foldtext()"
     end
+    -- vim.api.nvim_create_autocmd("FileType", {
+    --   pattern = "markdown",
+    --   callback = function()
+    --     vim.defer_fn(function()
+    --       vim.cmd("TSEnable highlight")
+    --       vim.cmd("TSEnable highlight")
+    --     end, 100)
+    --     -- vim.cmd("TSEnable highlight")
+    --   end,
+    -- })
   end,
   keys = {
     { "<c-space>", desc = "Increment Selection" },
@@ -152,7 +162,7 @@ return { -- Highlight, edit, and navigate code
   {
     "https://gitlab.com/HiPhish/rainbow-delimiters.nvim",
     event = { --[[ "BufReadPost", "BufNewFile", "BufWritePre", ]]
-      "VeryLazy",
+      -- "VeryLazy",
       "FreshFile",
     },
   },
