@@ -169,12 +169,72 @@ return {
         end,
         desc = "[S]earch by [G]rep based on cwd",
       },
+      {
+        "<leader>:",
+        function()
+          Snacks.picker.command_history()
+        end,
+        desc = "Command History",
+      },
+      -- find
+      {
+        "<leader>fb",
+        function()
+          Snacks.picker.buffers({
+            win = {
+              input = {
+                keys = {
+                  ["dd"] = "bufdelete",
+                  ["<c-d>"] = { "bufdelete", mode = { "n", "i" } },
+                },
+              },
+              list = { keys = { ["dd"] = "bufdelete" } },
+            },
+          })
+        end,
+        desc = "[ ] Find existing buffers",
+      },
+      {
+        "<leader>con",
+        function()
+          Snacks.picker.files({ cwd = vim.fn.stdpath("config") })
+        end,
+        desc = "[S]earch [N]eovim files",
+      },
+      {
+        "<leader>ff",
+        function()
+          Snacks.picker.files()
+        end,
+        desc = "[S]earch [F]iles",
+      },
+      {
+        "<leader>fgg",
+        function()
+          Snacks.picker.git_files()
+        end,
+        desc = "Find Files (git-files)",
+      },
+      -- {
+      --   "<leader>fp",
+      --   function()
+      --     Snacks.picker.projects()
+      --   end,
+      --   desc = "Projects",
+      -- },
+      {
+        "<leader>f.",
+        function()
+          Snacks.picker.recent()
+        end,
+        desc = '[S]earch Recent Files ("." for repeat)',
+      },
       ------------------------------------------------------------------------------
       -- New explorer
       {
         "<leader>fp",
         function()
-         local cwd = determine_cwd()
+          local cwd = determine_cwd()
           Snacks.explorer({ cwd = cwd })
         end,
         desc = "Explorer Snacks (cwd)",
@@ -185,13 +245,6 @@ return {
           Snacks.explorer()
         end,
         desc = "File Explorer Snacks",
-      },
-      {
-        "<leader>:",
-        function()
-          Snacks.picker.command_history()
-        end,
-        desc = "Command History",
       },
       {
         "<leader>Ss",

@@ -76,13 +76,13 @@ return {
       -- { "<leader>f:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
       { "<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<cr>", desc = "[S]earch [H]elp" },
       { "<leader>fk", "<cmd>lua require('telescope.builtin').keymaps()<cr>", desc = "[S]earch [K]eymaps" },
-      { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "[S]earch [F]iles" },
+      -- { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "[S]earch [F]iles" },
       { "<leader>fF", "<cmd>Telescope frecency<cr>", desc = "[S]earch [F]rencency" },
       { "<leader>fs", "<cmd>lua require('telescope.builtin').builtin()<cr>", desc = "[S]earch [S]elect Telescope" },
       { "<leader>fw", "<cmd>lua require('telescope.builtin').grep_string({ search = vim.fn.expand('<cword>') })<cr>", desc = "[S]earch current [W]ord" },
       { "<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<cr>", desc = "[S]earch by [G]rep" },
       -- git
-      { "<leader>fgg", "<cmd>lua require('telescope.builtin').git_files()<cr>", desc = "Find Files (git-files)" },
+      -- { "<leader>fgg", "<cmd>lua require('telescope.builtin').git_files()<cr>", desc = "Find Files (git-files)" },
       { "()<leader>fgs", "<cmd>Telescope git_status<CR>", desc = "Status" },
       { "<leader>fgc", "<cmd>Telescope git_commits<CR>", desc = "Commits" },
       { "<leader>fd", "<cmd>lua require('telescope.builtin').diagnostics()<cr>", desc = "[S]earch [D]iagnostics" },
@@ -92,11 +92,11 @@ return {
         "<cmd>lua require('telescope.builtin').oldfiles()<cr>",
         desc = '[S]earch Recent Files ("." for repeat)',
       },
-      {
-        "<leader>fb",
-        "<cmd>Telescope buffers sort_mru=true sort_lastused=true initial_mode=normal theme=ivy<cr>",
-        desc = "[ ] Find existing buffers",
-      },
+      -- {
+      --   "<leader>fb",
+      --   "<cmd>Telescope buffers sort_mru=true sort_lastused=true initial_mode=normal theme=ivy<cr>",
+      --   desc = "[ ] Find existing buffers",
+      -- },
       { "<leader>col", "<cmd>lua require('telescope.builtin').colorscheme()<cr>", desc = "[S]earch all colorschemes" },
       { '<leader>f"', "<cmd>Telescope registers<cr>", desc = "Registers" },
       { "<leader>fa", "<cmd>Telescope autocommands<cr>", desc = "Auto Commands" },
@@ -150,13 +150,13 @@ return {
       -- },
 
       -- Shortcut for searching your Neovim configuration files
-      {
-        "<leader>con",
-        function()
-          require("telescope.builtin").find_files({ cwd = vim.fn.stdpath("config") })
-        end,
-        desc = "[S]earch [N]eovim files",
-      },
+      -- {
+      --   "<leader>con",
+      --   function()
+      --     require("telescope.builtin").find_files({ cwd = vim.fn.stdpath("config") })
+      --   end,
+      --   desc = "[S]earch [N]eovim files",
+      -- },
       -- -- Shortcut for searching your my current file or buffers root directory
       -- {
       --   "<leader><space>",
