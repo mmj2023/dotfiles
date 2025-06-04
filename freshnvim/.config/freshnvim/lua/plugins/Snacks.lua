@@ -190,9 +190,39 @@ return {
               },
               list = { keys = { ["dd"] = "bufdelete" } },
             },
+            layout = "ivy",
+            hidden = false,
+            current = true,
+            sort_lastused = true,
+            on_show = function()
+              vim.cmd.stopinsert()
+            end,
           })
         end,
         desc = "[ ] Find existing buffers",
+      },
+      {
+        "<leader>fk",
+        function()
+          Snacks.picker.keymaps({
+            layout = "vertical",
+          })
+        end,
+        desc = "[S]earch [K]eymaps",
+      },
+      {
+        "<leader>col",
+        function()
+          Snacks.picker.colorschemes()
+        end,
+        desc = "[S]earch all colorschemes",
+      },
+      {
+        "<leader>fh",
+        function()
+          Snacks.picker.help()
+        end,
+        desc = "[S]earch [H]elp",
       },
       {
         "<leader>con",
@@ -230,6 +260,43 @@ return {
         desc = '[S]earch Recent Files ("." for repeat)',
       },
       ------------------------------------------------------------------------------
+      -- LSP
+      {
+        "gd",
+        function()
+          Snacks.picker.lsp_definitions()
+        end,
+        desc = "Goto Definition",
+      },
+      {
+        "gD",
+        function()
+          Snacks.picker.lsp_declarations()
+        end,
+        desc = "Goto Declaration",
+      },
+      {
+        "gr",
+        function()
+          Snacks.picker.lsp_references()
+        end,
+        nowait = true,
+        desc = "References",
+      },
+      {
+        "gI",
+        function()
+          Snacks.picker.lsp_implementations()
+        end,
+        desc = "Goto Implementation",
+      },
+      {
+        "gy",
+        function()
+          Snacks.picker.lsp_type_definitions()
+        end,
+        desc = "Goto T[y]pe Definition",
+      },
       -- New explorer
       {
         "<leader>fp",
@@ -266,6 +333,13 @@ return {
           Snacks.zen()
         end,
         desc = "Toggle Zen Mode",
+      },
+      {
+        "<leader>Z",
+        function()
+          Snacks.zen.zoom()
+        end,
+        desc = "Toggle Zoom",
       },
     }
     -- {"<leader>us",Snacks.toggle.option("spell", { name = "Spelling" }),desc = "toggle spell"},

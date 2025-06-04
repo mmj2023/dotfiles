@@ -74,8 +74,8 @@ return {
     },
     keys = {
       -- { "<leader>f:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
-      { "<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<cr>", desc = "[S]earch [H]elp" },
-      { "<leader>fk", "<cmd>lua require('telescope.builtin').keymaps()<cr>", desc = "[S]earch [K]eymaps" },
+      -- { "<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<cr>", desc = "[S]earch [H]elp" },
+      -- { "<leader>fk", "<cmd>lua require('telescope.builtin').keymaps()<cr>", desc = "[S]earch [K]eymaps" },
       -- { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "[S]earch [F]iles" },
       { "<leader>fF", "<cmd>Telescope frecency<cr>", desc = "[S]earch [F]rencency" },
       { "<leader>fs", "<cmd>lua require('telescope.builtin').builtin()<cr>", desc = "[S]earch [S]elect Telescope" },
@@ -97,7 +97,7 @@ return {
       --   "<cmd>Telescope buffers sort_mru=true sort_lastused=true initial_mode=normal theme=ivy<cr>",
       --   desc = "[ ] Find existing buffers",
       -- },
-      { "<leader>col", "<cmd>lua require('telescope.builtin').colorscheme()<cr>", desc = "[S]earch all colorschemes" },
+      -- { "<leader>col", "<cmd>lua require('telescope.builtin').colorscheme()<cr>", desc = "[S]earch all colorschemes" },
       { '<leader>f"', "<cmd>Telescope registers<cr>", desc = "Registers" },
       { "<leader>fa", "<cmd>Telescope autocommands<cr>", desc = "Auto Commands" },
       -- Slightly advanced example of overriding default behavior and theme
