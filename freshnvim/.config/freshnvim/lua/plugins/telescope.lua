@@ -73,7 +73,7 @@ return {
       "Telescope frecency",
     },
     keys = {
-      { "<leader>f:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
+      -- { "<leader>f:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
       { "<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<cr>", desc = "[S]earch [H]elp" },
       { "<leader>fk", "<cmd>lua require('telescope.builtin').keymaps()<cr>", desc = "[S]earch [K]eymaps" },
       { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "[S]earch [F]iles" },
@@ -101,17 +101,17 @@ return {
       { '<leader>f"', "<cmd>Telescope registers<cr>", desc = "Registers" },
       { "<leader>fa", "<cmd>Telescope autocommands<cr>", desc = "Auto Commands" },
       -- Slightly advanced example of overriding default behavior and theme
-      {
-        "<leader>/",
-        function()
-          -- You can pass additional configuration to Telescope to change the theme, layout, etc.
-          require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
-            winblend = 10,
-            previewer = false,
-          }))
-        end,
-        desc = "[/] Fuzzily search in current buffer",
-      },
+      -- {
+      --   "<leader>/",
+      --   function()
+      --     -- You can pass additional configuration to Telescope to change the theme, layout, etc.
+      --     require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
+      --       winblend = 10,
+      --       previewer = false,
+      --     }))
+      --   end,
+      --   desc = "[/] Fuzzily search in current buffer",
+      -- },
 
       -- It's also possible to pass additional configuration options.
       --  See `:help telescope.builtin.live_grep()` for information about particular keys
@@ -140,14 +140,14 @@ return {
         end,
         desc = "[S]earch [/] in Open Files",
       },
-      {
-        "<leader>fgp",
-        function()
-          local cwd = determine_cwd()
-          require("telescope.builtin").live_grep({ cwd = cwd })
-        end,
-        desc = "[S]earch by [G]rep based on cwd",
-      },
+      -- {
+      --   "<leader>fgp",
+      --   function()
+      --     local cwd = determine_cwd()
+      --     require("telescope.builtin").live_grep({ cwd = cwd })
+      --   end,
+      --   desc = "[S]earch by [G]rep based on cwd",
+      -- },
 
       -- Shortcut for searching your Neovim configuration files
       {
@@ -157,17 +157,17 @@ return {
         end,
         desc = "[S]earch [N]eovim files",
       },
-      -- Shortcut for searching your my current file or buffers root directory
-      {
-        "<leader><space>",
-        function()
-          -- cwd = vim.fn.getcwd()
-          local cwd = determine_cwd()
-
-          require("telescope.builtin").find_files({ cwd = cwd })
-        end,
-        desc = "[S]earch [N]eovim files",
-      },
+      -- -- Shortcut for searching your my current file or buffers root directory
+      -- {
+      --   "<leader><space>",
+      --   function()
+      --     -- cwd = vim.fn.getcwd()
+      --     local cwd = determine_cwd()
+      --
+      --     require("telescope.builtin").find_files({ cwd = cwd })
+      --   end,
+      --   desc = "[S]earch [N]eovim files",
+      -- },
     },
     opts = {
 

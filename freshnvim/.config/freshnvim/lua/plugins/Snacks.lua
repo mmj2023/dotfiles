@@ -1,3 +1,33 @@
+local determine_cwd = function()
+  local bufname = vim.api.nvim_buf_get_name(0)
+  local cwd = vim.fn.expand("%:p:h")
+
+  -- Check for specific file explorer buffers
+  if vim.bo.filetype == "netrw" then
+    cwd = vim.fn.expand("%:p:h")
+  elseif vim.bo.filetype == "oil" then
+    cwd = require("oil").get_current_dir()
+  elseif vim.bo.filetype == "neo-tree" then
+    cwd = require("neo-tree").get_current_node().path
+  elseif vim.bo.filetype == "NvimTree" then
+    cwd = require("nvim-tree.lib").get_node_at_cursor().absolute_path
+  elseif vim.bo.filetype == "minifiles" then
+    cwd = require("minifiles").get_current_dir()
+  else
+    -- Check if LSP is attached and get the root directory
+    for _, client in pairs(vim.lsp.buf_get_clients()) do
+      if client.config.root_dir then
+        local lsp_root_dir = client.config.root_dir
+        if bufname:find(lsp_root_dir, 1, true) then
+          cwd = lsp_root_dir
+          break
+        end
+      end
+    end
+  end
+
+  return cwd
+end
 local root = require("config.snacks_git")
 -- Terminal Mappings
 local term_nav = function(dir)
@@ -10,7 +40,9 @@ local term_nav = function(dir)
 end
 return {
   "snacks.nvim",
-  event = {"VeryLazy"--[[ , "VimEnter" ]]},
+  event = {
+    "VeryLazy" --[[ , "VimEnter" ]],
+  },
   init = function()
     vim.api.nvim_create_autocmd("User", {
       pattern = "OilActionsPost",
@@ -43,10 +75,25 @@ return {
     },
     bigfile = { enabled = true },
     notifier = {
-        enabled = true,
-        timeout = 1500,
+      enabled = true,
+      timeout = 1500,
     },
     quickfile = { enabled = true },
+    explorer = {
+      -- your explorer configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+      enabled = true,
+    },
+    picker = {
+      enabled = true,
+      sources = {
+        explorer = {
+          -- your explorer picker configuration comes here
+          -- or leave it empty to use the default settings
+        },
+      },
+    },
     zen = {
       -- your zen configuration comes here
       -- or leave it empty to use the default settings
@@ -61,6 +108,13 @@ return {
           nav_k = { "<C-k>", term_nav("k"), desc = "Go to Upper Window", expr = true, mode = "t" },
           nav_l = { "<C-l>", term_nav("l"), desc = "Go to Right Window", expr = true, mode = "t" },
         },
+      },
+    },
+    statuscolumn = { enabled = true },
+    words = { enabled = true },
+    styles = {
+      notification = {
+        -- wo = { wrap = true } -- Wrap notifications
       },
     },
   },
@@ -86,6 +140,58 @@ return {
           Snacks.bufdelete.other()
         end,
         desc = "Delete Other Buffers",
+      },
+      -- alternative exists in telescope plugin config
+      {
+        "<leader><space>",
+        function()
+          Snacks.picker.smart()
+        end,
+        desc = "[S]earch [N]eovim files in a smart manner",
+      },
+      {
+        "<leader>/",
+        function()
+          Snacks.picker.lines({
+            layout = {
+              preview = false,
+              preset = "vscode",
+            },
+          })
+        end,
+        desc = "[/] Fuzzily search in current buffer",
+      },
+      {
+        "<leader>fgp",
+        function()
+          local cwd = determine_cwd()
+          Snacks.picker.grep({ cwd = cwd })
+        end,
+        desc = "[S]earch by [G]rep based on cwd",
+      },
+      ------------------------------------------------------------------------------
+      -- New explorer
+      {
+        "<leader>fp",
+        function()
+         local cwd = determine_cwd()
+          Snacks.explorer({ cwd = cwd })
+        end,
+        desc = "Explorer Snacks (cwd)",
+      },
+      {
+        "<leader>foe",
+        function()
+          Snacks.explorer()
+        end,
+        desc = "File Explorer Snacks",
+      },
+      {
+        "<leader>:",
+        function()
+          Snacks.picker.command_history()
+        end,
+        desc = "Command History",
       },
       {
         "<leader>Ss",
@@ -152,7 +258,7 @@ return {
     return keys
   end,
   config = function(_, opts)
-      require("snacks").setup(opts)
+    require("snacks").setup(opts)
     Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
     Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
     Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>uL")
