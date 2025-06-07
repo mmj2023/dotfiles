@@ -15,7 +15,7 @@ local determine_cwd = function()
     cwd = require("minifiles").get_current_dir()
   else
     -- Check if LSP is attached and get the root directory
-    for _, client in pairs(vim.lsp.buf_get_clients()) do
+    for _, client in pairs(vim.lsp.get_clients()) do
       if client.config.root_dir then
         local lsp_root_dir = client.config.root_dir
         if bufname:find(lsp_root_dir, 1, true) then
