@@ -63,6 +63,10 @@ return {
     ---@field doc snacks.image.doc
     ---@field convert snacks.image.convert
     ---@field inline snacks.image.inline
+    selected = {
+      show_always = true, -- only show the selected column when there are multiple selections
+      unselected = false, -- use the unselected icon for unselected items
+    },
     images = {
       enabled = true,
       -- max_width = 100,
@@ -87,6 +91,7 @@ return {
     },
     picker = {
       enabled = true,
+      prompt = "   ",
       sources = {
         explorer = {
           -- your explorer picker configuration comes here
@@ -165,7 +170,7 @@ return {
         "<leader>fgp",
         function()
           local cwd = determine_cwd()
-          Snacks.picker.grep({ cwd = cwd })
+          Snacks.picker.grep({ cwd = cwd, prompt = "   " })
         end,
         desc = "[S]earch by [G]rep based on cwd",
       },
