@@ -90,38 +90,38 @@ vim.opt.laststatus = 3
 --   [vim.diagnostic.severity.INFO] = { text = "  ", texthl = "DiagnosticInfo", numhl = "DiagnosticInfo" },
 --   [vim.diagnostic.severity.HINT] = { text = "  ", texthl = "DiagnosticHint", numhl = "DiagnosticHint" },
 -- }
-vim.diagnostic.config({
-  virtual_text = {
-    current_line = true,
-    prefix = "▎", -- Could be '●', '▎', 'x', '■ ', '• ', '◆ ', '∙ ', '✗ ', '✓ ', etc.
-    severity = {
-      min = vim.diagnostic.severity.HINT,
-    },
-    format = function(diagnostic)
-      local icons = {
-        [vim.diagnostic.severity.ERROR] = "  ",
-        [vim.diagnostic.severity.WARN] = "  ",
-        [vim.diagnostic.severity.INFO] = "  ",
-        [vim.diagnostic.severity.HINT] = "  ",
-      }
-      return icons[diagnostic.severity] .. diagnostic.message
-    end,
-  },
-  signs = true,
-  -- signs = {
-  --   -- Define diagnostic signs per severity level
-  --   [vim.diagnostic.severity.ERROR] = { text = "  ", texthl = "DiagnosticError", numhl = "DiagnosticError" },
-  --   [vim.diagnostic.severity.WARN] = { text = "  ", texthl = "DiagnosticWarn", numhl = "DiagnosticWarn" },
-  --   [vim.diagnostic.severity.INFO] = { text = "  ", texthl = "DiagnosticInfo", numhl = "DiagnosticInfo" },
-  --   [vim.diagnostic.severity.HINT] = { text = "  ", texthl = "DiagnosticHint", numhl = "DiagnosticHint" },
-  -- },
-  update_in_insert = false,
-  underline = true,
-  severity_sort = true,
-  float = {
-    source = "always", -- Or "if_many"
-  },
-})
+-- vim.diagnostic.config({
+--   virtual_text = {
+--     current_line = true,
+--     prefix = "▎", -- Could be '●', '▎', 'x', '■ ', '• ', '◆ ', '∙ ', '✗ ', '✓ ', etc.
+--     severity = {
+--       min = vim.diagnostic.severity.HINT,
+--     },
+--     format = function(diagnostic)
+--       local icons = {
+--         [vim.diagnostic.severity.ERROR] = "  ",
+--         [vim.diagnostic.severity.WARN] = "  ",
+--         [vim.diagnostic.severity.INFO] = "  ",
+--         [vim.diagnostic.severity.HINT] = "  ",
+--       }
+--       return icons[diagnostic.severity] .. diagnostic.message
+--     end,
+--   },
+--   signs = true,
+--   -- signs = {
+--   --   -- Define diagnostic signs per severity level
+--   --   [vim.diagnostic.severity.ERROR] = { text = "  ", texthl = "DiagnosticError", numhl = "DiagnosticError" },
+--   --   [vim.diagnostic.severity.WARN] = { text = "  ", texthl = "DiagnosticWarn", numhl = "DiagnosticWarn" },
+--   --   [vim.diagnostic.severity.INFO] = { text = "  ", texthl = "DiagnosticInfo", numhl = "DiagnosticInfo" },
+--   --   [vim.diagnostic.severity.HINT] = { text = "  ", texthl = "DiagnosticHint", numhl = "DiagnosticHint" },
+--   -- },
+--   update_in_insert = false,
+--   underline = true,
+--   severity_sort = true,
+--   float = {
+--     source = "always", -- Or "if_many"
+--   },
+-- })
 -- if vim.fn.has("nvim-0.11") == 1 then
 --   vim.lsp.enable("clangd")
 -- end

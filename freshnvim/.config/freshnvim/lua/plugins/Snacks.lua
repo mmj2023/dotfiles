@@ -91,7 +91,7 @@ return {
     },
     picker = {
       enabled = true,
-      prompt = "   ",
+      prompt = "  ",
       sources = {
         explorer = {
           -- your explorer picker configuration comes here
