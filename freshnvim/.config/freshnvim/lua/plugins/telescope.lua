@@ -97,7 +97,7 @@ return {
       --   "<cmd>Telescope buffers sort_mru=true sort_lastused=true initial_mode=normal theme=ivy<cr>",
       --   desc = "[ ] Find existing buffers",
       -- },
-      -- { "<leader>col", "<cmd>lua require('telescope.builtin').colorscheme()<cr>", desc = "[S]earch all colorschemes" },
+      { "<leader>col", "<cmd>lua require('telescope.builtin').colorscheme()<cr>", desc = "[S]earch all colorschemes" },
       { '<leader>f"', "<cmd>Telescope registers<cr>", desc = "Registers" },
       { "<leader>fa", "<cmd>Telescope autocommands<cr>", desc = "Auto Commands" },
       -- Slightly advanced example of overriding default behavior and theme

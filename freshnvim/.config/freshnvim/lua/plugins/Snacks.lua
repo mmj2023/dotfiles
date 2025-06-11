@@ -215,13 +215,13 @@ return {
         end,
         desc = "[S]earch [K]eymaps",
       },
-      {
-        "<leader>col",
-        function()
-          Snacks.picker.colorschemes()
-        end,
-        desc = "[S]earch all colorschemes",
-      },
+      -- {
+      --   "<leader>col",
+      --   function()
+      --     Snacks.picker.colorschemes()
+      --   end,
+      --   desc = "[S]earch all colorschemes",
+      -- },
       {
         "<leader>fh",
         function()
