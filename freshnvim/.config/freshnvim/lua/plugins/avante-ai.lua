@@ -26,7 +26,8 @@ return {
     gemini = {
       -- @see https://ai.google.dev/gemini-api/docs/models/gemini
       -- model = "gemini-2.0-flash", -- your desired model (or use gpt-4o, etc.)
-      model = "gemini-2.5-pro-exp-03-25", -- your desired model (or use gpt-4o, etc.)
+      -- model = "gemini-2.5-pro-preview-06-05", -- your desired model (or use gpt-4o, etc.)
+      model = "gemini-2.5-flash-preview-05-20", -- your desired model (or use gpt-4o, etc.)
       timeout = 30000, -- timeout in milliseconds
       temperature = 0, -- adjust if needed
       max_tokens = 4096,

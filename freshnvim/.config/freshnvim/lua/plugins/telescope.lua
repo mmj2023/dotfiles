@@ -223,6 +223,7 @@ return {
           -- -- The maximum number of results to show in the location list window.
           -- location = 10,
         },
+        fzf = {},
       },
     },
     config = function(_, opts)

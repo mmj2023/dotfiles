@@ -98,6 +98,13 @@ return {
           -- or leave it empty to use the default settings
         },
       },
+      ---@class snacks.picker.matcher.Config
+      matcher = {
+        frecency = true, -- frecency bonus
+      },
+      debug = {
+        scores = true, -- show scores for each source
+      },
     },
     zen = {
       -- your zen configuration comes here
