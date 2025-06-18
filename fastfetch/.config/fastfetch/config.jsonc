@@ -1,10 +1,11 @@
 {
 	"$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
 	"logo": {
-		"type": "builtin",
-		"source": "/mnt/c/users/mmj21/Downloads/inspace.jpg",
+		// "type": "builtin",
+		"type": "auto",
+		"source": "~/Downloads/arch_vamp.png",
 		"width": 60,
-		"height": 14
+		// "height": 14
 	},
 	"display": {
 		"separator": "",
@@ -22,7 +23,8 @@
 		"separator",
 		{
 			"type": "os",
-			"key": " ",
+			// "key": " ",
+			"key": "󰣇 ",
 			"keyColor": "cyan"
 		},
 		{
@@ -42,7 +44,7 @@
 		},
 		{
 			"type": "font",
-			"key": " ",
+			"key": "󰛖 ",
 			"keyColor": "green"
 		},
 		{
@@ -57,7 +59,7 @@
 		},
 		{
 			"type": "terminalfont",
-			"key": "",
+			"key": "󰛖 ",
 			"keyColor": "red"
 		},
 		{
@@ -85,6 +87,11 @@
 			"key": " ",
 			"keyColor": "magenta"
 		},
+        {
+            "type": "battery",
+            "key": "󱟢",
+            "keyColor": "green"
+        },
 		"break",
 		"colors"
 	]

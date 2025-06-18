@@ -688,12 +688,12 @@ else
  alias new_d="cd $(ls -td --color=never * | head -n 1)"
 
 fi
-if [ -f "/home/mylordtome/.deno/env" ]; then
- . "/home/mylordtome/.deno/env"
-fi
-# if [ command -v opam &>/dev/null]; then
-eval $(opam env --switch=default)
+# if [ -f "/home/mylordtome/.deno/env" ]; then
+#  . "/home/mylordtome/.deno/env"
 # fi
+if [ command -v opam &>/dev/null ]; then
+eval $(opam env --switch=default)
+fi
 
 export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
