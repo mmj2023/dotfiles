@@ -88,18 +88,25 @@ iatest=$(expr index "$-" i)
 # fi
 # Running colorscript and fastfetch only if not in a tmux session
 # and if bashrc has not been sourced before
-if [ -z "$BASHRC_SOURCED" ]; then
- export BASHRC_SOURCED=1
- # Run your command here
- if [[ -z "$TMUX" ]]; then
-  # Run fastfetch only if not in a tmux session
-  if command -v fastfetch &>/dev/null; then
-   fastfetch
-  fi
-  if command -v colorscript &>/dev/null; then
-   colorscript random
-  fi
-
+# if [ -z "$BASHRC_SOURCED" ]; then
+#  # Run your command here
+#  if [[ -z "$TMUX" ]]; then
+#   # Run fastfetch only if not in a tmux session
+#   if command -v fastfetch &>/dev/null; then
+#    fastfetch
+#   fi
+#   if command -v colorscript &>/dev/null; then
+#    colorscript random
+#   fi
+#   export BASHRC_SOURCED=1
+#  fi
+# fi
+if [[ -z "$TMUX" ]]; then
+ if command -v fastfetch &>/dev/null; then
+  fastfetch
+ fi
+ if command -v colorscript &>/dev/null; then
+  colorscript random
  fi
 fi
 # Show the current version of the operating system
@@ -691,8 +698,8 @@ fi
 # if [ -f "/home/mylordtome/.deno/env" ]; then
 #  . "/home/mylordtome/.deno/env"
 # fi
-if [ command -v opam &>/dev/null ]; then
-eval $(opam env --switch=default)
+if [ command -v opam ] &>/dev/null; then
+ eval $(opam env --switch=default)
 fi
 
 export NVM_DIR="$HOME/.config/nvm"
