@@ -1,0 +1,82 @@
+# For defaults and description of each option, see:
+# https://github.com/dunst-project/dunst/blob/master/dunstrc
+
+[global]
+# Display
+follow              = mouse
+width               = 350
+height              = (0, 300)
+origin              = top-right
+offset              = (35, 35)
+indicate_hidden     = yes
+notification_limit  = 5
+gap_size            = 12
+padding             = 12
+horizontal_padding  = 20
+frame_width         = 2
+sort                = no
+
+# Progress bar
+progress_bar_frame_width   = 0
+progress_bar_corner_radius = 3
+
+# Colors (background transparency increased by using an alpha of 80)
+background          = "#383c4a80"
+foreground          = "#cdd1dc"
+highlight           = "#2274d5, #82aad9"
+
+# Text
+font                = Noto Sans CJK JP 10
+markup              = full
+format              = "<small>%a</small>\n<big><b>%s</b></big>\n%b"
+alignment           = left
+vertical_alignment  = center
+idle_threshold      = 30s
+show_age_threshold  = 30s
+hide_duplicate_count = false
+
+# Icon
+icon_position       = left
+min_icon_size       = 54
+max_icon_size       = 54
+icon_path           = /usr/share/icons/Arc/status/96:/usr/share/icons/Arc/status/symbolic
+icon_corner_radius  = 4
+
+# Misc/Advanced
+dmenu               = /usr/bin/env rofi -dmenu -p "Choose"
+corner_radius       = 10
+
+# Mouse actions
+mouse_left_click    = do_action, close_current
+mouse_middle_click  = none
+mouse_right_click   = close_current
+
+[urgency_low]
+frame_color         = "#2d303cf0"
+history_ignore      = true
+timeout             = 3
+
+[urgency_normal]
+frame_color         = "#484848f0"
+# Inline command to update the system tray: sends signal RT2 to waybar via bash
+script              = /usr/bin/env bash -c 'kill --signal RT2 waybar'
+timeout             = 8
+
+[urgency_critical]
+frame_color         = "#713a39f0"
+highlight           = "#e31e1b, #e37371"
+script              = /usr/bin/env bash -c 'kill --signal RT2 waybar'
+timeout             = 0
+
+[screenshot]
+appname             = Screenshot
+history_ignore      = true
+max_icon_size       = 80
+
+# Rules
+[fullscreen_delay_everything]
+fullscreen          = delay
+
+[fullscreen_show_critical]
+msg_urgency         = critical
+fullscreen          = show
