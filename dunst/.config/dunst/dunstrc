@@ -21,7 +21,7 @@ progress_bar_frame_width   = 0
 progress_bar_corner_radius = 3
 
 # Colors (background transparency increased by using an alpha of 80)
-background          = "#383c4a80"
+background          = "#383c4af0"
 foreground          = "#cdd1dc"
 highlight           = "#2274d5, #82aad9"
 
@@ -43,7 +43,7 @@ icon_path           = /usr/share/icons/Arc/status/96:/usr/share/icons/Arc/status
 icon_corner_radius  = 4
 
 # Misc/Advanced
-dmenu               = /usr/bin/env rofi -dmenu -p "Choose"
+dmenu               = /usr/bin/rofi -dmenu -p "Choose"
 corner_radius       = 10
 
 # Mouse actions
@@ -59,13 +59,16 @@ timeout             = 3
 [urgency_normal]
 frame_color         = "#484848f0"
 # Inline command to update the system tray: sends signal RT2 to waybar via bash
-script              = /usr/bin/env bash -c 'kill --signal RT2 waybar'
+# script              = /usr/bin/bash -c 'kill --signal RT2 waybar'
+# script = "bash -c 'kill --signal RT2 waybar'"
+# script = {{ update_systray }}
 timeout             = 8
 
 [urgency_critical]
 frame_color         = "#713a39f0"
 highlight           = "#e31e1b, #e37371"
-script              = /usr/bin/env bash -c 'kill --signal RT2 waybar'
+# script              = /usr/bin/bash -c 'kill --signal RT2 waybar'
+# script = {{ update_systray }}
 timeout             = 0
 
 [screenshot]
