@@ -5,7 +5,7 @@
 "margin-bottom":0,
 "margin-top":0,
 
-"modules-left": ["cpu","memory","network","mpd"],
+"modules-left": ["custom/launcher","cpu","memory","network","mpd"],
 "modules-center": ["hyprland/workspaces","hyprland/window"],
 "modules-right":  ["tray","idle_inhibitor","pulseaudio","backlight","battery","clock","custom/sep","clock#date"],
 
@@ -63,8 +63,14 @@
         "min-length": 8,
         "max-length": 28,
     },
+"custom/launcher": {
+    "format": " 󱓞 ",
+    "on-click": "pkill rofi || rofi -show drun -theme ~/.config/rofi/config.rasi",
+},
 "cpu": {
-    "format": " &#8239;{usage}%",
+    "interval": 1,
+    "format": " &#8239; {icon0}{icon1}{icon2}{icon3} {usage}%",
+    "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
     "tooltip": false,
     "on-click": "kitty -e 'btop'"
 },

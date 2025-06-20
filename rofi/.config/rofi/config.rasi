@@ -1,8 +1,39 @@
-@theme "gruvbox-dark.rasi"
 * {
-  bg: #061022dd;
-  // background-color: transparent;
+  // // background-color: transparent;
+  // bg: #061022dd;
   background-color: #00000000;
+  // below are the colorschemes to choose from all of them will have a translucent background
+  // bg-alt: #161B22;
+  // bg-selected: #21262D;
+  // fg: #58A6FF;
+  // fg-alt: #7D8590;
+  // border-color: #30363D;
+  // selected-bg: #388BFD;
+  // selected-fg: #010409;
+  // urgent: #F85149;
+  // active: #56D364;
+  // different colorscheme
+  // bg:           #101417;   /* Deep blackish gray */
+  // bg-alt:       #181C1F;   /* Slightly lighter gray */
+  // bg-selected:  #1B2B29;   /* Teal-tinted dark for selection */
+  // fg:           #AEE9D1;   /* Soft teal */
+  // fg-alt:       #C8D3C5;   /* Pale gray-green */
+  // border-color: #3B4B4B;   /* Muted gray-teal */
+  // selected-bg:  #19B48A;   /* Vivid green-teal */
+  // selected-fg:  #101417;   /* Background for contrast */
+  // urgent:       #FF5E62;   /* Alert red */
+  // active:       #19B48A;   /* Green-teal for active */
+  // different colorscheme
+  bg:           rgba(16, 20, 23, 0.8);      /* Deep blackish gray, translucent */
+  bg-alt:       rgba(24, 28, 31, 0.8);      /* Slightly lighter gray, translucent */
+  bg-selected:  rgba(27, 43, 41, 0.8);      /* Teal-tinted dark, translucent */
+  fg:           #AEE9D1;                    /* Soft teal */
+  fg-alt:       #C8D3C5;                    /* Pale gray-green */
+  border-color: rgba(59, 75, 75, 0.8);      /* Muted gray-teal, translucent */
+  selected-bg:  rgba(25, 180, 138, 0.8);    /* Vivid green-teal, translucent */
+  selected-fg:  #101417;                    /* Background for contrast */
+  urgent:       #FF5E62;                    /* Alert red */
+  active:       #19B48A;                    /* Green-teal for active */
 }
 
 configuration {
@@ -21,8 +52,9 @@ window {
   width: 40%;
   transparency: "real";
   orientation: vertical;
-  border: 2px ;
-  border-color: #6e96d2;
+  border: 1px ;
+  // border-color: #6e96d2;
+  border-color: @border-color;
   border-radius: 10px;
   background-color: @bg;
 }
@@ -36,8 +68,9 @@ mainbox {
 
 element {
   padding: 8 14;
-  text-color: #10B5FF;
-  border-radius: 5px;
+  // text-color: #10B5FF;
+  text-color: @fg;
+  border-radius: 3px;
   // background-color: transparent;
   background-color: #00000000;
   // background-color: @bg;
@@ -56,8 +89,10 @@ element alternate {
 }
 
 element selected {
-  text-color: #002a4c;
-  background-color: #7ab3ce;
+  // text-color: #002a4c;
+  // background-color: #7ab3ce;
+  text-color: @selected-fg;
+  background-color: @selected-bg;
 }
 
 element-text {
@@ -91,21 +126,23 @@ listview {
 //------------------------------------------------
 
 entry {
-  text-color: #10B5FF;
+  // text-color: #10B5FF;
+  text-color: @fg;
   padding: 10 10 0 0;
   margin: 0 -2 0 0;
   background-color: transparent;
 }
 
 inputbar {
-  background-image: url("~/Downloads/beach.jpg", width);
+  // background-image: url("~/Downloads/beach.jpg", width);
   padding: 10 0 0;
   margin: 0 0 0 0;
   background-color: transparent;
 }
 
 prompt {
-  text-color: #D756AB;
+  // text-color: #D756AB;
+  text-color: @selected-bg;
   padding: 10 6 0 10;
   margin: 0 -2 0 0;
   background-color: transparent;
@@ -115,7 +152,8 @@ prompt {
 //------------------------------------------------
 
 mode-switcher {
-  border-color:   #2fb4f7;
+  // border-color:   #2fb4f7;
+  border-color:   @border-color;
   spacing:	      0;
   background-color: transparent;
 }
@@ -123,15 +161,18 @@ mode-switcher {
 button {
   padding:	      10px;
   background-color: transparent;
-  text-color: #10B5FF;
+  // text-color: #10B5FF;
+  text-color: @fg-alt;
   vertical-align:   0.5;
   horizontal-align: 0.5;
 }
 
 button selected {
-  background-color: @bg;
-  background-color: transparent;
-  text-color: #D756AB;
+  // background-color: @bg;
+  // background-color: transparent;
+  background-color: @bg-selected;
+  // text-color: #D756AB;
+  text-color: @selected-bg;
 }
 
 message {
@@ -158,4 +199,5 @@ textbox {
 
 //@theme "/usr/share/rofi/themes/sidebar-v2.rasi"
 
-@theme "/usr/share/rofi/themes/sidebar-v2.rasi"
+// @theme "/usr/share/rofi/themes/sidebar-v2.rasi"
+// @theme "custom"
