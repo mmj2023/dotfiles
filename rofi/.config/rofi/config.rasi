@@ -1,0 +1,161 @@
+@theme "gruvbox-dark.rasi"
+* {
+  bg: #061022dd;
+  // background-color: transparent;
+  background-color: #00000000;
+}
+
+configuration {
+  modi:		    "run,filebrowser,drun";
+  show-icons:	    true;
+  icon-theme:	    "Papirus";
+  location:		    0;
+  font:		    "JetBrainsMono NF 12";
+  drun-display-format:  "{icon} {name}";
+  display-drun:	    "   Apps ";
+  display-run:	    "   Run ";
+  display-filebrowser:  "   File ";
+}
+
+window {
+  width: 40%;
+  transparency: "real";
+  orientation: vertical;
+  border: 2px ;
+  border-color: #6e96d2;
+  border-radius: 10px;
+  background-color: @bg;
+}
+
+mainbox {
+  children: [ inputbar, listview, mode-switcher ];
+}
+
+// ELEMENT
+// -----------------------------------
+
+element {
+  padding: 8 14;
+  text-color: #10B5FF;
+  border-radius: 5px;
+  // background-color: transparent;
+  background-color: #00000000;
+  // background-color: @bg;
+}
+/* ADD THESE RULES TO OVERRIDE ANY DEFAULT BOXES */
+element normal {
+  // background-color: transparent;
+  background-color: #00000000;
+  // background-color: @bg;
+}
+
+element alternate {
+  // background-color: transparent;
+  background-color: #00000000;
+  // background-color: @bg;
+}
+
+element selected {
+  text-color: #002a4c;
+  background-color: #7ab3ce;
+}
+
+element-text {
+  text-color: inherit;
+  // background-color: transparent;
+  background-color: #00000000;
+  // background-color: @bg;
+}
+
+element-icon {
+  size: 24 px;
+  padding: 0 6 0 0;
+  alignment: vertical;
+  // background-color: transparent;
+  background-color: #00000000;
+}
+
+listview {
+  columns: 2;
+  lines: 9;
+  padding: 8 0;
+  fixed-height: true;
+  fixed-columns: true;
+  fixed-lines: true;
+  border: 0 10 6 10;
+  // background-color: transparent;
+  background-color: #00000000;
+}
+
+// INPUT BAR
+//------------------------------------------------
+
+entry {
+  text-color: #10B5FF;
+  padding: 10 10 0 0;
+  margin: 0 -2 0 0;
+  background-color: transparent;
+}
+
+inputbar {
+  background-image: url("~/Downloads/beach.jpg", width);
+  padding: 10 0 0;
+  margin: 0 0 0 0;
+  background-color: transparent;
+}
+
+prompt {
+  text-color: #D756AB;
+  padding: 10 6 0 10;
+  margin: 0 -2 0 0;
+  background-color: transparent;
+}
+
+// Mode Switcher
+//------------------------------------------------
+
+mode-switcher {
+  border-color:   #2fb4f7;
+  spacing:	      0;
+  background-color: transparent;
+}
+
+button {
+  padding:	      10px;
+  background-color: transparent;
+  text-color: #10B5FF;
+  vertical-align:   0.5;
+  horizontal-align: 0.5;
+}
+
+button selected {
+  background-color: @bg;
+  background-color: transparent;
+  text-color: #D756AB;
+}
+
+message {
+  background-color: transparent;
+  margin: 2px;
+  padding: 2px;
+  border-radius: 5px;
+}
+
+textbox {
+  padding: 6px;
+  margin: 20px 0px 0px 20px;
+  text-color: #2fb4f7;
+  background-color: transparent;
+}
+
+//@theme "/usr/share/rofi/themes/arthur.rasi"
+
+//@theme "/usr/share/rofi/themes/android_notification.rasi"
+
+//@theme "/usr/share/rofi/themes/gruvbox-dark.rasi"
+
+//@theme "/usr/share/rofi/themes/iggy.rasi"
+
+//@theme "/usr/share/rofi/themes/sidebar-v2.rasi"
+
+@theme "/usr/share/rofi/themes/sidebar-v2.rasi"
