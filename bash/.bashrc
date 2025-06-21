@@ -701,7 +701,9 @@ fi
 if [ command -v opam ] &>/dev/null; then
  eval $(opam env --switch=default)
 fi
-
+# if [ command -v paru ] &>/dev/null; then
+ alias parf="paru -Slq | fzf --multi --preview 'paru -Sii {1}' --preview-window=down:75% | xargs -ro paru -S"
+# fi
 export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
