@@ -105,8 +105,10 @@
     // "device": "acpi_video1",
     "format": "{icon}&#8239;{percent}%",
     "format-icons": ["", ""],
-    "on-scroll-down": "brightnessctl -c backlight set 1%-",
-    "on-scroll-up": "brightnessctl -c backlight set +1%"
+    // "on-scroll-down": "brightnessctl -c backlight set 1%-",
+    // "on-scroll-up": "brightnessctl -c backlight set +1%"
+    "on-scroll-down": "hyprctl hyprsunset gamma +1",
+    "on-scroll-up": "hyprctl hyprsunset gamma -1"
 },
 "pulseaudio": {
   // "scroll-step": 1, // %, can be a float

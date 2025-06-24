@@ -95,6 +95,14 @@ return {
       cyclic = true,
     })
 
+    local capitalized_boolean = augend.constant.new({
+      elements = {
+        "yes",
+        "no",
+      },
+      word = true,
+      cyclic = true,
+    })
     return {
       dials_by_ft = {
         css = "css",
