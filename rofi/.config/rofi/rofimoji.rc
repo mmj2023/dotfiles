@@ -1,0 +1,13 @@
+# ~/.config/rofimoji.rc
+
+# default action: copy to clipboard + paste
+action = clipboard
+
+# load emojis + math symbols
+files = [emojis, math]
+
+# hide long descriptions for grid layout
+hidden-descriptions = True
+
+# max recent picks (Alt+1, Alt+2…Alt+0)
+max-recent = 5

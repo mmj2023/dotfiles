@@ -6,29 +6,65 @@
 "margin-top":0,
 
 "modules-left": ["custom/launcher","cpu","memory","network","mpd"],
-"modules-center": ["hyprland/workspaces","hyprland/window"],
-"modules-right":  ["tray","idle_inhibitor","pulseaudio","backlight","battery","clock","custom/sep","clock#date"],
+"modules-center": ["hyprland/workspaces","hyprland/window","niri/workspaces","niri/window"],
+"modules-right":  ["tray","idle_inhibitor","pulseaudio","backlight","bluetooth","battery","clock","custom/sep","clock#date"],
 
+// "battery": {
+//   "states": {
+//   "warning": 30,
+//   "critical": 15
+//   },
+//   "format": "{icon}&#8239;{capacity}%",
+//   "format-charging": " &#8239;{capacity}%",
+//   "format-plugged": " &#8239;{capacity}%",
+//   "format-alt": "{icon} {time}",
+//   "format-icons": [" ", " ", " ", " ", " ", " ", " "]
+// },
 "battery": {
-  "states": {
-  "warning": 30,
-  "critical": 15
-  },
-  "format": "{icon}&#8239;{capacity}%",
-  "format-charging": " &#8239;{capacity}%",
-  "format-plugged": " &#8239;{capacity}%",
-  "format-alt": "{icon} {time}",
-  "format-icons": [" ", " ", " ", " ", " ", " ", " "]
+ "format": "{capacity}% {icon}",
+ "format-discharging": "{icon}",
+ "format-charging":    "{icon}",
+ "format-plugged":     "",
+ "format-icons": {
+  "charging": [
+   "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"
+  ],
+  "default": [
+   "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"
+  ]
+ },
+ "format-full": "full ",
+ "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%",
+ "tooltip-format-charging": "{power:>1.0f}W↑ {capacity}%",
+ "interval": 5,
+ "states": {
+  "warning": 20,
+  "critical": 10
+ }
 },
 "hyprland/workspaces": {
  "sort-by-name": true,
  "on-click": "activate"
+},
+"niri/workspaces": {
+ "sort-by-name": true,
+ "on-click": "activate"
+},
+"niri/window": {
+ "format": "{}",
+ "rewrite": {
+  "(.{42}).*": "$1..",
+ },
+ "swap-icon-label": true,
+ "icon": true,
+ "icon-size": 22,
 },
 "hyprland/window": {
  "format": "{}",
  "rewrite": {
   "(.{42}).*": "$1..",
  },
+ "swap-icon-label": true,
  "icon": true,
  "icon-size": 22,
 },
@@ -110,6 +146,13 @@
     "on-scroll-down": "hyprctl hyprsunset gamma +1",
     "on-scroll-up": "hyprctl hyprsunset gamma -1"
 },
+"bluetooth": {
+ "format": "",
+ "format-disabled": "󰂲",
+ "format-connected": "",
+ "tooltip-format": "Devices connected: {num_connections}",
+ "on-click": "GTK_THEME=Adwaita:dark blueman-manager",
+},
 "pulseaudio": {
   // "scroll-step": 1, // %, can be a float
   "format": "{icon} {volume}% {format_source}",
@@ -127,7 +170,9 @@
     "car": "",
     "default": ["", " ", " "]
   },
-  "on-click": "pavucontrol"
+  "tooltip-format": "Playing at {volume}%",
+  "on-click": "pavucontrol",
+  "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
 },
 "mpd": {
   "format": "{stateIcon} {artist} - {title}",
