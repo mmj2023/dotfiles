@@ -7,7 +7,7 @@
 
 "modules-left": ["custom/launcher","cpu","memory","network","mpd"],
 "modules-center": ["hyprland/workspaces","hyprland/window","niri/workspaces","niri/window"],
-"modules-right":  ["tray","idle_inhibitor","pulseaudio","backlight","bluetooth","battery","clock","custom/sep","clock#date"],
+"modules-right":  ["tray","idle_inhibitor","pulseaudio","backlight","bluetooth","battery","clock","custom/sep","clock#date","custom/lock"],
 
 // "battery": {
 //   "states": {
@@ -99,6 +99,13 @@
         "min-length": 8,
         "max-length": 28,
     },
+"custom/lock": {
+ // "exec":  "~/.config/waybar/scripts/lock-status.sh",
+ // "interval":  5,           // update every 5s (optional)
+ "format":  " ",
+ "tooltip-format": "  Lock screen",
+ "on-click": "HYPRLOCK_BG='rgba(16,20,23,0.8)' HYPRLOCK_FG='#AEE9D1' hyprlock",
+},
 "custom/launcher": {
     "format": " 󱓞 ",
     "on-click": "pkill rofi || rofi -show drun -theme ~/.config/rofi/config.rasi",

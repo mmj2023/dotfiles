@@ -1,0 +1,128 @@
+/* ─────────────────────────────────────────────────────────────── */
+/* ~/.config/rofi/symbols.rasi                                   */
+/* A Windows-style emoji/math picker for Hyprland via Rofimoji   */
+/* ─────────────────────────────────────────────────────────────── */
+
+/* 1) Colour & spacing variables */
+* {
+   bg:            rgba(16,20,23,0.4);
+   // bg:            #00000000;
+   bg-alt:        rgba(24,28,31,0.8);
+   bg-selected:   rgba(27,43,41,0.8);
+   fg:            #AEE9D1;
+   fg-alt:        #C8D3C5;
+   sel-bg:        rgba(25,180,138,0.8);
+   sel-fg:        #101417;
+   border-col:    rgba(59,75,75,0.8);
+}
+/* 2) Rofi core configuration */
+configuration {
+  font:           "Noto Sans Symbols 12";
+  show-icons:     true;
+  // icon-theme:     "Papirus";
+  modi:           "emoji:rofimoji,math:rofimoji --files math";
+}
+
+/* 3) Main window */
+window {
+  width:           40%;                /* or pick a fixed px value */
+  transparency:    "real";
+  orientation:     vertical;
+  border:          1px;
+  border-radius:   10px;
+  border-color:    @border-col;
+  background-color:@bg;
+}
+
+/* 4) Universal element defaults */
+* {
+  background-color: @bg;
+  background-alt:    @bg-alt;   /* used by listview if you choose */
+  background-active: @sel-bg;
+  border-color:      @border-col;
+  text-color:        @fg;
+  spacing:           4px;
+  padding:           6px 12px;
+}
+
+/* 5) List/grid of symbols */
+listview {
+  lines:            9;
+  columns:          2;
+  fixed-height:     true;
+  fixed-columns:    true;
+  fixed-lines:      true;
+  border:           0 10px 6px 10px;
+}
+
+/* 6) Individual cells */
+element {
+  background-color: transparent;
+  text-color:       @fg;
+  padding:           8px 14px;
+  border-radius:     3px;
+}
+element normal,
+element alternate {
+  background-color: transparent;
+}
+element selected {
+  background-color: @sel-bg;
+  text-color:       @sel-fg;
+}
+
+/* 7) Icon & text sub-elements */
+element-icon {
+  size:       24px;
+  padding:    0 6px 0 0;
+  alignment:  vertical;
+}
+element-text {
+  background-color: transparent;
+  text-color:        inherit;
+}
+
+/* 8) The input bar */
+inputbar {
+  background-color: transparent;
+}
+entry {
+  text-color:       @fg;
+  padding:           10px 10px 0 0;
+  margin:            0 -2px 0 0;
+}
+prompt {
+  text-color:       @sel-bg;
+  padding:           10px 6px 0 10px;
+  margin:            0 -2px 0 0;
+}
+
+/* 9) Mode-switcher (if you use multiple modi) */
+mode-switcher {
+  border-color:     @border-col;
+  background-color: transparent;
+  spacing:          0;
+}
+button {
+  padding:           10px;
+  text-color:        @fg-alt;
+  background-color:  transparent;
+}
+button selected {
+  background-color:  @bg-selected;
+  text-color:        @sel-fg;
+}
+
+/* 10) Messages & textboxes (rare) */
+message {
+  background-color: transparent;
+  border-radius:    5px;
+  margin:           2px;
+  padding:          2px;
+}
+textbox {
+  text-color:       #2fb4f7;
+  background-color: transparent;
+  padding:          6px;
+  margin:           20px 0 0 20px;
+}
