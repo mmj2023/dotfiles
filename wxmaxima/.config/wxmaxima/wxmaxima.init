@@ -1,0 +1,18 @@
+# in ~/.config/wxmaxima/wxmaxima.init
+
+# Force all cell backgrounds & the document to black,
+# and all text to white:
+[Style/DocumentBackground]
+color=black
+
+[Style/Background]
+color=black
+
+[Style/Text]
+color=white
+
+[Style/Default]
+color=white
+
+# you can duplicate these for any section you find
+# is still light (e.g. [Style/Section], [Style/Heading*], etc.)
