@@ -3,7 +3,7 @@
 	"logo": {
 		// "type": "builtin",
 		"type": "auto",
-		"source": "~/Pictures/arch_vamp.png",
+		"source": "~/Pictures/hyprland.icon",
 		"width": 60,
 		// "height": 14
 	},

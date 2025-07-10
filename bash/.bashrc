@@ -237,6 +237,7 @@ if command -v nvim >/dev/null 2>&1; then
  alias ebrc='nvim ~/.bashrc'
  # echo "Program 'nvim' exists"
  alias vi='nvim'
+ alias vim='nvim'
  alias svi='sudo vi'
  alias vis='nvim "+set si"'
  if [ -d ~/.config/nvchadnvim ]; then
@@ -432,6 +433,9 @@ bind '"\e[B": history-search-forward'
 if [ -f ~/.bash_aliases ]; then
  . ~/.bash_aliases
 fi
+# if [ -f ~/.bash_profile ]; then
+#  . ~/.bash_profile
+# fi
 if command -v starship &>/dev/null; then
  eval "$(starship init bash)"
 fi
@@ -698,12 +702,7 @@ fi
 # if [ -f "/home/mylordtome/.deno/env" ]; then
 #  . "/home/mylordtome/.deno/env"
 # fi
-if [ command -v opam ] &>/dev/null; then
- eval $(opam env --switch=default)
-fi
 # if [ command -v paru ] &>/dev/null; then
  alias parf="paru -Slq | fzf --multi --preview 'paru -Sii {1}' --preview-window=down:75% | xargs -ro paru -S"
 # fi
-export NVM_DIR="$HOME/.config/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+source ~/.blerc.sh

@@ -1,6 +1,6 @@
 ble-face argument_error=fg=#1a1b26,bg=#f7768e
 ble-face argument_option=fg=#7aa2f7
-ble-face auto_complete=fg=#3e487f,bg=#2f96b8 #bg=#2f96b8
+ble-face auto_complete=fg=#3e487f #, #bg=#2f96b8 #bg=#2f96b8
 ble-face cmdinfo_cd_cdpath=fg=#7aa2f7,bg=#f7768e
 ble-face command_alias=fg=#7aa2f7
 ble-face command_builtin=fg=#f7768e

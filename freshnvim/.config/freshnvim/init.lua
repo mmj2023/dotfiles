@@ -83,7 +83,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local opts = {
-  --   -- install = { colorscheme = { "tokyonight", "habamax" } },
+    -- install = { colorscheme = { "tokyonight", "habamax" } },
 }
 local fresh_file_events = { "BufReadPost", "BufNewFile", "BufWritePre" }
 
