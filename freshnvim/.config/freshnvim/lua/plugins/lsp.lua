@@ -73,6 +73,18 @@ return {
               },
             },
           },
+          -- Haskell Language Server
+          hls = {
+            mason = true,
+            filetypes = { "haskell", "lhaskell", "cabal" },
+            settings = {
+              haskell = {
+                formattingProvider = "ormolu",
+                hlintOn = true,
+                plugin = { ghcide = { globalOn = true } },
+              },
+            },
+          },
           -- JDTLS (Java language server) configuration with many features enabled
           jdtls = {
             root_markers = { ".git", "pom.xml", "build.gradle" },

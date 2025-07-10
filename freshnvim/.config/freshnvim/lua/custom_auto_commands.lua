@@ -684,6 +684,30 @@ vim.api.nvim_create_autocmd("LspAttach", {
     })
   end,
 })
+-- hack fix for filetype detection due to issues related to snacks nvim
+local function detect_filetype(buf)
+  if vim.filetype and vim.filetype.detect then
+    vim.filetype.detect({ buf = buf })
+  else
+    -- run Ex command in the context of `buf`, without changing your visible buffer
+    vim.api.nvim_buf_call(buf, function()
+      vim.cmd('silent! filetype detect')
+    end)
+  end
+end
+
+-- schedule a deferred check on every buffer read/new-file
+vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
+  callback = function(args)
+    local buf = args.buf
+    vim.defer_fn(function()
+      local ft = vim.api.nvim_buf_get_option(buf, "filetype")
+      if ft == "" then
+        detect_filetype(buf)
+      end
+    end, 10)
+  end,
+})
 -- -- Create (or reuse) a namespace for our extmarks
 -- local ns = vim.api.nvim_create_namespace("search_info_ns")
 --

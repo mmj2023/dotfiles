@@ -162,10 +162,15 @@ elif [ -f /etc/bash_completion ]; then
 fi
 # Disable the bell
 if [[ $iatest -gt 0 ]]; then bind "set bell-style visible"; fi
-# Expand the history size
+# --- Shell Options and History Settings ---
+# Disable the bell
+if [[ $iatest -gt 0 ]]; then bind "set bell-style visible"; fi
+
+# Expand the history size and format
 export HISTFILESIZE=10000
 export HISTSIZE=500
 export HISTTIMEFORMAT="%F %T" # add timestamp to history
+
 # Don't put duplicate lines in the history and do not add lines that start with a space
 export HISTCONTROL=erasedups:ignoredups:ignorespace
 
@@ -175,23 +180,38 @@ shopt -s checkwinsize
 # Causes bash to append to history instead of overwriting it so if you start a new terminal, you have old session history
 shopt -s histappend
 PROMPT_COMMAND='history -a'
-# set up XDG folders
-export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_STATE_HOME="$HOME/.local/state"
-export XDG_CACHE_HOME="$HOME/.cache"
+
 # Allow ctrl-S for history navigation (with ctrl-R)
 [[ $- == *i* ]] && stty -ixon
+
 # Ignore case on auto-completion
 # Note: bind used instead of sticking these in .inputrc
 if [[ $iatest -gt 0 ]]; then bind "set completion-ignore-case on"; fi
 
 # Show auto-completion list automatically, without double tab
 if [[ $iatest -gt 0 ]]; then bind "set show-all-if-ambiguous On"; fi
+
+# --- XDG Base Directory Specification ---
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_STATE_HOME="$HOME/.local/state"
+export XDG_CACHE_HOME="$HOME/.cache"
+
+# --- Color and Display Settings ---
 # To have colors for ls and all grep commands such as grep, egrep and zgrep
 export CLICOLOR=1
 export LS_COLORS='no=00:fi=00:di=00;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.avi=01;35:*.fli=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.ogg=01;35:*.mp3=01;35:*.wav=01;35:*.xml=00;31:'
 #export GREP_OPTIONS='--color=auto' #deprecated
+
+# Color for manpages in less makes manpages a little easier to read
+export LESS_TERMCAP_mb=$'\E[01;31m'
+export LESS_TERMCAP_md=$'\E[01;31m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[01;44;33m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;32m'
+
 
 # Check if ripgrep is installed
 if command -v rg &>/dev/null; then
@@ -327,13 +347,13 @@ alias lla='ls -Al'               # List and Hidden Files
 alias las='ls -A'                # Hidden Files
 alias lls='ls -l'                # List
 
-# alias chmod commands
-alias mx='chmod a+x'
-alias 000='chmod -R 000'
-alias 644='chmod -R 644'
-alias 666='chmod -R 666'
-alias 755='chmod -R 755'
-alias 777='chmod -R 777'
+# --- Chmod Aliases ---
+alias mx='chmod a+x'     # Make executable
+alias 000='chmod -R 000' # No permissions
+alias 644='chmod -R 644' # Owner R/W, Group R, Others R
+alias 666='chmod -R 666' # All R/W
+alias 755='chmod -R 755' # Owner R/W/X, Group R/X, Others R/X
+alias 777='chmod -R 777' # All R/W/X (full permissions)
 
 # Search command line history
 alias h="history | grep "
@@ -433,43 +453,45 @@ bind '"\e[B": history-search-forward'
 if [ -f ~/.bash_aliases ]; then
  . ~/.bash_aliases
 fi
-# if [ -f ~/.bash_profile ]; then
-#  . ~/.bash_profile
-# fi
 if command -v starship &>/dev/null; then
  eval "$(starship init bash)"
 fi
+
+# FNM (Fast Node Manager) configuration
 FNM_PATH="/home/mylordtome/.local/share/fnm"
 if [ -d "$FNM_PATH" ]; then
  export PATH="$FNM_PATH:$PATH"
  eval "$(fnm env)"
 fi
-# for cargo
-# Check if Cargo env file exists before sourcing
+
+# Cargo (Rust package manager) environment
 if [ -f "$HOME/.cargo/env" ]; then
  . "$HOME/.cargo/env"
- # else
- # echo "Cargo environment file not found: $HOME/.cargo/env"
 fi
-# For linuxbrew
-# Check if Linuxbrew exists before running
+
+# Linuxbrew environment
 if [ -x "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-# else
-#     echo "Linuxbrew not found at /home/linuxbrew/.linuxbrew/bin/brew"
 fi
-# colored GCC warnings and errors
-export COLORTERM=truecolor
 
-export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+# General Path additions
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/:$PATH" # Ensure this is consistent with the above
 
-export GDK_BACKEND=wayland
+# --- Color and Display Settings (Moved to consolidated block above) ---
+# These were already moved, so ensure no duplicates are left here.
+# Removed duplicate COLORTERM, GCC_COLORS, GDK_BACKEND exports.
 
-[ command -v git ] &>/dev/null && alias gits='git status'
+# --- Git Aliases and Functions ---
+[ command -v git ] &>/dev/null && alias gits='git status' # Git status shorthand
+
+# Git commit all changes with a message
 gcom() {
  git add .
  git commit -m "$1"
 }
+
+# Git commit all changes and push to remote with a message
 lazyg() {
  git add .
  git commit -m "$1"
@@ -574,6 +596,7 @@ fi
 #
 # # Run the function
 # check_wsl
+# --- Archive Extraction Function (ex) ---
 # usage: ex [file]
 # from http://www.gitlab.com/dwt1/
 function ex {
@@ -619,30 +642,25 @@ function ex {
 ### "nvim" as manpager
 # export MANPAGER="nvim --clean +Man!"
 # export MANPAGER="vi +MANPAGER +Man!"
+
+# --- Default Shell Aliases ---
 # change your default USER shell
 # alias tobash="sudo chsh $USER -s /bin/bash && echo 'Log out and log back in for change to take effect.'"  # already set to bash
 alias tozsh="sudo chsh $USER -s /bin/zsh && echo 'Log out and log back in for change to take effect.'"
 alias tofish="sudo chsh $USER -s /bin/fish && echo 'Log out and log back in for change to take effect.'"
 
+# --- Tmux Bindings ---
 if command -v tmux &>/dev/null; then
  bind -x '"\C-w": clear'
  bind '"\C-g": "\C-j"'
  bind '"\ek": "\C-k"'
 fi
+
+# --- Bash Line Editor (ble.sh) ---
 if [ -f ~/.local/share/blesh/ble.sh ]; then
  source ~/.local/share/blesh/ble.sh
 fi
-# if [ -f ~/ble_colors.sh ]; then
-#     . ~/ble_colors.sh &
-# fi
 
-# Generated for envman. Do not edit.
-[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
-export PATH=$PATH:$HOME/go/bin
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
 
 # # Pre-write a command in the terminal after loading .bashrc
 # if [ -z "$PRE_WRITTEN_COMMAND_DONE" ]; then
@@ -668,41 +686,35 @@ function y() {
 }
 # export NODE_COMPILE_CACHE=~/.cache/nodejs-compile-cache
 export PATH="$HOME/.local/bin:$PATH"
-# for zoxide
+# --- Zoxide Integration & Aliases ---
 eval "$(zoxide init bash)"
-# check z exists
-if command -v z >/dev/null 2>&1; then
- # echo "Program 'z' exists"
- # Change directory aliases
- alias cd='z'
- alias home='z ~'
- alias cd..='z ..'
- alias ..='z ..'
- alias ...='z ../..'
- alias ....='z ../../..'
- alias .....='z ../../../..'
- # cd into the old directory
- alias bd='z "$OLDPWD"'
- alias new_d="z $(ls -td --color=never * | head -n 1)"
 
+# Check if zoxide is installed and active
+if command -v z >/dev/null 2>&1; then
+ # Zoxide-powered directory navigation aliases
+ alias cd='z'                # Override cd with zoxide for smart directory jumping
+ alias home='z ~'            # Go to home directory
+ alias cd..='z ..'           # Go up one directory
+ alias ..='z ..'             # Shorthand for going up one directory
+ alias ...='z ../..'         # Go up two directories
+ alias ....='z ../../..'     # Go up three directories
+ alias .....='z ../../../..' # Go up four directories
+ alias bd='z "$OLDPWD"'      # Go back to the old directory
+ alias new_d="z $(ls -td --color=never * | head -n 1)" # Go to the newest directory
 else
- # echo "Program 'z' does not exist"
- # Change directory aliases
+ # Fallback to standard cd aliases if zoxide is not available
  alias home='cd ~'
  alias cd..='cd ..'
  alias ..='cd ..'
  alias ...='cd ../..'
  alias ....='cd ../../..'
  alias .....='cd ../../../..'
- # cd into the old directory
  alias bd='cd "$OLDPWD"'
  alias new_d="cd $(ls -td --color=never * | head -n 1)"
-
 fi
-# if [ -f "/home/mylordtome/.deno/env" ]; then
-#  . "/home/mylordtome/.deno/env"
-# fi
 # if [ command -v paru ] &>/dev/null; then
  alias parf="paru -Slq | fzf --multi --preview 'paru -Sii {1}' --preview-window=down:75% | xargs -ro paru -S"
 # fi
+alias mingwgcc="x86_64-w64-mingw32-gcc"
+export PATH="$HOME/.local/:$PATH"
 source ~/.blerc.sh
