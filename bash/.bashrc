@@ -427,12 +427,13 @@ check_wsl() {
   alias wssh="wezterm.exe ssh"
  else
   # echo "Not running in WSL"
-  alias wssh="wezterm ssh"
+  alias wssh="__NV_DISABLE_EXPLICIT_SYNC=1 wezterm ssh"
  fi
 }
 
 # Run the function
 check_wsl
+alias wezterm="__NV_DISABLE_EXPLICIT_SYNC=1 wezterm"
 
 # alias to cleanup unused docker containers, images, networks, and volumes
 
