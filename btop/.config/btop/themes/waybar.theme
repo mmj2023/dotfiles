@@ -1,0 +1,65 @@
+# Waybar-inspired btop v1.4.4 theme
+# Your Waybar colors:
+#  • fg     = #AEE9D1
+#  • accent1= #1B2B29
+#  • accent2= #495052
+#  • accent3= #7C9D96
+# Background is left empty so your terminal/compositor RGBA(16,20,23,0.8) shines through
+
+theme[main_bg]       = "#101417"           ; empty = terminal bg
+theme[main_fg]       = "#AEE9D1"
+
+# UI text & selections
+theme[title]         = "#7C9D96"
+theme[hi_fg]         = "#7C9D96"
+theme[inactive_fg]   = "#495052"
+theme[selected_bg]   = "#1B2B29"
+theme[selected_fg]   = "#AEE9D1"
+theme[proc_misc]     = "#7C9D96"
+
+# Box outlines & dividers
+theme[cpu_box]       = "#495052"
+theme[mem_box]       = "#495052"
+theme[net_box]       = "#495052"
+theme[proc_box]      = "#495052"
+theme[div_line]      = "#495052"
+
+# Temperature graph (cool green → light → deep)
+theme[temp_start]    = "#7C9D96"
+theme[temp_mid]      = "#AEE9D1"
+theme[temp_end]      = "#1B2B29"
+
+# CPU graph (dark → green → light)
+theme[cpu_start]     = "#1B2B29"
+theme[cpu_mid]       = "#7C9D96"
+theme[cpu_end]       = "#AEE9D1"
+
+# Free memory/disk (light → green → muted)
+theme[free_start]    = "#AEE9D1"
+theme[free_mid]      = "#7C9D96"
+theme[free_end]      = "#495052"
+
+# Cached memory/disk (muted → green → light)
+theme[cached_start]  = "#495052"
+theme[cached_mid]    = "#7C9D96"
+theme[cached_end]    = "#AEE9D1"
+
+# Available memory/disk (light → muted → green)
+theme[available_start] = "#AEE9D1"
+theme[available_mid]   = "#495052"
+theme[available_end]   = "#7C9D96"
+
+# Used memory/disk (dark → green → light)
+theme[used_start]    = "#1B2B29"
+theme[used_mid]      = "#7C9D96"
+theme[used_end]      = "#AEE9D1"
+
+# Network download (soft blue → lighter → fg)
+theme[download_start] = "#5E81AC"
+theme[download_mid]   = "#81A1C1"
+theme[download_end]   = "#AEE9D1"
+
+# Network upload (warm red → orange → yellow)
+theme[upload_start]   = "#BF616A"
+theme[upload_mid]     = "#D08770"
+theme[upload_end]     = "#EBCB8B"

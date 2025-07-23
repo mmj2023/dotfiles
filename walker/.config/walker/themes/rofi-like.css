@@ -1,0 +1,89 @@
+/* Rofi-inspired colors */
+:root {
+  --bg:           rgba(16, 20, 23, 0.1);
+  --bg-alt:       rgba(24, 28, 31, 0.1);
+  --bg-selected:  rgba(27, 43, 41, 0.1);
+  --fg:           #AEE9D1;
+  --fg-alt:       #C8D3C5;
+  --border-color: rgba(59, 75, 75, 0.1);
+  --selected-bg:  rgba(25, 180, 138, 0.1);
+  --selected-fg:  #101417;
+  --urgent:       #FF5E62;
+  --active:       #19B48A;
+}
+
+/* Main window */
+#window {
+  background-color: var(--bg);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  width: 40%;
+}
+
+/* Input / search bar */
+#search {
+  background: transparent;     /* keep typeahead readable */
+  color: var(--fg);
+}
+
+/* List container */
+#listview {
+  background: transparent;
+}
+
+/* Individual items */
+#item {
+  color: var(--fg);
+  padding: 8px 14px;
+}
+
+#item:nth-child(even),
+#item.alternate {
+  background: transparent;
+}
+
+#item.selected {
+  color: var(--selected-fg);
+  background-color: var(--selected-bg);
+}
+
+/* Icons */
+#icon {
+  margin-right: 6px;
+}
+
+/* Mode-switcher buttons */
+#button {
+  color: var(--fg-alt);
+  padding: 10px;
+}
+
+#button.selected {
+  background-color: var(--bg-selected);
+  color: var(--selected-bg);
+}
+
+/* Prompt text */
+#prompt {
+  color: var(--selected-bg);
+}
+
+/* Messages & textboxes */
+.message {
+  background: transparent;
+  margin: 2px;
+  padding: 2px;
+  border-radius: 5px;
+}
+
+#textbox {
+  margin: 20px 0 0 20px;
+  padding: 6px;
+  color: #2fb4f7;
+}
+
+/* Mode switcher border */
+.mode-switcher {
+  background: transparent;
+  border-color: var(--border-color);
+}

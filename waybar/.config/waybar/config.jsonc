@@ -27,7 +27,7 @@
  "format-plugged":     "",
  "format-icons": {
   "charging": [
-   "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"
+   "󰢜 ", "󰂆 ", "󰂇 ", "󰂈 ", "󰢝 ", "󰂉 ", "󰢞 ", "󰂊 ", "󰂋 ", "󰂅 "
   ],
   "default": [
    "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"
@@ -108,7 +108,8 @@
 },
 "custom/launcher": {
     "format": " 󱓞 ",
-    "on-click": "pkill rofi || rofi -show drun -theme ~/.config/rofi/config.rasi",
+    // "on-click": "pkill rofi || rofi -show drun -theme ~/.config/rofi/config.rasi",
+    "on-click": "walker",
 },
 "cpu": {
     "interval": 1,

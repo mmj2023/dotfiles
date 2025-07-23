@@ -5,6 +5,7 @@ case $- in
 *) return ;;
 esac
 
+# --- Distribution Detection ---
 # Returns the last 2 fields of the working directory
 distribution() {
  local dtype="unknown" # Default to unknown
@@ -65,7 +66,7 @@ distribution() {
 }
 # setting a distro variable for potential future use
 DISTRIBUTION=$(distribution)
-# IP address lookup
+# --- IP Address Lookup ---
 alias whatismyip="whatsmyip"
 function whatsmyip() {
  # Internal IP Lookup.
@@ -109,6 +110,7 @@ if [[ -z "$TMUX" ]]; then
   colorscript random
  fi
 fi
+# --- System Version ---
 # Show the current version of the operating system
 ver() {
  local dtype
@@ -149,6 +151,7 @@ ver() {
  esac
 }
 
+# --- Sourcing Global Definitions and Completion ---
 # Source global definitions
 if [ -f /etc/bashrc ]; then
  . /etc/bashrc
@@ -160,8 +163,6 @@ if [ -f /usr/share/bash-completion/bash_completion ]; then
 elif [ -f /etc/bash_completion ]; then
  . /etc/bash_completion
 fi
-# Disable the bell
-if [[ $iatest -gt 0 ]]; then bind "set bell-style visible"; fi
 # --- Shell Options and History Settings ---
 # Disable the bell
 if [[ $iatest -gt 0 ]]; then bind "set bell-style visible"; fi

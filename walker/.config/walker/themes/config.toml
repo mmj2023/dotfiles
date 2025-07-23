@@ -1,0 +1,23 @@
+# ~/.config/walker/config.toml
+
+# Theme
+theme = "rofi-like"
+
+# Appearance
+font       = "JetBrainsMono NF 12"
+icon_theme = "Papirus"
+show_icons = true
+
+# Modules & labels (mimics rofi’s drun/run/filebrowser)
+modules = ["runner", "filebrowser", "applications"]
+
+labels = { runner      = " Run"
+         , applications = " Apps"
+         , filebrowser = " File" }
+# [keys]
+# the default is ["esc"], so we add e.g. ctrl+space and alt+space too
+# close = ["esc", "ctrl space", "alt space"]
+"keys": { "close": ["alt space"] }
+# Hook up the CSS theme file
+# Walker will look under ~/.config/walker/themes/
+# for rofi-like.css when theme="rofi-like"
