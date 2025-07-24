@@ -1,15 +1,18 @@
 /* CUSTOM THEME: Transparent Waybar style */
 
 @define-color foreground       #AEE9D1;
-@define-color background       rgba(16, 20, 23, 0.5);
-@define-color alt_background   rgba(27, 43, 41, 0.5);
+/* @define-color background       rgba(16, 20, 23, 0.8); */
+@define-color background       rgba(16, 20, 23, 0.85);
+@define-color alt_background   rgba(27, 43, 41, 0.8);
 @define-color accent_highlight rgba(174, 233, 209, 0.15);
+/* @define-color accent_highlight rgba(27, 43, 41, 0.8); */
 
 /* global font + text color */
 * {
   font-family: JetBrainsMono;
   font-size: 13px;
   color: @foreground;
+  background: transparent;
 }
 
 /* main containers */
@@ -56,26 +59,27 @@
 }
 
 #clear {
-  color: @foreground;
+  color: @alt_background;
   opacity: 0.8;
 }
 
 /* boxed layout */
 #box {
-  background-color: @background;
-  border: 1px solid rgba(16, 20, 23, 0.6);
-  border-radius: 2px;
-  padding: 32px;
-  box-shadow:
-    0 19px 38px rgba(0, 0, 0, 0.3),
-    0 15px 12px rgba(0, 0, 0, 0.22);
+  background: transparent;
+  /* border: 1px solid rgba(16, 20, 23, 0.6); */
+  /* border-radius: 2px; */
+  /* padding: 32px; */
+  padding: 20px;
+  /* box-shadow: */
+  /*   0 19px 38px rgba(0, 0, 0, 0.3), */
+  /*   0 15px 12px rgba(0, 0, 0, 0.22); */
 }
 
 /* list items */
 child {
   padding: 8px;
   border-radius: 2px;
-  background-color: transparent;
+  background-color: @background;
 }
 
 /* hover & selection highlights */
@@ -102,3 +106,4 @@ child:selected {
   font-size: 1.2em;
   border-radius: 2px;
 }
+

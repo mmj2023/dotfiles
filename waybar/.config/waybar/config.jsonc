@@ -7,7 +7,7 @@
 
 "modules-left": ["custom/launcher","cpu","memory","network","mpd"],
 "modules-center": ["hyprland/workspaces","hyprland/window","niri/workspaces","niri/window"],
-"modules-right":  ["tray","idle_inhibitor","pulseaudio","backlight","bluetooth","battery","clock","custom/sep","clock#date","custom/lock"],
+"modules-right":  ["tray","idle_inhibitor","pulseaudio","backlight","bluetooth","battery","clock","custom/sep","clock#date","custom/lock","custom/power"],
 
 // "battery": {
 //   "states": {
@@ -104,7 +104,14 @@
  // "interval":  5,           // update every 5s (optional)
  "format":  " ",
  "tooltip-format": "  Lock screen",
- "on-click": "HYPRLOCK_BG='rgba(16,20,23,0.8)' HYPRLOCK_FG='#AEE9D1' hyprlock",
+ "on-click": "sh -c '(hyprlock)' & disown",
+},
+"custom/power": {
+ "format": " ",
+ // "tooltip-format": "  Power off",
+ "tooltip-format": "  logout and shutdown controls",
+ // "on-click": "systemctl poweroff",
+ "on-click": "wlogout &",
 },
 "custom/launcher": {
     "format": " 󱓞 ",
@@ -115,7 +122,7 @@
     "interval": 1,
     "format": " &#8239; {icon0}{icon1}{icon2}{icon3} {usage}%",
     "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
-    "tooltip": false,
+    // "tooltip": false,
     "on-click": "kitty -e 'btop'"
 },
 "memory": {
