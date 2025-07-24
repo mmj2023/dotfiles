@@ -1,0 +1,15 @@
+# ~/.config/yazi/themes/transparent-teal.toml
+
+[colors]
+# these are ANSI/24-bit colors, no alpha channels – transparency comes from your terminal
+foreground      = "#AEE9D1"
+background      = "#101417"  # your terminal must be set to 50% opacity
+directory       = "#7CB8BB"
+symlink         = "#C397D8"
+executable      = "#FF9D00"
+selected_fg     = "#101417"  # invert fg/bg on selection
+selected_bg     = "#AEE9D1"
+cursor_line_bg  = "#101417"  # line highlight
+header          = "#6D6D6D"
+footer          = "#6D6D6D"
+marker          = "#AEE9D1"

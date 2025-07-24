@@ -4,7 +4,7 @@
 # author = "you@example.com"
 # version = "1.0"
 
-[mgr]
+[manager]
 cwd         = { fg = "#AEE9D1" }
 
 # tabs
