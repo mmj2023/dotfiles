@@ -7,7 +7,7 @@
 
 "modules-left": ["custom/launcher","cpu","memory","network","mpd"],
 "modules-center": ["hyprland/workspaces","hyprland/window","niri/workspaces","niri/window"],
-"modules-right":  ["tray","idle_inhibitor","pulseaudio","backlight","bluetooth","battery","clock","custom/sep","clock#date","custom/lock","custom/power"],
+"modules-right":  ["tray","idle_inhibitor","pulseaudio","custom/notification","backlight","bluetooth","battery","clock","custom/sep","clock#date","custom/lock","custom/power"],
 
 // "battery": {
 //   "states": {
@@ -105,6 +105,22 @@
  "format":  " ",
  "tooltip-format": "  Lock screen",
  "on-click": "sh -c '(hyprlock)' & disown",
+},
+"custom/notification": {
+        "tooltip": false,
+        "format": "{icon}",
+        "format-icons": {
+          "notification": "<span foreground='red'><sup></sup></span>",
+          "none": "",
+          "dnd-notification": "<span foreground='red'><sup></sup></span>",
+          "dnd-none": ""
+        },
+        "return-type": "json",
+        // "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
 },
 "custom/power": {
  "format": " ",

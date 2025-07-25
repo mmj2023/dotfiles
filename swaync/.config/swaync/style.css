@@ -1,0 +1,44 @@
+* {
+    /* font-family: "JetBrains Mono", monospace; */
+    font-size: 13px;
+    color: #AEE9D1;
+}
+
+#root, .notification {
+    /* background-color: rgba(16, 20, 23, 0.8); */
+    background-color: rgba(16, 20, 23, 0);
+}
+window {
+    background-color: rgba(16, 20, 23, 0.8);
+}
+.notification {
+    border-radius: 6px;
+    /* border: 1px solid rgba(174,233,209,0.2); */
+    border: 1px solid rgba(16, 20, 23, 0.8);
+    /* background-color: rgba(16, 20, 23, 0.8); */
+    margin-bottom: 8px;
+    padding: 12px;
+}
+
+.notification:hover {
+    background-color: rgba(174,233,209,0.8);
+}
+
+.notification-body-title {
+    font-weight: bold;
+    color: #AEE9D1;
+}
+
+.notification-actions GtkButton {
+    /* background-color: transparent; */
+    background-color: rgba(16, 20, 23, 0.8);
+    color: #AEE9D1;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.notification-actions GtkButton:hover {
+    /* background-color: rgba(174,233,209,0.15); */
+    background-color: rgba(174,233,209,0.8);
+}

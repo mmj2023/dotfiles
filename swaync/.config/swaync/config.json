@@ -1,0 +1,8 @@
+{
+  "style": "/home/mdmmj/.config/swaync/style.css",
+  "widgets": [
+   "title",
+   "dnd",
+   "notifications"
+  ]
+}
