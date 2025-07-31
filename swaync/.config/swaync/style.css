@@ -4,15 +4,16 @@
     color: #AEE9D1;
 }
 
-#root, .notification {
+#root, window{
     /* background-color: rgba(16, 20, 23, 0.8); */
     background-color: rgba(16, 20, 23, 0);
 }
-window {
-    background-color: rgba(16, 20, 23, 0.8);
-}
+/* window { */
+/*     background-color: rgba(16, 20, 23, 0.8); */
+/* } */
 .notification {
     border-radius: 6px;
+    background-color: rgba(16, 20, 23, 0.8);
     /* border: 1px solid rgba(174,233,209,0.2); */
     border: 1px solid rgba(16, 20, 23, 0.8);
     /* background-color: rgba(16, 20, 23, 0.8); */

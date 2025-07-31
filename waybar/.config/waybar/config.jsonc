@@ -6,7 +6,7 @@
 "margin-top":0,
 
 "modules-left": ["custom/launcher","cpu","memory","network","mpd"],
-"modules-center": ["hyprland/workspaces","hyprland/window","niri/workspaces","niri/window"],
+"modules-center": ["hyprland/workspaces","hyprland/scratchpad","hyprland/window","niri/workspaces","niri/window"],
 "modules-right":  ["tray","idle_inhibitor","pulseaudio","custom/notification","backlight","bluetooth","battery","clock","custom/sep","clock#date","custom/lock","custom/power"],
 
 // "battery": {
@@ -43,6 +43,46 @@
  }
 },
 "hyprland/workspaces": {
+ "disable-scroll": false,
+ "sort-by-name": true,
+ "on-click": "activate",
+ // "format": "{name} {icon}",
+ "format": "{icon}",
+ "format-icons": {
+    "1": "1:  ",
+    "2": "2:  ",
+    "5": "5: 󰌳 ",
+    "6": "6: 󰿎 ",
+    // "2": "",
+    // "3": "",
+    // "4": "",
+    // "5": "",
+    // "6": "",
+    // "7": "",
+    // "8": "",
+    // "9": "",
+    // "10": "",
+    // "11": "",
+    // "12": "",
+    // "13": "",
+    // "14": "",
+    // "15": "",
+    // "16": "",
+    // "17": "",
+    // "18": "",
+    // "19": "",
+    // "20": "",
+    // "21": "",
+    // "22": "",
+    // "23": "",
+    // "24": "",
+    // "25": "",
+    // "26": "",
+    // "27": "",
+    // "28": "
+  }
+},
+"hyprland/scratchpad": {
  "sort-by-name": true,
  "on-click": "activate"
 },
