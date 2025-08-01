@@ -151,9 +151,9 @@
         "format": "{icon}",
         "format-icons": {
           "notification": "<span foreground='red'><sup></sup></span>",
-          "none": "",
+          "none": " ",
           "dnd-notification": "<span foreground='red'><sup></sup></span>",
-          "dnd-none": ""
+          "dnd-none": " "
         },
         "return-type": "json",
         // "exec-if": "which swaync-client",
