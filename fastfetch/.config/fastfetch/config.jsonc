@@ -38,6 +38,11 @@
 			"keyColor": "blue"
 		},
 		{
+			"type": "terminal",
+			"key": " ",
+			"keyColor": "magenta"
+		},
+		{
 			"type": "shell",
 			"key": " ",
 			"keyColor": "magenta"
@@ -47,15 +52,22 @@
 			"key": "󰛖 ",
 			"keyColor": "green"
 		},
+        {
+         "type": "wm",
+         // "key": " DE/WM",
+         "key": " ",
+         "keyColor": "blue"
+        },
+        {
+         "type": "wmtheme",
+         // "key": "│ ├󰉼",
+         "key": "󰉼 ",
+         "keyColor": "blue"
+        },
 		{
 			"type": "icons",
 			"key": " ",
 			"keyColor": "yellow"
-		},
-		{
-			"type": "terminal",
-			"key": " ",
-			"keyColor": "magenta"
 		},
 		{
 			"type": "terminalfont",
@@ -89,8 +101,15 @@
 		},
         {
             "type": "battery",
-            "key": "󱟢",
+            "key": "󱟢 ",
             "keyColor": "green"
+        },
+        {
+         "type": "uptime",
+         // "key": "│ ├󰅐",
+         "key": "󰅐 ",
+         // "keyColor": "green"
+         "keyColor": "cyan"
         },
 		"break",
 		"colors"
