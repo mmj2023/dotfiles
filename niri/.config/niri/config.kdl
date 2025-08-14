@@ -14,11 +14,12 @@ input {
 
             // For example:
             // layout "us,ru"
-            options "grp:win_space_toggle,compose:ralt,ctrl:nocaps"
+            // options "grp:win_space_toggle,compose:ralt,ctrl:nocaps"
+            options "caps:swapescape"
         }
 
         // Enable numlock on startup, omitting this setting disables it.
-        numlock
+        // numlock
     }
 
     // Next sections include libinput settings.
@@ -60,7 +61,7 @@ input {
 
     // Focus windows and outputs automatically when moving the mouse into them.
     // Setting max-scroll-amount="0%" makes it work only on windows already fully on screen.
-    // focus-follows-mouse max-scroll-amount="0%"
+    focus-follows-mouse max-scroll-amount="0%"
 }
 
 // You can configure outputs by their name, which you can find
@@ -69,7 +70,7 @@ input {
 // Find more information on the wiki:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Outputs
 // Remember to uncomment the node by removing "/-"!
-/-output "eDP-1" {
+output "eDP-1" {
     // Uncomment this line to disable this output.
     // off
 
@@ -79,11 +80,11 @@ input {
     // for the resolution.
     // If the mode is omitted altogether or is invalid, niri will pick one automatically.
     // Run `niri msg outputs` while inside a niri instance to list all outputs and their modes.
-    // mode "1920x1080@144.02299"
-    mode "3840×2160@144.02299"
+    mode "1920x1080@144.02299"
+    // mode "3840×2160@144.02299"
 
     // You can use integer or fractional scale, for example use 1.5 for 150% scale.
-    // scale 1.5655
+    scale 1.25
 
     // Transform allows to rotate the output counter-clockwise, valid values are:
     // normal, 90, 180, 270, flipped, flipped-90, flipped-180 and flipped-270.
@@ -98,7 +99,7 @@ input {
     // so to put another output directly adjacent to it on the right, set its x to 1920.
     // If the position is unset or results in an overlap, the output is instead placed
     // automatically.
-    // position x=1280 y=0
+// position x=1280 y=0
 }
 
 // Settings that influence how windows are positioned and sized.
@@ -147,14 +148,16 @@ layout {
     //
     // Alternatively, you can override it with a window rule called
     // `draw-border-with-background`.
+    background-color "transparent"
 
+    // background-color "#00000000"
     // You can change how the focus ring looks.
     focus-ring {
         // Uncomment this line to disable the focus ring.
         off
 
         // How many logical pixels the ring extends out from the windows.
-        width 4
+        width 2
 
         // // Colors can be set in a variety of ways:
         // // - CSS named colors: "red"
@@ -176,7 +179,7 @@ layout {
         // // You can use any CSS linear-gradient tool on the web to set these up.
         // // Changing the color space is also supported, check the wiki for more info.
         // //
-        // // active-gradient from="#80c8ff" to="#bbddff" angle=45
+        // active-gradient from="#80c8ff" to="#bbddff" angle=45
         //
         // // You can also color the gradient relative to the entire view
         // // of the workspace, rather than relative to just the window itself.
@@ -192,20 +195,20 @@ layout {
         // off
 
         width 2
-        active-color "#ffc87f"
+        // active-color "#ffc87f"
         inactive-color "#505050"
 
         // Color of the border around windows that request your attention.
-        urgent-color "#9b0000"
+        // urgent-color "#9b0000"
 
         active-gradient from="#33ccffee" to="#00ff99ee" angle=45 relative-to="workspace-view"
-        inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
+        // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
     }
 
     // You can enable drop shadows for windows.
     shadow {
         // Uncomment the next line to enable shadows.
-        // on
+        on
 
         // By default, the shadow draws only around its window, and not behind it.
         // Uncomment this setting to make the shadow draw behind its window.
@@ -227,16 +230,16 @@ layout {
         // pixels and match the CSS box-shadow properties.
 
         // Softness controls the shadow blur radius.
-        softness 30
+        // softness 30
 
         // Spread expands the shadow.
-        spread 5
+        // spread 5
 
         // Offset moves the shadow relative to the window.
-        offset x=0 y=5
+        // offset x=0 y=5
 
-        // You can also change the shadow color and opacity.
-        color "#0007"
+        // // You can also change the shadow color and opacity.
+        // color "#0007"
     }
 
     // Struts shrink the area occupied by windows, similarly to layer-shell panels.
@@ -258,14 +261,71 @@ layout {
 // See the binds section below for more spawn examples.
 
 // This line starts waybar, a commonly used bar for Wayland compositors.
+spawn-at-startup "xwayland-satellite"
 spawn-at-startup "waybar"
+spawn-at-startup "swww-daemon"
+spawn-at-startup "killall swaync || swaync &"
+spawn-at-startup "bash ~/set_wallpaper.sh ~/Pictures/high_res_blue_green_space.jpg"
+spawn-at-startup "copyq --start-server"
+// # Launch Walker as a background service
+spawn-at-startup "walker --gapplication-service"
+// # Launch swayosd as a background service
+spawn-at-startup "swayosd-server"
+spawn-at-startup "/usr/lib/polkit-kde-authentication-agent-1"
+spawn-at-startup "flameshot"
+spawn-at-startup "prime-run" "ghostty"
+environment {
+    DISPLAY ":0"
+    HYPRCURSOR_THEME "cz-Hickson-black"
+    XCURSOR_THEME "cz-Hickson-black"
+    XCURSOR_SIZE "24"
+    HYPRCURSOR_SIZE "24"
+    // LD_PRELOAD ""
+    // MOZ_ENABLE_WAYLAND "1"
+    // XDG_CURRENT_DESKTOP "niri"
+    // XDG_SESSION_TYPE "wayland"
+    // XDG_SESSION_DESKTOP "niri"
+    // MOZ_DBUS_REMOTE "1"
+    // // GDK_BACKEND "wayland"
+    // // QT_AUTO_SCREEN_SCALE_FACTOR "1.25"
+    // // QT_SCALE_FACTOR "1.25"
+    // // QT_WAYLAND_FORCE_DPI "1"
+    // EGL_PLATFORM "wayland"
+    // CLUTTER_BACKEND "wayland"
+    // _JAVA_AWT_WM_NONREPARENTING "1"
+    // ELECTRON_OZONE_PLATFORM_HINT "auto"
+    // // QT_QPA_PLATFORMTHEME "qt6ct"
+    // // GSK_RENDERER "wayland"
+    // NVD_BACKEND "wayland"
+    // LIBVA_DRIVER_NAME "nvidia"
+    // // GBM_BACKEND "nvidia-drm"
+    // VDPAU_DRIVER "nvidia"
+    // __GLX_VENDOR_LIBRARY_NAME "nvidia"
+    // __GL_VRR_ALLOWED "1"
+    // __GL_GSYNC_ALLOWED "1"
+    // __GL_SHADER_DISK_CACHE_SKIP_CLEANUP "1"
+    // __GL_YIELD "USLEEP"
+}
+cursor {
+ xcursor-theme "cz-Hickson-black"
+ xcursor-size 24
+
+ hide-when-typing
+ hide-after-inactive-ms 500
+}
+
+hotkey-overlay {
+    skip-at-startup
+    // hide-not-bound
+}
+
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
 // If the client will specifically ask for CSD, the request will be honored.
 // Additionally, clients will be informed that they are tiled, removing some client-side rounded corners.
 // This option will also fix border/focus ring drawing behind some semitransparent windows.
 // After enabling or disabling this, you need to restart the apps for this to take effect.
-// prefer-no-csd
+prefer-no-csd
 
 // You can change the path where screenshots are saved.
 // A ~ at the front will be expanded to the home directory.
@@ -283,7 +343,7 @@ animations {
     // off
 
     // Slow down all animations by this factor. Values below 1 speed them up instead.
-    // slowdown 3.0
+    slowdown 0.25
 }
 
 // Window rules let you adjust behavior for individual windows.
@@ -300,6 +360,12 @@ window-rule {
     default-column-width {}
 }
 
+// window-rule {
+// // make a regular expression that matches everything
+//     match app-id=r#"^.*"#
+//     // match app-id=r#"^.^"#
+//     draw-border-with-background true
+// }
 // Open the Firefox picture-in-picture player as floating by default.
 window-rule {
     // This app-id regular expression will work for both:
@@ -344,8 +410,9 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
-    Mod+W hotkey-overlay-title="Open a Terminal: ghostty" { spawn "bash" "-c" "exec ghostty"; }
+    Mod+W hotkey-overlay-title="Open a Terminal: ghostty" { spawn "bash" "-c" "exec prime-run ghostty"; }
     Mod+SPACE hotkey-overlay-title="Run an Application: rofi" { spawn "bash" "-c" "pkill rofi || rofi -show drun -theme ~/.config/rofi/config.rasi"; }
+    // Mod+SPACE hotkey-overlay-title="Run an Application: walker" { spawn "bash" "-c" "prime-run walker"; }
     Super+Shift+L hotkey-overlay-title="Lock the Screen: hyprlock" { spawn "hyprlock"; }
 
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
@@ -579,7 +646,7 @@ binds {
 
     // The quit action will show a confirmation dialog to avoid accidental exits.
     Mod+Shift+E { quit; }
-    Ctrl+Alt+Delete { quit; }
+    // Ctrl+Alt+Delete { quit; }
 
     // Powers off the monitors. To turn them back on, do any input like
     // moving the mouse or pressing any other key.

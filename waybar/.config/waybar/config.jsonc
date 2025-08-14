@@ -119,8 +119,8 @@
 },
 "clock": {
     "locale": "C",
-    "format": " {:%H:%M}", // Icon: calendar-alt
-    "format-alt": " {:%I:%M %p}",
+    "format": "  {:%H:%M}", // Icon: calendar-alt
+    "format-alt": "  {:%I:%M %p}",
 },
 "clock#date": {
         "format": "  {:L%a %d %b}",
