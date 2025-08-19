@@ -306,6 +306,8 @@ environment {
     // __GL_SHADER_DISK_CACHE_SKIP_CLEANUP "1"
     // __GL_YIELD "USLEEP"
 }
+
+
 cursor {
  xcursor-theme "cz-Hickson-black"
  xcursor-size 24
@@ -652,3 +654,7 @@ binds {
     // moving the mouse or pressing any other key.
     Mod+Shift+P { power-off-monitors; }
 }
+
+// xwayland-satellite {
+//     // path "xwayland-satellite"
+// }
