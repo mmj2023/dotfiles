@@ -46,7 +46,7 @@ dotfiles/
 
 - **Bash** (latest stable version recommended)
 - **[Starship Prompt](https://starship.rs/)** installed and available in your shell
-- **[ Blesh ](https://github.com/akinomyoga/ble.sh) needed for for the starship prompt
+- **[ Blesh ](https://github.com/akinomyoga/ble.sh)** needed for for the starship prompt
 - a whole bunch of other projects or applications which are optional and can be installed when you want to install them and then you can just symlink their config files. even my .bashrc and starship prompt are optional.
 
 ## 📜 License
