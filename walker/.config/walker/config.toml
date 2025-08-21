@@ -60,13 +60,6 @@ resume_last_query = false
 [activation_mode]
 labels = "jkl;asdf"
 
-[builtins.hyprland_keybinds]
-show_sub_when_single = true
-weight = 5
-name = "hyprland_keybinds"
-placeholder = "Hyprland Keybinds"
-switcher_only = true
-
 [builtins.applications]
 weight = 5
 name = "applications"
@@ -122,30 +115,27 @@ label = "General Assistant"
 prompt = "You are a helpful general assistant. Keep your answers short and precise."
 
 [builtins.calc]
-require_number = true
-weight = 5
-name = "calc"
-icon = "accessories-calculator"
-placeholder = "Calculator"
-min_chars = 4
+name = "Calculator"
+icon = ""
+min_chars = 3
+prefix = "="
+
+[builtins.finder]
+use_fd = true
+cmd_alt = "xdg-open $(dirname ~/%RESULT%)"
+icon = "file"
+name = "Finder"
+preview_images = true
+hidden = false
+prefix = "."
 
 [builtins.windows]
 weight = 5
 icon = "view-restore"
 name = "windows"
+# prefix = "]"
 placeholder = "Windows"
 show_icon_when_single = true
-
-[builtins.clipboard]
-always_put_new_on_top = true
-exec = "wl-copy"
-weight = 5
-name = "clipboard"
-avoid_line_breaks = true
-placeholder = "Clipboard"
-image_height = 300
-max_entries = 10
-switcher_only = true
 
 [builtins.commands]
 weight = 5
@@ -160,16 +150,6 @@ icon = "utilities-terminal"
 name = "custom_commands"
 placeholder = "Custom Commands"
 
-[builtins.emojis]
-exec = "wl-copy"
-weight = 5
-name = "emojis"
-placeholder = "Emojis"
-switcher_only = true
-history = true
-typeahead = true
-show_unqualified = false
-
 [builtins.symbols]
 after_copy = ""
 weight = 5
@@ -178,21 +158,6 @@ placeholder = "Symbols"
 switcher_only = true
 history = true
 typeahead = true
-
-[builtins.finder]
-use_fd = false
-fd_flags = "--ignore-vcs --type file --type directory"
-cmd_alt = "xdg-open $(dirname ~/%RESULT%)"
-weight = 5
-icon = "file"
-name = "finder"
-placeholder = "Finder"
-switcher_only = true
-ignore_gitignore = true
-refresh = true
-concurrency = 8
-show_icon_when_single = true
-preview_images = false
 
 [builtins.runner]
 eager_loading = true
@@ -257,9 +222,76 @@ show_icon_when_single = true
 
 [builtins.translation]
 delay = 1000
+prefix = "["
 weight = 5
 name = "translation"
 icon = "accessories-dictionary"
 placeholder = "Translation"
 switcher_only = true
 provider = "googlefree"
+
+
+[builtins.emojis]
+name = "Emojis"
+icon = ""
+prefix = ":"
+
+[builtins.hyprland_keybinds]
+path = "~/.config/hypr/hyprland.conf"
+# prefix = "["
+hidden = true
+
+# [builtins.windows]
+# switcher_only = true
+# hidden = true
+
+# [builtins.hyprland_keybinds]
+# show_sub_when_single = true
+# weight = 5
+# name = "hyprland_keybinds"
+# placeholder = "Hyprland Keybinds"
+# switcher_only = true
+
+# [builtins.finder]
+# use_fd = false
+# fd_flags = "--ignore-vcs --type file --type directory"
+# cmd_alt = "xdg-open $(dirname ~/%RESULT%)"
+# weight = 5
+# icon = "file"
+# name = "finder"
+# placeholder = "Finder"
+# switcher_only = true
+# ignore_gitignore = true
+# refresh = true
+# concurrency = 8
+# show_icon_when_single = true
+# preview_images = false
+
+# [builtins.emojis]
+# exec = "wl-copy"
+# weight = 5
+# name = "emojis"
+# placeholder = "Emojis"
+# switcher_only = true
+# history = true
+# typeahead = true
+# show_unqualified = false
+
+# [builtins.clipboard]
+# always_put_new_on_top = true
+# exec = "wl-copy"
+# weight = 5
+# name = "clipboard"
+# avoid_line_breaks = true
+# placeholder = "Clipboard"
+# image_height = 300
+# max_entries = 10
+# switcher_only = true
+
+# [builtins.calc]
+# require_number = true
+# weight = 5
+# name = "calc"
+# icon = "accessories-calculator"
+# placeholder = "Calculator"
+# min_chars = 4

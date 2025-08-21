@@ -720,3 +720,5 @@ fi
 alias mingwgcc="x86_64-w64-mingw32-gcc"
 export PATH="$HOME/.local/:$PATH"
 source ~/.blerc.sh
+
+. "$HOME/.local/share/../bin/env"

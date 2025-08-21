@@ -1,6 +1,6 @@
 # Define the PREFIX variable
 PREFIX ?= /usr
-SRC=src
+SRC=conf
 
 # Default target
 all: clean install

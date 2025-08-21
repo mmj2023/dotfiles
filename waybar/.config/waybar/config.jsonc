@@ -137,7 +137,7 @@
         },
         "actions": { "on-click-right": "mode" },
         "min-length": 8,
-        "max-length": 28,
+        // "max-length": 28,
     },
 "custom/lock": {
  // "exec":  "~/.config/waybar/scripts/lock-status.sh",
