@@ -1,6 +1,6 @@
 # 🛠️ My Dotfiles
 
-A personal collection of configuration files to set up and customize my development environment.
+A personal collection of configuration files to set up and customize my linux environment.
 These dotfiles help streamline workflows, keep settings consistent across machines, and make it easy to get up and running quickly.
 
 ## 📂 Structure
