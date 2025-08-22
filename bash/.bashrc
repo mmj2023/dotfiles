@@ -104,7 +104,12 @@ iatest=$(expr index "$-" i)
 # fi
 if [[ -z "$TMUX" ]]; then
  if command -v fastfetch &>/dev/null; then
+  if [[ "$TERM" == "xterm-kitty" ]]; then
   fastfetch
+ else
+  fastfetch -c ~/.config/fastfetch/fallback_fasfetch.jsonc
+  alias fastfetch="fastfetch -c ~/.config/fastfetch/fallback_fasfetch.jsonc"
+  fi
  fi
  if command -v colorscript &>/dev/null; then
   colorscript random

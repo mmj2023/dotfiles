@@ -16,7 +16,8 @@ config.visual_bell = {
 config.enable_wayland = true
 config.audible_bell = "Disabled"
 config.window_close_confirmation = "NeverPrompt"
-config.term = "xterm-kitty"
+-- config.term = "xterm-kitty"
+-- config.term = "xterm-kitty"
 --
 -- -- Set primary rendering frontend
 -- -- local function get_frontend()
