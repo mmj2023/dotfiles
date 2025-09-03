@@ -71,7 +71,7 @@ return {
               { icon = " ", key = "s", desc = "Restore Session", section = "session" },
               -- { icon = " ", key = "x", desc = "Lazy Extras", action = ":LazyExtras" },
               { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy" },
-              { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+              {--[[  icon = " ",  ]]key = "q",--[[  desc = "Quit",  ]]action = ":qa" },
           },
         },
         sections = {

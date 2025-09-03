@@ -40,8 +40,10 @@ local term_nav = function(dir)
 end
 return {
   "snacks.nvim",
+  -- lazy = false,
   event = {
-    "VeryLazy" --[[ , "VimEnter" ]],
+    "VeryLazy" ,
+    -- "VimEnter",
   },
   init = function()
     vim.api.nvim_create_autocmd("User", {

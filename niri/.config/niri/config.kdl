@@ -413,8 +413,8 @@ binds {
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+W hotkey-overlay-title="Open a Terminal: ghostty" { spawn "bash" "-c" "exec prime-run ghostty"; }
-    Mod+SPACE hotkey-overlay-title="Run an Application: rofi" { spawn "bash" "-c" "pkill rofi || rofi -show drun -theme ~/.config/rofi/config.rasi"; }
-    // Mod+SPACE hotkey-overlay-title="Run an Application: walker" { spawn "bash" "-c" "prime-run walker"; }
+    // Mod+SPACE hotkey-overlay-title="Run an Application: rofi" { spawn "bash" "-c" "pkill rofi || rofi -show drun -theme ~/.config/rofi/config.rasi"; }
+    Mod+SPACE hotkey-overlay-title="Run an Application: walker" { spawn "bash" "-c" "exec dash ~/toggle_walker.sh"; }
     Super+Shift+L hotkey-overlay-title="Lock the Screen: hyprlock" { spawn "hyprlock"; }
 
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
