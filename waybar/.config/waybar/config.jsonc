@@ -242,7 +242,7 @@
     "default": ["", " ", " "]
   },
   "tooltip-format": "Playing at {volume}%",
-  "on-click": "pavucontrol",
+  "on-click": "pavucontrol-qt",
   "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
 },
 "mpd": {
