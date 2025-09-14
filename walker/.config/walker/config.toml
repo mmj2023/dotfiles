@@ -238,7 +238,7 @@ prefix = ":"
 
 [builtins.hyprland_keybinds]
 path = "~/.config/hypr/hyprland.conf"
-# prefix = "["
+prefix = "|"
 hidden = true
 
 # [builtins.windows]

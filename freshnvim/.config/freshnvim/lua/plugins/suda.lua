@@ -1,6 +1,6 @@
 return {
   "lambdalisue/vim-suda",
-  event = "VeryLazy",
+  event = "CmdlineEnter",
   -- opts = {
   --   -- your config here
   -- },

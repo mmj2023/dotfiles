@@ -693,8 +693,6 @@ function y() {
 }
 # export NODE_COMPILE_CACHE=~/.cache/nodejs-compile-cache
 export PATH="$HOME/.local/bin:$PATH"
-# --- Zoxide Integration & Aliases ---
-eval "$(zoxide init bash)"
 
 # Check if zoxide is installed and active
 if command -v z >/dev/null 2>&1; then
@@ -721,9 +719,17 @@ else
 fi
 # if [ command -v paru ] &>/dev/null; then
  alias parf="paru -Slq | fzf --multi --preview 'paru -Sii {1}' --preview-window=down:75% | xargs -ro paru -S"
+ alias parr="paru -Qq | fzf --multi --preview 'paru -Qi {1}' --preview-window=down:75% | xargs -ro paru -Rns"
+
 # fi
 alias mingwgcc="x86_64-w64-mingw32-gcc"
 export PATH="$HOME/.local/:$PATH"
 source ~/.blerc.sh
 
+# for carapace
+export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
+source <(carapace _carapace)
+
 . "$HOME/.local/share/../bin/env"
+# --- Zoxide Integration & Aliases ---
+eval "$(zoxide init bash)"
