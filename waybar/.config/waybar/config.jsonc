@@ -1,7 +1,7 @@
 {
 "layer": "top",
 "position": "top",
-"height": 10,
+"height": 25,
 "margin-bottom":0,
 "margin-top":0,
 
@@ -113,7 +113,7 @@
  "tooltip": false,
 },
 "tray": {
-    // "icon-size": 16,
+    "icon-size": 16,
     "show-passive-items": true,
     "spacing": 6
 },

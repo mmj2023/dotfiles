@@ -105,10 +105,10 @@ iatest=$(expr index "$-" i)
 if [[ -z "$TMUX" ]]; then
  if command -v fastfetch &>/dev/null; then
   if [[ "$TERM" == "xterm-kitty" ]]; then
-  fastfetch
- else
-  fastfetch -c ~/.config/fastfetch/fallback_fasfetch.jsonc
-  alias fastfetch="fastfetch -c ~/.config/fastfetch/fallback_fasfetch.jsonc"
+   fastfetch
+  else
+   fastfetch -c ~/.config/fastfetch/fallback_fasfetch.jsonc
+   alias fastfetch="fastfetch -c ~/.config/fastfetch/fallback_fasfetch.jsonc"
   fi
  fi
  if command -v colorscript &>/dev/null; then
@@ -217,7 +217,6 @@ export LESS_TERMCAP_se=$'\E[0m'
 export LESS_TERMCAP_so=$'\E[01;44;33m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
-
 
 # Check if ripgrep is installed
 if command -v rg &>/dev/null; then
@@ -548,6 +547,36 @@ if command -v sesh &>/dev/null; then
   )\"
  }
  sesh_script() {
+
+  # If not in tmux at all
+  if [ -z "$TMUX" ]; then
+   # Check if any tmux server is running
+   if tmux has-session 2>/dev/null; then
+    #   # # Attach to existing tmux
+    #   # # tmux attach
+    #   # # sesh_tmux_script
+    #   tmux new-window "bash -ic sesh_script"
+    #   # tmux new-window "bash -ic '$(declare -f sesh_script); sesh_script'"
+    # else
+    #   # # No tmux server yet → just start tmux normally
+    #   # tmux new-session
+    #   # tmux new-session "bash -ic sesh_tmux_script"
+    #   # tmux new-session "bash -ic '$(declare -f sesh_script); sesh_script'"
+    # tmux new-session "bash -ic sesh_script"
+    tmux attach
+   else
+    # tmux new-session -d
+    tmux new-session
+
+    # Send the picker command into that session
+    # tmux send-keys -t sesh_tmp C-s T
+
+    # Attach to it
+    tmux attach
+   fi
+   return
+  fi
+
   sesh connect \"$(
    sesh list --icons | fzf \
     --no-sort --ansi --border-label ' sesh ' --prompt '⚡  ' \
@@ -668,7 +697,6 @@ if [ -f ~/.local/share/blesh/ble.sh ]; then
  source ~/.local/share/blesh/ble.sh
 fi
 
-
 # # Pre-write a command in the terminal after loading .bashrc
 # if [ -z "$PRE_WRITTEN_COMMAND_DONE" ]; then
 #     export PRE_WRITTEN_COMMAND_DONE=1
@@ -697,14 +725,14 @@ export PATH="$HOME/.local/bin:$PATH"
 # Check if zoxide is installed and active
 if command -v z >/dev/null 2>&1; then
  # Zoxide-powered directory navigation aliases
- alias cd='z'                # Override cd with zoxide for smart directory jumping
- alias home='z ~'            # Go to home directory
- alias cd..='z ..'           # Go up one directory
- alias ..='z ..'             # Shorthand for going up one directory
- alias ...='z ../..'         # Go up two directories
- alias ....='z ../../..'     # Go up three directories
- alias .....='z ../../../..' # Go up four directories
- alias bd='z "$OLDPWD"'      # Go back to the old directory
+ alias cd='z'                                          # Override cd with zoxide for smart directory jumping
+ alias home='z ~'                                      # Go to home directory
+ alias cd..='z ..'                                     # Go up one directory
+ alias ..='z ..'                                       # Shorthand for going up one directory
+ alias ...='z ../..'                                   # Go up two directories
+ alias ....='z ../../..'                               # Go up three directories
+ alias .....='z ../../../..'                           # Go up four directories
+ alias bd='z "$OLDPWD"'                                # Go back to the old directory
  alias new_d="z $(ls -td --color=never * | head -n 1)" # Go to the newest directory
 else
  # Fallback to standard cd aliases if zoxide is not available
@@ -718,8 +746,8 @@ else
  alias new_d="cd $(ls -td --color=never * | head -n 1)"
 fi
 # if [ command -v paru ] &>/dev/null; then
- alias parf="paru -Slq | fzf --multi --preview 'paru -Sii {1}' --preview-window=down:75% | xargs -ro paru -S"
- alias parr="paru -Qq | fzf --multi --preview 'paru -Qi {1}' --preview-window=down:75% | xargs -ro paru -Rns"
+alias parf="paru -Slq | fzf --multi --preview 'paru -Sii {1}' --preview-window=down:75% | xargs -ro paru -S"
+alias parr="paru -Qq | fzf --multi --preview 'paru -Qi {1}' --preview-window=down:75% | xargs -ro paru -Rns"
 
 # fi
 alias mingwgcc="x86_64-w64-mingw32-gcc"
@@ -733,3 +761,4 @@ source <(carapace _carapace)
 . "$HOME/.local/share/../bin/env"
 # --- Zoxide Integration & Aliases ---
 eval "$(zoxide init bash)"
+source /usr/share/doc/pkgfile/command-not-found.bash

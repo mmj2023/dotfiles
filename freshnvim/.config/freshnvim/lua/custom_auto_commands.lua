@@ -641,7 +641,8 @@ local in_tmux = os.getenv("TMUX") ~= nil
 if in_tmux then
   -- vim.fn.system("tmux set-option status-style bg=default")
   vim.fn.system(
-    'tmux set status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default] 󰃮 %Y-%m-%d 󱑒 %H:%M "'
+    -- 'tmux set status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default] 󰃮 %Y-%m-%d 󱑒 %H:%M:%S "'
+    'tmux set status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default] 󱑒 %H:%M:%S "'
   )
   -- vim.fn.system('if [ -n "$TMUX" ]; then tmux set-option status-style bg=' .. bg_color .. "; fi")
   vim.fn.system("tmux set-option status-style bg=default")
@@ -654,7 +655,9 @@ vim.api.nvim_create_autocmd("VimLeave", {
     local in_tmux = os.getenv("TMUX") ~= nil
     if in_tmux then
       vim.fn.system(
-        'tmux set status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default] 󰃮 %Y-%m-%d "'
+        -- 'tmux set status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default] 󰃮 %Y-%m-%d "'
+        -- 'tmux set status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default]  "'
+        'tmux set status-right "#{#[bg=#{default_fg},bold]}#[fg=${default_fg},bg=default]  "'
       )
       vim.fn.system("tmux set-option status-style bg=default")
       -- vim.fn.system("tmux source-file ~/.tmux.conf")

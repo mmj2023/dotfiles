@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/user/bin/env bash
 
 # Get the current pane's process
 # pane_pid=$(tmux display-message -p "#{pane_pid}")
@@ -19,7 +19,9 @@ is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
 # if eval "$is_vim"; then
 #     # echo "This pane is running a shell program (e.g., bash, zsh, etc.)."
     # tmux if-shell "! $is_vim" "display-message  'This pane is running a shell program (e.g., bash, zsh, etc.).'"
-    tmux if-shell "! $is_vim" 'set status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default] 󰃮 %Y-%m-%d "'
+    # tmux if-shell "! $is_vim" 'set status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default] 󰃮 %Y-%m-%d "'
+    # tmux if-shell "! $is_vim" 'set status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default]  "'
+    tmux if-shell "! $is_vim" 'set status-right "#{#[bg=#{default_fg},bold]}#[fg=${default_fg},bg=default]  "'
     tmux if-shell "! $is_vim" 'set-option status-style bg=default'
 #     # Run your custom command here
 # else
