@@ -240,6 +240,7 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # Alias's to modified commands
+alias plasma-wifi='QT_QUICK_CONTROLS_STYLE=org.kde.desktop plasmawindowed org.kde.plasma.networkmanagement'
 alias cp='cp -i'
 alias mv='mv -i'
 alias rmd='\rm  --recursive --force --verbose '
@@ -762,3 +763,4 @@ source <(carapace _carapace)
 # --- Zoxide Integration & Aliases ---
 eval "$(zoxide init bash)"
 source /usr/share/doc/pkgfile/command-not-found.bash
+# eval "$(mise activate bash)"

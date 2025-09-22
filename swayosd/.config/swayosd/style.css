@@ -1,13 +1,13 @@
-@define-color background-color #2d353b;
-@define-color border-color #d3c6aa;
-@define-color label #d3c6aa;
-@define-color image #d3c6aa;
-@define-color progress #d3c6aa;
+@define-color background-color rgba(27, 43, 41, 0.8);
+@define-color border-color #AEE9D1;
+@define-color label #AEE9D1;
+@define-color image #AEE9D1;
+@define-color progress #AEE9D1;
 
 
 window {
-  border-radius: 0;
-  opacity: 0.8;
+  border-radius: 20px;
+  opacity: 0.85;
   border: 2px solid @border-color;
 
   background-color: @background-color;
