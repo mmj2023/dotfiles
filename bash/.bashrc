@@ -368,8 +368,6 @@ alias h="history | grep "
 alias p="ps aux | grep "
 alias topcpu="/bin/ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10"
 
-# Search files in the current folder
-alias f="find . | grep "
 
 # Count all files (recursively) in the current folder
 alias countfiles="for t in files links directories; do echo \`find . -type \${t:0:1} | wc -l\` \$t; done 2> /dev/null"
@@ -384,7 +382,14 @@ alias p="ps aux | grep "
 alias topcpu="/bin/ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10"
 
 # Search files in the current folder
-alias f="find . | grep "
+# alias f="find . | grep "
+if command -v fd &>/dev/null; then
+    alias f="fd --type f"
+    alias d="fd --type d"
+   else
+    alias f="find . | grep "
+fi
+# alias f="fd"
 
 # Count all files (recursively) in the current folder
 alias countfiles="for t in files links directories; do echo \`find . -type \${t:0:1} | wc -l\` \$t; done 2> /dev/null"
@@ -723,9 +728,9 @@ function y() {
 # export NODE_COMPILE_CACHE=~/.cache/nodejs-compile-cache
 export PATH="$HOME/.local/bin:$PATH"
 
-# Check if zoxide is installed and active
-if command -v z >/dev/null 2>&1; then
- # Zoxide-powered directory navigation aliases
+# # Check if zoxide is installed and active
+# if command -v z >/dev/null 2>&1; then
+#  # Zoxide-powered directory navigation aliases
  alias cd='z'                                          # Override cd with zoxide for smart directory jumping
  alias home='z ~'                                      # Go to home directory
  alias cd..='z ..'                                     # Go up one directory
@@ -735,17 +740,17 @@ if command -v z >/dev/null 2>&1; then
  alias .....='z ../../../..'                           # Go up four directories
  alias bd='z "$OLDPWD"'                                # Go back to the old directory
  alias new_d="z $(ls -td --color=never * | head -n 1)" # Go to the newest directory
-else
- # Fallback to standard cd aliases if zoxide is not available
- alias home='cd ~'
- alias cd..='cd ..'
- alias ..='cd ..'
- alias ...='cd ../..'
- alias ....='cd ../../..'
- alias .....='cd ../../../..'
- alias bd='cd "$OLDPWD"'
- alias new_d="cd $(ls -td --color=never * | head -n 1)"
-fi
+# else
+#  # Fallback to standard cd aliases if zoxide is not available
+#  alias home='cd ~'
+#  alias cd..='cd ..'
+#  alias ..='cd ..'
+#  alias ...='cd ../..'
+#  alias ....='cd ../../..'
+#  alias .....='cd ../../../..'
+#  alias bd='cd "$OLDPWD"'
+#  alias new_d="cd $(ls -td --color=never * | head -n 1)"
+# fi
 # if [ command -v paru ] &>/dev/null; then
 alias parf="paru -Slq | fzf --multi --preview 'paru -Sii {1}' --preview-window=down:75% | xargs -ro paru -S"
 alias parr="paru -Qq | fzf --multi --preview 'paru -Qi {1}' --preview-window=down:75% | xargs -ro paru -Rns"
@@ -760,7 +765,7 @@ export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
 source <(carapace _carapace)
 
 . "$HOME/.local/share/../bin/env"
-# --- Zoxide Integration & Aliases ---
-eval "$(zoxide init bash)"
 source /usr/share/doc/pkgfile/command-not-found.bash
 # eval "$(mise activate bash)"
+# --- Zoxide Integration & Aliases ---
+eval "$(zoxide init bash)"

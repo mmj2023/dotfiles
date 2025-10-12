@@ -27,8 +27,11 @@ vim.opt.shiftwidth = 1
 vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.autoindent = true
+vim.opt.smarttab = true
+-- Enable filetype detection, plugins, and indentation
+vim.cmd("filetype plugin indent on")
 -- Enable break indent
-vim.opt.breakindent = true
+vim.opt.breakindent = false
 
 -- vim.opt.laststatus = 3
 vim.opt.cursorline = true
@@ -151,7 +154,7 @@ vim.opt.grepformat = "%f:%l:%c:%m"
 vim.opt.grepprg = "rg --vimgrep"
 vim.opt.formatoptions = "jcroqlnt" -- tcqj
 -- disable nvim intro
-vim.opt.shortmess:append "sI"
+vim.opt.shortmess:append("sI")
 vim.o.ruler = false
 -- vim.opt.pumblend = 10 -- Popup blend
 -- vim.opt.pumheight = 10 -- Maximum number of entries in a popup
@@ -186,4 +189,31 @@ if vim.fn.has("nvim-0.11") == 1 then
 end
 if vim.fn.has("nvim-0.11") == 1 then
   vim.lsp.enable("ocamllsp")
+end
+vim.o.shell = shell or vim.o.shell
+
+-- Special handling for pwsh
+if shell == "pwsh" or shell == "powershell" then
+  -- Check if 'pwsh' is executable and set the shell accordingly
+  if vim.fn.executable("pwsh") == 1 then
+    vim.o.shell = "pwsh"
+  elseif vim.fn.executable("powershell") == 1 then
+    vim.o.shell = "powershell"
+  else
+    return vim.notify("No powershell executable found")
+  end
+
+  -- Setting shell command flags
+  vim.o.shellcmdflag =
+    "-NoLogo -NonInteractive -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues['Out-File:Encoding']='utf8';$PSStyle.OutputRendering='plaintext';Remove-Alias -Force -ErrorAction SilentlyContinue tee;"
+
+  -- Setting shell redirection
+  vim.o.shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
+
+  -- Setting shell pipe
+  vim.o.shellpipe = '2>&1 | %%{ "$_" } | tee %s; exit $LastExitCode'
+
+  -- Setting shell quote options
+  vim.o.shellquote = ""
+  vim.o.shellxquote = ""
 end
