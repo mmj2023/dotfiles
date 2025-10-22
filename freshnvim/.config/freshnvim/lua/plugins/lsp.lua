@@ -368,6 +368,22 @@ return {
         -- LSP Server Settings
         ---@type lspconfig.options
         servers = {
+          -- Rust LS configuration
+          rust_analyzer = {
+            -- Enables `rust-analyzer`'s inlay hints.
+            -- These are the type hints that often appear inline in your code,
+            -- showing inferred types, parameter names, etc.
+            --  settings = {
+            --        inlayHints = {
+            --     bindingMode = {
+            --        enable = true,
+            --        hideForConst = true,
+            --      },
+            --      chainingHints = {},
+            --     },
+            --  },
+            -- },
+          },
           -- Lua LS configuration
           lua_ls = {
             -- mason = false, -- set to false if you don't want this server to be installed with mason

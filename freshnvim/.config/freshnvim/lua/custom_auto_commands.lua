@@ -105,6 +105,7 @@ function rand_colorscheme()
   math.randomseed(os.time()) -- Set the random seed based on the current time
 
   local less_preferred_colorschemes = {
+    "zenbones",
     "blue",
     "zaibatsu",
     "darkblue",
@@ -227,7 +228,6 @@ function rand_colorscheme()
     "tokyodark",
     "vague",
     "cold",
-    "zenbones",
     "zenburned",
     "zenwritten",
     "base16-3024",
@@ -495,7 +495,6 @@ function rand_colorscheme()
     "base16-tokyodark-terminal",
     "vague",
     "cold",
-    "zenbones",
     -- "base16-zenbones",
     "base16-zenburn",
     -- "zenburned",
