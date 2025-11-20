@@ -33,7 +33,6 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", {desc = "move highlighted text up"}
 vim.keymap.set("v", ">", ">gv", {desc = "indent selected text and keep it highlighted"})
 vim.keymap.set("v", "<", "<gv", {desc = "unindent selected text and keep it highlighted"})
 
-vim.keymap.set("n", "<leader>pv", vim.cmd.Oil, {})
 vim.keymap.set("n", "<leader>bn", "<cmd>bnext<CR>", { silent = true, desc = "change with next buffer" })
 vim.keymap.set("n", "<leader>bp", "<cmd>bprev<CR>", { silent = true, desc = "change with previous buffer" })
 -- vim.keymap.set("n", "<leader><Tab>", ":b#<CR>", { silent = true })

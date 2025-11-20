@@ -54,6 +54,14 @@ return {
         end
       end,
     })
+    vim.api.nvim_create_autocmd("VimEnter", {
+     callback = function(data)
+      if vim.fn.isdirectory(data.file) == 1 then
+          local cwd = determine_cwd()
+          Snacks.explorer({ cwd = cwd })
+      end
+     end,
+    })
   end,
   opts = {
     ---@class snacks.image
@@ -113,6 +121,9 @@ return {
       -- or leave it empty to use the default settings
       -- refer to the configuration section below
       enabled = true,
+      layout = { preset = "sidebar", preview = true },
+      replace_netrw = true,
+
     },
     picker = {
       enabled = true,

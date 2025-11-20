@@ -9,10 +9,12 @@ return {
 
   {
     "stevearc/oil.nvim",
-    event = "VeryLazy",
+    -- event = "VeryLazy",
+    lazy = true,
     ---@module 'oil'
     ---@type oil.SetupOpts
     opts = {
+      default_file_explorer = false,
       delete_to_trash = true,
       skip_confirm_for_simple_edits = true,
       watch_for_changes = true,
@@ -32,6 +34,10 @@ return {
         "FerretDetective/oil-git-signs.nvim",
       },
     },
+    keys = {
+      { "<leader>pv", "<cmd>Oil<cr>", desc = "Open Oil" },
+    },
+
     -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
   },
 }

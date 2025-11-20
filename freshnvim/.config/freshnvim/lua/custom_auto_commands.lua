@@ -105,6 +105,7 @@ function rand_colorscheme()
   math.randomseed(os.time()) -- Set the random seed based on the current time
 
   local less_preferred_colorschemes = {
+    "tokyobones",
     "zenbones",
     "blue",
     "zaibatsu",
@@ -465,7 +466,6 @@ function rand_colorscheme()
     "base16-rose-pine-moon",
     "base16-onedark",
     "base16-onedark-dark",
-    "gruvbox",
     "base16-gruvbox-dark-hard",
     "base16-gruvbox-dark-pale",
     "base16-gruvbox-dark-soft",
@@ -485,7 +485,6 @@ function rand_colorscheme()
     "gruber-darker",
     "night-owl",
     "tokyodark",
-    "tokyobones",
     "base16-tokyodark",
     "base16-tokyo-night-dark",
     "base16-tokyo-night-moon",
