@@ -471,6 +471,17 @@ return {
               },
             },
           },
+          fortls = {
+            cmd = { "fortls" },
+            filetypes = { "fortran" },
+            -- root_dir = lspconfig.util.root_pattern(".fortls", ".git", "."),
+            settings = {
+              nthreads = 8, -- adjust for your CPU
+              autocomplete = true,
+              hover = true,
+              symbols = true,
+            },
+          },
           -- intelephense = {
           --   settings = {
           --     intelephense = {
