@@ -752,7 +752,7 @@ export PATH="$HOME/.local/bin:$PATH"
 #  alias new_d="cd $(ls -td --color=never * | head -n 1)"
 # fi
 # if [ command -v paru ] &>/dev/null; then
-alias parf="paru -Slq | fzf --multi --preview 'paru -Sii {1}' --preview-window=down:75% | xargs -ro paru -S"
+alias parf="paru -Slq | fzf --multi --preview 'paru -Sii {1}' --preview-window=down:75% | xargs -ro paru -S --needed"
 alias parr="paru -Qq | fzf --multi --preview 'paru -Qi {1}' --preview-window=down:75% | xargs -ro paru -Rns"
 
 # fi
