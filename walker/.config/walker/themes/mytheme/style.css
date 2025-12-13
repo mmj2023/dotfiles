@@ -1,5 +1,242 @@
 /* @import url("../../gtk-3.0/gtk.css"); */
 @import url("/home/mdmmj/.config/gtk-3.0/gtk.css");
+
+*/ @define-color window_bg_color @window_bg_color;
+/* uses Matugen’s window background */
+@define-color accent_bg_color @accent_bg_color;
+/* uses Matugen’s accent background */
+@define-color theme_fg_color @window_fg_color;
+/* Walker’s foreground = Matugen’s window_fg_color */
+@define-color error_bg_color @error_bg_color;
+/* error background from Matugen */
+@define-color error_fg_color @error_fg_color;
+/* error foreground from Matugen */
+@define-color success_bg_color @accent_bg_color;
+/* map success to accent (or another Matugen var) */
+@define-color warning_bg_color @card_bg_color;
+/* map warning to card background (or neutral) */
+
+* {
+ all: unset;
+}
+
+popover {
+ background: alpha(@window_bg_color, 0.6);
+ /* translucent background */
+ border: 1px solid alpha(@accent_bg_color, 0.8);
+ border-radius: 18px;
+ padding: 10px;
+ opacity: 0;
+}
+
+.normal-icons {
+ -gtk-icon-size: 16px;
+}
+
+.large-icons {
+ -gtk-icon-size: 32px;
+}
+
+scrollbar {
+ opacity: 0;
+}
+
+.box-wrapper {
+ box-shadow:
+  0 19px 38px rgba(0, 0, 0, 0.3),
+  0 15px 12px rgba(0, 0, 0, 0.22);
+ background: alpha(@window_bg_color, 0.6);
+ padding: 20px;
+ border-radius: 20px;
+ border: 1px solid alpha(@accent_bg_color, 0.8);
+}
+
+.preview-box {
+}
+
+.box {
+}
+
+.preview-box {
+ opacity: 0.5;
+}
+
+.elephant-hint {
+ opacity: 0.5;
+}
+
+.placeholder {
+ color: alpha(@theme_fg_color, 0.7);
+ /* slightly translucent text */
+}
+
+.search-container {
+ all: unset;
+ border: 2px solid alpha(@accent_bg_color, 0.8);
+ /* background: alpha(@window_bg_color, 0.85); */
+ border-radius: 10px;
+}
+
+.input placeholder {
+ opacity: 0.5;
+}
+
+.input:focus,
+.input:active {
+  box-shadow: none;
+  outline: none;
+}
+
+.input {
+ all: unset;
+ caret-color: @theme_fg_color;
+ background: alpha(@window_bg_color, 0.6);
+ padding: 15px;
+ color: @theme_fg_color;
+}
+
+
+.input selection {
+ all: unset;
+ background: alpha(@window_bg_color, 0.95);
+}
+
+
+.list {
+ color: @theme_fg_color;
+ background: alpha(@window_bg_color, 0.6);
+ /* opacity: 0.5; */
+ all: unset;
+}
+
+child,
+child > * {
+  all: unset;
+  /* border-radius: 10px; */
+}
+
+child:hover .item-box {
+}
+
+child:selected .item-box {
+ border: 2px solid alpha(@theme_fg_color, 0.4);
+}
+
+child:selected .item-box * {
+  /* color: @window_bg_color; */
+}
+
+child:selected .item-box {
+ background: alpha(@accent_bg_color, 0.25);
+}
+
+.item-box {
+ border-radius: 10px;
+ padding: 10px;
+}
+
+.item-text-box {
+  all: unset;
+  padding: 14px 0;
+}
+
+.item-text {
+}
+
+.item-subtext {
+  font-size: 0px;
+  min-height: 0px;
+  margin: 0px;
+  padding: 0px;
+}
+
+
+.item-quick-activation {
+ background: alpha(@accent_bg_color, 0.25);
+ border-radius: 5px;
+ padding: 10px;
+}
+
+
+/* .item-subtext { */
+/*  font-size: 12px; */
+/*  opacity: 0.5; */
+/* } */
+
+.providerlist .item-subtext {
+ font-size: unset;
+ opacity: 0.75;
+}
+
+.item-image {
+  margin-right: 14px;
+  -gtk-icon-transform: scale(0.9);
+}
+
+.item-image-text {
+ font-size: 28px;
+}
+
+.preview {
+ border: 1px solid alpha(@accent_bg_color, 0.25);
+ border-radius: 10px;
+ color: @theme_fg_color;
+ opacity: 0.5;
+}
+
+.todo.done .item-text-box {
+ opacity: 0.25;
+}
+
+.bluetooth.disconnected {
+ opacity: 0.5;
+}
+
+.preview .large-icons {
+ -gtk-icon-size: 64px;
+}
+
+.keybinds {
+ padding-top: 10px;
+ border-top: 1px solid alpha(@window_bg_color, 0.4);
+ font-size: 12px;
+ color: @theme_fg_color;
+}
+
+.keybind-button {
+ opacity: 0.5;
+}
+
+.keybind-button:hover {
+ opacity: 0.75;
+ cursor: pointer;
+}
+
+.keybind-bind {
+ text-transform: lowercase;
+ opacity: 0.35;
+}
+
+.keybind-label {
+ padding: 2px 4px;
+ border-radius: 4px;
+ border: 1px solid alpha(@theme_fg_color, 0.8);
+}
+
+.error {
+ padding: 10px;
+ background: alpha(@error_bg_color, 0.8);
+ color: @error_fg_color;
+}
+
+:not(.calc).current {
+ font-style: italic;
+}
+
+.preview-content.archlinuxpkgs {
+ font-family: monospace;
+}
+
 /* @define-color selected-text #fabd2f; */
 /* @define-color text #ebdbb2; */
 /* @define-color base #282828; */
@@ -13,34 +250,36 @@
 /* @define-color error_bg_color #ebdbb2; */
 /* @define-color error_fg_color #282828; */
 
-/* @define-color window_bg_color rgba(20, 20, 30, 0.6);   /* dark translucent base */ */
-/* @define-color accent_bg_color #00ffcc;                 /* neon cyan accent */ */
-/* @define-color theme_fg_color #e0fffa;                  /* soft glowing foreground */ */
-/* @define-color error_bg_color #ff0066;                  /* neon magenta error background */ */
-/* @define-color error_fg_color #0d0d0d;                  /* dark text on neon error */ */
-/* @define-color success_bg_color #39ff14;                /* neon green success */ */
-/* @define-color warning_bg_color #ffcc00;                /* bright yellow warning */ */
+/* @define-color window_bg_color rgba(20, 20, 30, 0.6);   /* dark translucent base */
+*/
+/* @define-color accent_bg_color #00ffcc;                 /* neon cyan accent */
+*/
+/* @define-color theme_fg_color #e0fffa;                  /* soft glowing foreground */
+*/
+/* @define-color error_bg_color #ff0066;                  /* neon magenta error background */
+*/
+/* @define-color error_fg_color #0d0d0d;                  /* dark text on neon error */
+*/
+/* @define-color success_bg_color #39ff14;                /* neon green success */
+*/
+/* @define-color warning_bg_color #ffcc00;                /* bright yellow warning */
 
-@define-color window_bg_color @window_bg_color;   /* uses Matugen’s window background */
-@define-color accent_bg_color @accent_bg_color;   /* uses Matugen’s accent background */
-@define-color theme_fg_color @window_fg_color;    /* Walker’s foreground = Matugen’s window_fg_color */
-@define-color error_bg_color @error_bg_color;     /* error background from Matugen */
-@define-color error_fg_color @error_fg_color;     /* error foreground from Matugen */
-@define-color success_bg_color @accent_bg_color;  /* map success to accent (or another Matugen var) */
-@define-color warning_bg_color @card_bg_color;    /* map warning to card background (or neutral) */
-
-/* /* Walker theme variables, mapped to Matugen’s dynamic colors */ */
-/* @define-color window_bg_color rgba(@window_bg_color, 0.6);   /* 60% opacity */ */
-/* @define-color accent_bg_color rgba(@accent_bg_color, 0.8);  /* 80% opacity */ */
-/* @define-color theme_fg_color rgba(@window_fg_color, 0.9);   /* 90% opacity */ */
-/* @define-color error_bg_color rgba(@error_bg_color, 0.8);    /* 80% opacity */ */
-/* @define-color error_fg_color rgba(@error_fg_color, 1.0);    /* keep fully opaque */ */
-/* @define-color success_bg_color rgba(@accent_bg_color, 0.7); /* semi‑transparent accent */ */
-/* @define-color warning_bg_color rgba(@card_bg_color, 0.7);   /* semi‑transparent card */ */
-
-
-
-
+/* /* Walker theme variables, mapped to Matugen’s dynamic colors */
+*/
+/* @define-color window_bg_color rgba(@window_bg_color, 0.6);   /* 60% opacity */
+*/
+/* @define-color accent_bg_color rgba(@accent_bg_color, 0.8);  /* 80% opacity */
+*/
+/* @define-color theme_fg_color rgba(@window_fg_color, 0.9);   /* 90% opacity */
+*/
+/* @define-color error_bg_color rgba(@error_bg_color, 0.8);    /* 80% opacity */
+*/
+/* @define-color error_fg_color rgba(@error_fg_color, 1.0);    /* keep fully opaque */
+*/
+/* @define-color success_bg_color rgba(@accent_bg_color, 0.7); /* semi‑transparent accent */
+*/
+/* @define-color warning_bg_color rgba(@card_bg_color, 0.7);   /* semi‑transparent card */
+*/
 /* * { */
 /*   all: unset; */
 /* } */
@@ -133,7 +372,8 @@
 /*   padding: 10px; */
 /* } */
 /**/
-/* /* child:hover .item-box, */ */
+/* /* child:hover .item-box, */
+*/
 /* child:selected .item-box { */
 /*   background: alpha(@accent_bg_color, 0.25); */
 /* } */
@@ -157,7 +397,8 @@
 /**/
 /* .preview { */
 /*   border: 1px solid alpha(@accent_bg_color, 0.25); */
-/*   /* padding: 10px; */ */
+/*   /* padding: 10px; */
+*/
 /*   border-radius: 10px; */
 /*   color: @theme_fg_color; */
 /* } */
@@ -242,163 +483,3 @@
 /* .preview-content.archlinuxpkgs { */
 /*   font-family: monospace; */
 /* } */
-
-* {
-  all: unset;
-}
-
-popover {
-  background: alpha(@window_bg_color, 0.6);   /* translucent background */
-  border: 1px solid alpha(@accent_bg_color, 0.8);
-  border-radius: 18px;
-  padding: 10px;
-  opacity: 0;
-}
-
-.normal-icons {
-  -gtk-icon-size: 16px;
-}
-
-.large-icons {
-  -gtk-icon-size: 32px;
-}
-
-scrollbar {
-  opacity: 0;
-}
-
-.box-wrapper {
-  box-shadow:
-    0 19px 38px rgba(0, 0, 0, 0.3),
-    0 15px 12px rgba(0, 0, 0, 0.22);
-  background: alpha(@window_bg_color, 0.6);
-  padding: 20px;
-  border-radius: 20px;
-  border: 1px solid alpha(@accent_bg_color, 0.8);
-}
-
-.preview-box {
-   opacity: 0.5;
-}
-.elephant-hint {
-   opacity: 0.5;
-}
-
-.placeholder {
-  color: alpha(@theme_fg_color, 0.7);   /* slightly translucent text */
-}
-
-.search-container {
-  border-radius: 10px;
-}
-
-.input placeholder {
-  opacity: 0.5;
-}
-
-.input selection {
-  background: alpha(@window_bg_color, 0.4);
-}
-
-.input {
-  caret-color: @theme_fg_color;
-  background: alpha(@window_bg_color, 0.6);
-  padding: 10px;
-  color: @theme_fg_color;
-}
-
-.list {
-  color: @theme_fg_color;
-  background: alpha(@window_bg_color, 0.6);
-  /* opacity: 0.5; */
-}
-
-.item-box {
-  border-radius: 10px;
-  padding: 10px;
-}
-
-.item-quick-activation {
-  background: alpha(@accent_bg_color, 0.25);
-  border-radius: 5px;
-  padding: 10px;
-}
-
-child:selected .item-box {
-  background: alpha(@accent_bg_color, 0.25);
-}
-
-.item-subtext {
-  font-size: 12px;
-  opacity: 0.5;
-}
-
-.providerlist .item-subtext {
-  font-size: unset;
-  opacity: 0.75;
-}
-
-.item-image-text {
-  font-size: 28px;
-}
-
-.preview {
-  border: 1px solid alpha(@accent_bg_color, 0.25);
-  border-radius: 10px;
-  color: @theme_fg_color;
-  opacity: 0.5;
-}
-
-.todo.done .item-text-box {
-  opacity: 0.25;
-}
-
-.bluetooth.disconnected {
-  opacity: 0.5;
-}
-
-.preview .large-icons {
-  -gtk-icon-size: 64px;
-}
-
-.keybinds {
-  padding-top: 10px;
-  border-top: 1px solid alpha(@window_bg_color, 0.4);
-  font-size: 12px;
-  color: @theme_fg_color;
-}
-
-.keybind-button {
-  opacity: 0.5;
-}
-
-.keybind-button:hover {
-  opacity: 0.75;
-  cursor: pointer;
-}
-
-.keybind-bind {
-  text-transform: lowercase;
-  opacity: 0.35;
-}
-
-.keybind-label {
-  padding: 2px 4px;
-  border-radius: 4px;
-  border: 1px solid alpha(@theme_fg_color, 0.8);
-}
-
-.error {
-  padding: 10px;
-  background: alpha(@error_bg_color, 0.8);
-  color: @error_fg_color;
-}
-
-:not(.calc).current {
-  font-style: italic;
-}
-
-.preview-content.archlinuxpkgs {
-  font-family: monospace;
-}
-
