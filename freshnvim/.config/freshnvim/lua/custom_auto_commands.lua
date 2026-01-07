@@ -11,6 +11,9 @@ vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
     end
   end,
 })
+-- Set wsl-clipboard for vim clipboard if running WSL
+-- Check if the current linux kernal is microsoft WSL version
+
 -- -- detect if the os is wsl and if yes then, syncronize clipboard to it.
 -- local function is_wsl()
 --   local osrelease_path = "/proc/sys/kernel/osrelease"
@@ -40,8 +43,7 @@ vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
 --   -- else
 --   -- 	print("Not running on WSL")
 -- end
--- Set wsl-clipboard for vim clipboard if running WSL
--- Check if the current linux kernal is microsoft WSL version
+
 local function is_wsl()
   local version_file = io.open("/proc/version", "rb")
   if version_file ~= nil and string.find(version_file:read("*a"), "microsoft") then
@@ -58,13 +60,13 @@ if is_wsl() then
     name = "wsl-clipboard",
     copy = {
       ["+"] = "wcopy",
-      ["*"] = "wcopy"
+      ["*"] = "wcopy",
     },
     paste = {
       ["+"] = "wpaste",
-      ["*"] = "wpaste"
+      ["*"] = "wpaste",
     },
-    cache_enabled = true
+    cache_enabled = true,
   }
 end
 
@@ -508,21 +510,6 @@ function rand_colorscheme()
 end
 vim.cmd("colorscheme " .. rand_colorscheme())
 
--- -- Create an augroup named "RestoreCursorPosition"
--- local group = vim.api.nvim_create_augroup('RestoreCursorPosition', { clear = true })
--- -- Define an autocommand within that group
---
--- vim.api.nvim_create_autocmd('BufReadPost', {
---     group = group,
---     pattern = '*',
---     callback = function()
---         local pos = vim.fn.line('\'"')
---         if pos > 1 and pos <= vim.fn.line('$') then
---             vim.api.nvim_command('normal! g`"')
---         end
---     end,
--- })
-
 -- resize splits if window got resized
 vim.api.nvim_create_autocmd({ "VimResized" }, {
   group = augroup("resize_splits"),
@@ -532,6 +519,7 @@ vim.api.nvim_create_autocmd({ "VimResized" }, {
     vim.cmd("tabnext " .. current_tab)
   end,
 })
+
 -- Auto create dir when saving a file, in case some intermediate directory does not exist
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
   group = augroup("auto_create_dir"),
@@ -543,6 +531,7 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
     vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
   end,
 })
+
 -- Fix conceallevel for json files
 vim.api.nvim_create_autocmd({ "FileType" }, {
   group = augroup("json_conceal"),
@@ -616,6 +605,22 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   command = [[%s/\s\+$//e]],
 })
 -- go to last loc when opening a buffer
+
+-- -- Create an augroup named "RestoreCursorPosition"
+-- local group = vim.api.nvim_create_augroup('RestoreCursorPosition', { clear = true })
+-- -- Define an autocommand within that group
+--
+-- vim.api.nvim_create_autocmd('BufReadPost', {
+--     group = group,
+--     pattern = '*',
+--     callback = function()
+--         local pos = vim.fn.line('\'"')
+--         if pos > 1 and pos <= vim.fn.line('$') then
+--             vim.api.nvim_command('normal! g`"')
+--         end
+--     end,
+-- })
+
 vim.api.nvim_create_autocmd("BufReadPost", {
   group = augroup("last_loc"),
   callback = function(event)
@@ -631,6 +636,7 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     end
   end,
 })
+
 -- vim.api.nvim_create_autocmd('VeryLazy', {
 -- pattern = '*',
 -- callback = function()
@@ -648,6 +654,7 @@ if in_tmux then
 end
 --     end,
 -- })
+
 vim.api.nvim_create_autocmd("VimLeave", {
   callback = function()
     local in_tmux = os.getenv("TMUX") ~= nil
@@ -662,6 +669,42 @@ vim.api.nvim_create_autocmd("VimLeave", {
     end
   end,
 })
+
+vim.api.nvim_create_autocmd("FocusGained", {
+  pattern = "*",
+  callback = function()
+    -- Add any command you want to execute when Neovim regains focus
+    print("Welcome back to Neovim!") -- Example action (optional)
+    -- -- You can also refresh the buffer, reload configs, or synchronize plugins
+    -- vim.cmd("checktime") -- Refresh buffers in case files were modified externally
+    local in_tmux = os.getenv("TMUX") ~= nil
+    if in_tmux then
+      vim.fn.system(
+        -- 'tmux set status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default] 󰃮 %Y-%m-%d "'
+        -- 'tmux set status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default]  "'
+        'tmux set status-right "#{#[bg=#{default_fg},bold]}#[fg=${default_fg},bg=default]  "'
+      )
+      vim.fn.system("tmux set-option status-style bg=default")
+      -- vim.fn.system("tmux source-file ~/.tmux.conf")
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd("FocusLost", {
+  callback = function()
+    local in_tmux = os.getenv("TMUX") ~= nil
+    if in_tmux then
+      vim.fn.system(
+        -- 'tmux set status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default] 󰃮 %Y-%m-%d "'
+        -- 'tmux set status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default]  "'
+        'tmux set status-right "#{#[bg=#{default_fg},bold]}#[fg=${default_fg},bg=default]  "'
+      )
+      vim.fn.system("tmux set-option status-style bg=default")
+      -- vim.fn.system("tmux source-file ~/.tmux.conf")
+    end
+  end,
+})
+
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(event)
     vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
@@ -692,7 +735,7 @@ local function detect_filetype(buf)
   else
     -- run Ex command in the context of `buf`, without changing your visible buffer
     vim.api.nvim_buf_call(buf, function()
-      vim.cmd('silent! filetype detect')
+      vim.cmd("silent! filetype detect")
     end)
   end
 end
@@ -709,6 +752,7 @@ vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
     end, 10)
   end,
 })
+
 -- -- Create (or reuse) a namespace for our extmarks
 -- local ns = vim.api.nvim_create_namespace("search_info_ns")
 --
@@ -750,15 +794,6 @@ vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
 --     vim.schedule(function()
 --       show_search_info()
 --     end)
---   end,
--- })
--- vim.api.nvim_create_autocmd("FocusGained", {
---   pattern = "*",
---   callback = function()
---     -- Add any command you want to execute when Neovim regains focus
---     print("Welcome back to Neovim!") -- Example action (optional)
---     -- You can also refresh the buffer, reload configs, or synchronize plugins
---     vim.cmd("checktime") -- Refresh buffers in case files were modified externally
 --   end,
 -- })
 -- vim.cmd(string.format([[highlight WinBar1 guifg=%s]], Snacks.util.color("Special")))

@@ -65,7 +65,7 @@ config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
 -- config.window_decorations = "RESIZE"
 config.enable_tab_bar = true
 config.scrollback_lines = 10000
-config.window_background_opacity = 0.3
+config.window_background_opacity = 0
 -- wezterm.on("toggle-opacity", function(window, pane)
 -- 	-- print("toggle-blur")
 -- 	local overrides = window:get_config_overrides() or {}
