@@ -1,0 +1,699 @@
+# Hyprland Configuration
+# https://wiki.hypr.land/Configuring/
+
+################
+### MONITORS ###
+################
+
+# See https://wiki.hyprland.org/Configuring/Monitors/
+monitor=,preferred,auto,auto
+source = ~/.config/hypr/monitors.conf
+
+
+########################
+### ENVIRONMENT VARS ###
+########################
+source = ~/.config/hypr/modules/environment.conf
+
+#######################
+### Local variables ###
+#######################
+$mod = SUPER
+$terminal = prime-run ghostty
+$fileManager = prime-run pcmanfm
+$menu = dash ~/toggle_walker.sh
+# $menu = dash ~/.config/hypr/launch_walker.sh
+# $menu = walker
+
+####################
+### STARTUP APPS ###
+####################
+# exec-once = hyprpaper &
+# exec-once = killall dunst && dunst &
+# exec-once = lxqt-policykit-agent &
+# exec-once = wl-paste --type text --watch cliphist store
+# exec-once = wl-paste --type image --watch cliphist store
+# exec-once = waybar & hyprpaper & firefox
+# exec-once = nm-applet &
+# exec-once = blueman-applet &
+# exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+# exec-once = dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS
+# exec-once = /usr/lib/mate-polkit/polkit-mate-authentication-agent-1
+# exec-once = bash ~/protal.sh
+exec-once= dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+exec-once = /usr/lib/polkit-kde-authentication-agent-1
+exec-once = hyprctl setcursor cz-Hickson-black 24
+exec-once = xrdb ~/.Xresources
+# exec-once = hyprctl setcursor breeze_cursors 24
+exec-once = killall hypridle & hypridle
+exec-once = bash -c "wl-paste --watch cliphist store &"
+exec-once = hyprpm reload -n
+exec-once = dms run
+# # exec-once = systemctl --user start hyprpolkitagent
+exec-once = hyprsunset
+# # exec-once = snixembed
+exec-once = elephant
+exec-once = copyq --start-server
+exec-once = flameshot
+exec-once = walker --gapplication-service
+exec-once = wayscriber --daemon
+exec-once = kwalletd6
+exec-once = [workspace 1 silent] $terminal
+exec-once = [workspace 2 silent] prime-run zen
+exec-once = [workspace 5 silent] prime-run helium-browser --ozone-platform=x11
+# exec-once = [workspace 5 silent] ~/AppImages/squashfs-root/AppRun
+exec-once = [workspace 6 silent] prime-run librewolf
+# for dolphin
+# disabled cause the tray gets broken
+# exec-once = XDG_MENU_PREFIX=plasma- kbuildsycoca6 --noincremental
+# exec-once = kded6 &
+
+# ==================
+# INPUT CONFIG
+# ==================
+# input {
+#     kb_layout = us
+#     numlock_by_default = true
+# }
+input {
+    kb_layout = us
+    # numlock_by_default = true
+    repeat_delay = 150
+    repeat_rate = 50
+    kb_variant =
+    kb_model =
+    kb_options = caps:swapescape
+    kb_rules =
+
+    follow_mouse = 2
+    # emulate_discrete_scroll = 1
+    # mouse_refocus = 0
+    # off_window_axis_events = 2
+
+    sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
+
+    touchpad {
+        # disable_while_typing = true
+        natural_scroll = true
+        # clickfinger_behavior = true
+        middle_button_emulation = true
+        disable_while_typing = true
+        # scroll_factor = 0.5
+    }
+}
+
+group {
+    col.border_active   = rgba(33d2ffee) rgba(00ff88ee) 45deg
+    col.border_locked_active = rgba(33d2ffee) rgba(00ff88ee) 45deg
+    col.border_inactive = rgba(4f4f4faa)
+    groupbar {
+       # col.active = rgba(33d2ffee) rgba(00ff88ee) 90deg
+       col.active = rgba(85D4CFee) rgba(00ff88ee) 90deg
+       col.locked_active = rgba(234439FF) rgba(00ff88ee) 90deg
+       # col.inactive = rgba(4f4f4faa)
+       col.inactive = rgba(707070ff)
+       col.locked_inactive = rgba(707070ff)
+       # font_family = JetBrainsMono Nerd Font
+       font_size = 11
+       text_color = rgba(AEE9D1aa)
+       font_weight_active = bold
+       # text_color_locked_inactive = rgba(4f4f4faa)
+
+       # example
+       # enabled = true
+       #
+       # font_fanily = JetBrainsMono Nerd Font
+       # font_size = 12
+       #
+       # gradients = true
+       #
+       # height = 18
+       #
+       # priopity = 3
+       #
+       # render_titles = true
+       #
+       # scrolling = true
+       #
+       # text color = $foreground
+       #
+       # col.active = $cofor13
+       # coloinactive = $background
+       # col.locked_active = $coloré
+       # col.locked_inactive = $colors
+     }
+}
+
+# ==================
+# GENERAL LAYOUT
+# ==================
+general {
+    gaps_in = 2
+    gaps_out = 2
+    border_size = 2  # off in niri
+
+    # https://wiki.hyprland.org/Configuring/Variables/#variable-types for info about colors
+    # col.active_border = rgba(707070ff)
+    col.active_border = rgba(33ccffee) rgba(00ff99ee) 45deg
+    col.inactive_border = rgba(707070ff)
+    # col.inactive_border = rgba(d0d0d0ff)
+
+    # Set to true enable resizing windows by clicking and dragging on borders and gaps
+    resize_on_border = true
+    extend_border_grab_area = 20
+    # layout
+    # layout = dwindle
+    # layout = scrolling
+    # Please see https://wiki.hyprland.org/Configuring/Tearing/ before you turn this on
+    allow_tearing = false
+}
+
+# ==================
+# DECORATION
+# ==================
+decoration {
+    # rounding = 12
+    rounding = 4
+
+    active_opacity = 1.0
+    inactive_opacity = 1.0
+    # inactive_opacity = 0.9
+
+    shadow {
+        enabled = false
+        range = 30
+        render_power = 5
+        offset = 0 5
+        color = rgba(00000070)
+    }
+    # https://wiki.hyprland.org/Configuring/Variables/#blur
+    blur {
+        enabled = false
+        size = 4
+        passes = 6
+
+        vibrancy = 0.1696
+        # vibrancy = 0.16
+    }
+    # Dim
+    # dim_inactive = true
+    # dim_strength = 0.025
+    # dim_
+}
+
+# ==================
+# ANIMATIONS
+# ==================
+animations {
+    enabled = yes, please :)
+    # enabled = true
+    bezier = easeOutQuint,0.23,1,0.32,1
+    bezier = easeInOutCubic,0.65,0.05,0.36,1
+    bezier = linear,0,0,1,1
+    bezier = almostLinear,0.5,0.5,0.75,1.0
+    bezier = quick,0.15,0,0.1,1
+
+    animation = windowsIn, 1, 3, default
+    animation = windowsOut, 1, 3, default
+    animation = windowsMove, 1, 4, default
+    animation = fade, 1, 3, default
+    animation = border, 1, 3, default
+    # animation = workspaces, 1, 5, default
+    animation = workspaces, 1, 0.97, almostLinear, fade
+    animation = workspacesIn, 1, 0.605, almostLinear, slidevert
+    animation = workspacesOut, 1, 0.97, almostLinear, slidevert
+}
+
+# ==================
+# LAYOUTS
+# ==================
+# dwindle {
+#     preserve_split = true
+# }
+#
+# master {
+#     mfact = 0.5
+# }
+# See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
+dwindle {
+    pseudotile = true # Master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
+    preserve_split = true # You probably want this
+    # smart-indent = true
+}
+
+# See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
+master {
+    new_status = master
+}
+
+###########
+# XWAYLAND
+###########
+xwayland {
+    force_zero_scaling = true
+}
+
+###################
+### PERMISSIONS ###
+###################
+
+# See https://wiki.hyprland.org/Configuring/Permissions/
+# Please note permission changes here require a Hyprland restart and are not applied on-the-fly
+# for security reasons
+
+# ecosystem {
+#   enforce_permissions = 1
+# }
+
+# permission = /usr/bin/grim, screencopy, allow
+# permission = /usr/(lib|libexec|lib64)/xdg-desktop-portal-hyprland, screencopy, allow
+# permission = /usr/(bin|local/bin)/hyprpm, plugin, allow
+#
+
+# ==================
+# MISC
+# ==================
+# misc {
+#     disable_hyprland_logo = true
+#     disable_splash_rendering = true
+#     vrr = 1
+# }
+misc {
+    # force_default_wallpaper = -1 # Set to 0 or 1 to disable the anime mascot wallpapers
+    # disable_hyprland_logo = false # If true disables the random hyprland logo / anime girl background. :(
+    # focus_on_activate = true
+    # animate_manual_resizes = false
+    # animate_mouse_windowdragging = false
+    # vfr = 1
+    # vrr = 1
+    force_default_wallpaper = 0 # Set to 0 or 1 to disable the anime mascot wallpapers
+    disable_hyprland_logo = true # If true disables the random hyprland logo / anime girl background. :(
+    focus_on_activate = true
+    disable_splash_rendering = true
+    vfr = true
+    vrr = true
+    mouse_move_enables_dpms = true
+    key_press_enables_dpms = true
+    enable_swallow = false
+    swallow_regex = (foot|kitty|allacritty|Alacritty|ghostty)
+    # new_window_takes_over_fullscreen = 2 # TODO: fix this
+    on_focus_under_fullscreen = 1
+    exit_window_retains_fullscreen = false
+    allow_session_lock_restore = 1
+    mouse_move_enables_dpms = true
+    key_press_enables_dpms = true
+    background_color = rgba(0,0,0,0)
+    session_lock_xray = true
+    initial_workspace_tracking = 2
+}
+
+# ==================
+# CURSOR
+# ==================
+cursor {
+    no_hardware_cursors = true
+    zoom_factor = 1
+    zoom_rigid = true
+    inactive_timeout = 0.3
+    hide_on_key_press = true
+    no_warps = true
+    zoom_disable_aa = false
+    # zoom_disable_aa = true
+}
+# ==================
+# EXPERIMENTAL
+# ==================
+experimental {
+    # Enables experimental features
+    # xx_color_management_v4 = true
+ }
+
+# === scroll ===
+binds {
+    scroll_event_delay = 0
+    # hide_special_on_workspace_change = true
+}
+
+# ==================
+# WINDOW RULES
+# ==================
+
+# Ref https://wiki.hyprland.org/Configuring/Workspace-Rules/
+# "Smart gaps" / "No gaps when only"
+# uncomment all if you wish to use that.
+
+# workspace = w[tv1], gapsout:0, gapsin:0
+# workspace = f[1], gapsout:0, gapsin:0
+# windowrule = bordersize 0, floating:0, onworkspace:w[tv1] # TODO: fix this
+# windowrule = rounding 0, floating:0, onworkspace:w[tv1] # TODO: fix this
+# windowrule = bordersize 0, floating:0, onworkspace:f[1] # TODO: fix this
+# windowrule = rounding 0, floating:0, onworkspace:f[1] # TODO: fix this
+workspace = w[tv1], gapsout:0, gapsin:0
+workspace = f[1], gapsout:0, gapsin:0
+windowrule = border_size 0, match:float 0, match:workspace w[tv1]
+windowrule = rounding 0, match:float 0, match:workspace w[tv1]
+windowrule = border_size 0, match:float 0, match:workspace f[1]
+windowrule = rounding 0, match:float 0, match:workspace f[1]
+# # Smart gaps (ignoring special workspaces)
+# workspace = w[tv1]s[false], gapsout:0, gapsin:0
+# workspace = f[1]s[false], gapsout:0, gapsin:0
+# windowrule = border_size 0, match:float 0, match:workspace w[tv1]s[false]
+# windowrule = rounding 0, match:float 0, match:workspace w[tv1]s[false]
+# windowrule = border_size 0, match:float 0, match:workspace f[1]s[false]
+# windowrule = rounding 0, match:float 0, match:workspace f[1]s[false]
+
+
+windowrule = tile on, match:class ^(org\.wezfurlong\.wezterm)$
+windowrulev2 = rounding 12, class:^(org\.gnome\.)
+windowrulev2 = noborder, class:^(org\.gnome\.)
+
+windowrule = tile on, match:class ^(gnome-control-center)$
+windowrule = tile on, match:class ^(pavucontrol)$
+windowrule = tile on, match:class ^(nm-connection-editor)$
+
+windowrule = float on, match:class ^(gnome-calculator)$
+windowrule = float on, match:class ^(galculator)$
+windowrule = float on, match:class ^(blueman-manager)$
+# windowrulev2 = float, class:^(org\.gnome\.Nautilus)$
+# windowrulev2 = float, class:^(steam)$
+windowrule = float on, match:class ^(xdg-desktop-portal)$
+
+windowrule = match:class ^(org\.wezfurlong\.wezterm)$, match:float 0, border_size 0
+windowrule = match:class ^(Alacritty)$, match:float 0, border_size 0
+windowrule = match:class ^(com\.mitchellh\.ghostty)$, match:float 0, border_size 0
+windowrule = match:class ^(kitty)$, match:float 0, border_size 0
+# windowrulev2 = noborder, class:^(org\.wezfurlong\.wezterm)$
+# windowrulev2 = noborder, class:^(Alacritty)$
+# windowrulev2 = noborder, class:^(app\.zen_browser\.zen)$
+# windowrulev2 = noborder, class:^(kitty)$
+
+windowrule = float on, match:class ^(app\.zen_browser\.zen)$, match:title ^(Picture-in-Picture)$
+windowrule = float on, match:class ^(librewolf)$, match:title ^(Picture-in-Picture)$
+windowrule = float on, match:class ^(helium)$, match:title ^(Picture-in-Picture)$
+windowrulev2 = float, class:^(zoom)$
+
+# windowrule {
+#   name = flameshot
+#   no_anim = on
+#   pin = off
+#   float = on
+#   # fullscreen_state = 2 0
+#   fullscreen = off
+#   # move = 0 0
+#   content = photo
+#   match:class = flameshot
+#   match:title = flameshot
+# }
+
+windowrule {
+  name = flameshot
+  no_anim = on
+  pin = off
+  float = on
+  fullscreen_state = true
+  move = 0 0
+  content = photo
+  match:class = flameshot
+  match:title = flameshot
+}
+
+# windowrule {
+#   name = flameshot
+#   float = on
+#   border_size = 0
+#   no_anim = on
+#   # fullscreen = off
+#   # fullscreen_state = off
+#   # monitor = 0
+#   move = 0 0
+#   match:class = flameshot
+#   match:title = flameshot
+# }
+
+# windowrulev2 = opacity 0.9 0.9, floating:0, focus:0
+
+# windowrule = move (cursor_x-(window_w*0.5)) (cursor_y-(window_h*0.5)), match:class kitty
+
+windowrule = opacity 0.6 override, match:tag alpha_0.6
+# windowrule = maximize on, match:tag max
+
+windowrule = float on,match:class ^(com.github.hluk.copyq)$, # fixed
+windowrule = size 300 200,match:class ^(com.github.hluk.copyq)$,# TODO: fix this
+windowrule = move (cursor_x-(window_w*0)) (cursor_y-(window_h*0)), match:class ^(com.github.hluk.copyq)$,
+# windowrule = move (cursor_x-(window_w*0.5)) (cursor_y-(window_h*0.5)), match:class ^(com.github.hluk.copyq)$,
+windowrule = float on,match:class ^(io.github.Qalculate.qalculate-qt)$, # TODO: fix this
+windowrule = size 500 500,match:class ^(io.github.Qalculate.qalculate-qt)$,# TODO: fix this
+# Ignore maximize requests from apps. You'll probably like this.
+# windowrule = suppressevent maximize, match:class ^(.*)$ # TODO: fix this
+# Fix some dragging issues with XWayland
+# windowrule = nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0 # TODO: fix this
+
+layerrule = no_anim on, match:namespace ^(quickshell)$ # TODO: fix this
+# layerrule {
+#   name = ^(quickshell)$
+#   no_anim = on
+#   above_lock = 1
+#   # match:namespace = ^(quickshell)$
+# }
+
+# === plugins ===
+plugin {
+    # # hyprexpo {
+    # #     columns = 3
+    # #     gap_size = 5
+    # #     bg_col = rgb(111111)
+    # #     workspace_method = center current # [center/first] [workspace] e.g. first 1 or center m+1
+    # #     enable_gesture = true # laptop touchpad
+    # #     gesture_fingers = 4  # 3 or 4
+    # #     gesture_distance = 200 # how far is the "max"
+    # #     gesture_positive = false # positive = swipe down. Negative = swipe up.
+    # # }
+    # hyprexpo {
+    #     columns = 3
+    #     gap_size = 1
+    #     bg_col = rgb(000000)
+    #     workspace_method = first 1 # [center/first] [workspace] e.g. first 1 or center m+1
+    #
+    #     enable_gesture = false # laptop touchpad, 4 fingers
+    #     # hyprexpo-gesture = 4, vertical, expo, toggle
+    #     # hyprexpo-gesture = 4, up, expo, on
+    #     # hyprexpo-gesture = 4, down, expo, select
+    #     # gesture_fingers = 4  # 3 or 4
+    #     # gesture_distance = 300 # how far is the "max"
+    #     gesture_distance = 200 # how far is the "max"
+    #     # gesture_positive = false
+    # }
+    hyprscrolling {
+     fullscreen_on_one_column = true
+     focus_fit_method = 0
+     follow_focus = true
+    }
+    dynamic-cursors {
+
+     # enables the plugin
+     enabled = false
+
+      # sets the cursor behaviour, supports these values:
+      # tilt    - tilt the cursor based on x-velocity
+      # rotate  - rotate the cursor based on movement direction
+      # stretch - stretch the cursor shape based on direction and velocity
+      # none    - do not change the cursors behaviour
+      mode = none
+      # mode = stretch
+
+      # minimum angle difference in degrees after which the shape is changed
+      # smaller values are smoother, but more expensive for hw cursors
+      threshold = 2
+
+      # override the mode behaviour per shape
+      # this is a keyword and can be repeated many times
+      # by default, there are no rules added
+      # see the dedicated `shape rules` section below!
+      # shaperule = <shape-name>, <mode> (optional), <property>: <value>, ...
+      # shaperule = <shape-name>, <mode> (optional), <property>: <value>, ...
+      # ...
+
+      # for mode = rotate
+      rotate {
+
+       # length in px of the simulated stick used to rotate the cursor
+       # most realistic if this is your actual cursor size
+       length = 20
+
+       # clockwise offset applied to the angle in degrees
+       # this will apply to ALL shapes
+        offset = 0.0
+      }
+
+     # for mode = tilt
+     tilt {
+
+      # controls how powerful the tilt is, the lower, the more power
+      # this value controls at which speed (px/s) the full tilt is reached
+      # the full tilt being 60° in both directions
+      limit = 5000
+
+       # relationship between speed and tilt, supports these values:
+       # linear             - a linear function is used
+       # quadratic          - a quadratic function is used (most realistic to actual air drag)
+       # negative_quadratic - negative version of the quadratic one, feels more aggressive
+       # see `activation` in `src/mode/utils.cpp` for how exactly the calculation is done
+       function = negative_quadratic
+
+       # time window (ms) over which the speed is calculated
+       # higher values will make slow motions smoother but more delayed
+       window = 100
+     }
+
+     # for mode = stretch
+     stretch {
+
+      # controls how much the cursor is stretched
+      # this value controls at which speed (px/s) the full stretch is reached
+      # the full stretch being twice the original length
+      limit = 3000
+
+       # relationship between speed and stretch amount, supports these values:
+       # linear             - a linear function is used
+       # quadratic          - a quadratic function is used
+       # negative_quadratic - negative version of the quadratic one, feels more aggressive
+       # see `activation` in `src/mode/utils.cpp` for how exactly the calculation is done
+       function = quadratic
+
+      # time window (ms) over which the speed is calculated
+      # higher values will make slow motions smoother but more delayed
+       window = 100
+     }
+
+     # configure shake to find
+     # magnifies the cursor if its is being shaken
+     shake {
+
+      # enables shake to find
+      enabled = true
+
+       # use nearest-neighbour (pixelated) scaling when shaking
+       # may look weird when effects are enabled
+       nearest = true
+
+       # controls how soon a shake is detected
+       # lower values mean sooner
+       threshold = 5.785
+
+        # magnification level immediately after shake start
+        base = 3.0
+       # magnification increase per second when continuing to shake
+       speed = 1.0
+       # how much the speed is influenced by the current shake intensitiy
+       influence = 0.0
+
+       # maximal magnification the cursor can reach
+       # values below 1 disable the limit (e.g. 0)
+       limit = 0.0
+
+       # time in millseconds the cursor will stay magnified after a shake has ended
+       timeout = 2000
+
+       # show cursor behaviour `tilt`, `rotate`, etc. while shaking
+       effects = false
+
+       # enable ipc events for shake
+       # see the `ipc` section below
+       ipc = false
+     }
+
+     # use hyprcursor to get a higher resolution texture when the cursor is magnified
+     # see the `hyprcursor` section below
+     hyprcursor {
+
+      # use nearest-neighbour (pixelated) scaling when magnifing beyond texture size
+      # this will also have effect without hyprcursor support being enabled
+      # 0 / false - never use pixelated scaling
+      # 1 / true  - use pixelated when no highres image
+      # 2         - always use pixleated scaling
+      nearest = true
+
+       # enable dedicated hyprcursor support
+       enabled = true
+
+       # resolution in pixels to load the magnified shapes at
+       # be warned that loading a very high-resolution image will take a long time and might impact memory consumption
+       # -1 means we use [normal cursor size] * [shake:base option]
+       resolution = -1
+
+       # shape to use when clientside cursors are being magnified
+       # see the shape-name property of shape rules for possible names
+       # specifying clientside will use the actual shape, but will be pixelated
+       fallback = clientside
+     }
+    }
+    # overview {
+    #
+    # }
+    overview {
+		overrideGaps = false
+		gapsIn = 10
+		gapsOut = 30
+		panelHeight = 300
+		reservedArea = 32
+		workspaceActiveBorder = rgba(99999999)
+		workspaceInactiveBorder = rgba(55555599)
+		drawActiveWorkspace = true
+		showOvelayLayers = true
+		hideRealLayers = false
+		affectStrut = false
+		panelBorderWidth = 0
+		panelBorderColor = rgba(707070cc)
+		panelColor = rgba(10101044)
+	}
+}
+
+# debug {
+# disable_logs = false
+# }
+
+# ==================
+# device settings
+# ==================
+# Example per-device config
+# See https://wiki.hyprland.org/Configuring/Keywords/#per-device-input-configs for more
+device {
+    name = epic-mouse-v1
+    sensitivity = 0.5
+}
+# ==================
+# GESTURES
+# ==================
+source = ~/.config/hypr/modules/gestures.conf
+
+# ==================
+# KEYBINDINGS
+# ==================
+
+# === Application Launchers ===
+source = ~/.config/hypr/modules/keybinds.conf
+#
+# === Move to Workspacesets ===
+source = ~/.config/hypr/modules/submap_workspaceset1.conf
+source = ~/.config/hypr/modules/submap_workspaceset2.conf
+source = ~/.config/hypr/modules/submap_workspaceset3.conf
+source = ~/.config/hypr/modules/submap_workspaceset4.conf
+source = ~/.config/hypr/modules/submap_workspaceset5.conf
+source = ~/.config/hypr/modules/submap_workspaceset6.conf
+source = ~/.config/hypr/modules/submap_workspaceset7.conf
+source = ~/.config/hypr/modules/submap_workspaceset8.conf
+source = ~/.config/hypr/modules/submap_workspaceset9.conf
+source = ~/.config/hypr/modules/submap_workspaceset10.conf
+
+###############
+### submaps ###
+###############
+source = ~/.config/hypr/modules/submap_movetoworkspace.conf
+# === submaps ===
+# common submap between every workspace submap
+source = ~/.config/hypr/modules/submap_resize.conf
+# custom don't know if it works
+# bindl = , switch:on:Lid Switch, exec, hyprctl reload
+# === Lid switch ===
+bindl = , switch:off:Lid Switch,exec,hyprctl keyword monitor "eDP-1,1920x1080@144.02,0x0,1.25,bitdepth,10"
+bindl = , switch:on:Lid Switch,exec, systemctl suspend || loginctl suspend

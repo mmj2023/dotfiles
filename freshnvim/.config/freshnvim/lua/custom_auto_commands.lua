@@ -645,8 +645,8 @@ local in_tmux = os.getenv("TMUX") ~= nil
 if in_tmux then
   -- vim.fn.system("tmux set-option status-style bg=default")
   vim.fn.system(
-    -- 'tmux set status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default] 󰃮 %Y-%m-%d 󱑒 %H:%M:%S "'
-    'tmux set status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default] 󱑒 %H:%M:%S "'
+    'tmux set status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default] 󰃮 %Y-%m-%d 󱑒 %H:%M:%S "'
+    -- 'tmux set status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default] 󱑒 %H:%M:%S "'
   )
   -- vim.fn.system('if [ -n "$TMUX" ]; then tmux set-option status-style bg=' .. bg_color .. "; fi")
   vim.fn.system("tmux set-option status-style bg=default")
@@ -676,13 +676,17 @@ vim.api.nvim_create_autocmd("FocusGained", {
     -- Add any command you want to execute when Neovim regains focus
     print("Welcome back to Neovim!") -- Example action (optional)
     -- -- You can also refresh the buffer, reload configs, or synchronize plugins
-    -- vim.cmd("checktime") -- Refresh buffers in case files were modified externally
+    vim.cmd("checktime") -- Refresh buffers in case files were modified externally
     local in_tmux = os.getenv("TMUX") ~= nil
     if in_tmux then
+      -- vim.fn.system(
+      --   -- 'tmux set status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default] 󰃮 %Y-%m-%d "'
+      --   -- 'tmux set status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default]  "'
+      --   'tmux set status-right "#{#[bg=#{default_fg},bold]}#[fg=${default_fg},bg=default]  "'
+      -- )
       vim.fn.system(
-        -- 'tmux set status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default] 󰃮 %Y-%m-%d "'
-        -- 'tmux set status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default]  "'
-        'tmux set status-right "#{#[bg=#{default_fg},bold]}#[fg=${default_fg},bg=default]  "'
+        'tmux set status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default] 󰃮 %Y-%m-%d 󱑒 %H:%M:%S "'
+        -- 'tmux set status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default] 󱑒 %H:%M:%S "'
       )
       vim.fn.system("tmux set-option status-style bg=default")
       -- vim.fn.system("tmux source-file ~/.tmux.conf")

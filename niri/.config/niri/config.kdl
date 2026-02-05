@@ -40,7 +40,7 @@ input {
 
     mouse {
         // off
-        // natural-scroll
+        natural-scroll
         // accel-speed 0.2
         // accel-profile "flat"
         // scroll-method "no-scroll"
@@ -48,7 +48,7 @@ input {
 
     trackpoint {
         // off
-        // natural-scroll
+        natural-scroll
         // accel-speed 0.2
         // accel-profile "flat"
         // scroll-method "on-button-down"
@@ -261,19 +261,23 @@ layout {
 // See the binds section below for more spawn examples.
 
 // This line starts waybar, a commonly used bar for Wayland compositors.
-spawn-at-startup "xwayland-satellite"
-spawn-at-startup "waybar"
-spawn-at-startup "swww-daemon"
-spawn-at-startup "killall swaync || swaync &"
-spawn-at-startup "bash ~/set_wallpaper.sh ~/Pictures/high_res_blue_green_space.jpg"
-spawn-at-startup "copyq --start-server"
+// spawn-at-startup "xwayland-satellite"
+// spawn-at-startup "waybar"
+spawn-at-startup "dbus-update-activation-environment" "--systemd" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP"
+spawn-at-startup "prime-run" "dms" "run"
+// spawn-at-startup "swww-daemon"
+// spawn-at-startup "killall swaync || swaync &"
+// spawn-at-startup "bash ~/set_wallpaper.sh ~/Pictures/high_res_blue_green_space.jpg"
+spawn-at-startup "copyq" "--start-server"
 // # Launch Walker as a background service
-spawn-at-startup "walker --gapplication-service"
+spawn-at-startup "elephant"
+spawn-at-startup "wayscriber" "--daemon"
+spawn-at-startup "walker" "--gapplication-service"
 // # Launch swayosd as a background service
-spawn-at-startup "swayosd-server"
+// spawn-at-startup "swayosd-server"
 spawn-at-startup "/usr/lib/polkit-kde-authentication-agent-1"
 spawn-at-startup "flameshot"
-spawn-at-startup "prime-run" "ghostty"
+spawn-at-startup "prime-run" "kitty"
 environment {
     DISPLAY ":0"
     HYPRCURSOR_THEME "cz-Hickson-black"
@@ -294,7 +298,7 @@ environment {
     // CLUTTER_BACKEND "wayland"
     // _JAVA_AWT_WM_NONREPARENTING "1"
     // ELECTRON_OZONE_PLATFORM_HINT "auto"
-    // // QT_QPA_PLATFORMTHEME "qt6ct"
+    QT_QPA_PLATFORMTHEME "qt5ct"
     // // GSK_RENDERER "wayland"
     // NVD_BACKEND "wayland"
     // LIBVA_DRIVER_NAME "nvidia"
@@ -305,6 +309,39 @@ environment {
     // __GL_GSYNC_ALLOWED "1"
     // __GL_SHADER_DISK_CACHE_SKIP_CLEANUP "1"
     // __GL_YIELD "USLEEP"
+
+    ELECTRON_OZONE_PLATFORM_HINT "auto"
+    TERMINAL "ghostty"
+    XCURSOR_THEME "cz-Hickson-black"
+    XCURSOR_SIZE "24"
+    __GLX_VENDOR_LIBRARY_NAME "nvidia"
+    LIBVA_DRIVER_NAME "nvidia"
+    GBM_BACKEND "nvidia-drm"
+    WLR_NO_HARDWARE_CURSORS "1"
+    WLR_DRM_NO_ATOMIC "1"
+    AQ_NO_HARDWARE_CURSORS "1"
+    AQ_DRM_NO_ATOMIC "1"
+    __GL_VRR_ALLOWED "1"
+    NVD_BACKEND "direct"
+
+    // XDG Specifications
+    XDG_CURRENT_DESKTOP "Hyprland"
+    XDG_SESSION_TYPE "wayland"
+    XDG_SESSION_DESKTOP "Hyprland"
+
+    //toolkit Backend
+    GDK_BACKEND "wayland,x11"
+    GDK_SCALE "1.25"
+    SDL_VIDEODRIVER "wayland"
+    CLUTTER_BACKEND "wayland"
+
+    QT_QPA_PLATFORM "wayland;xcb"
+    QT_QPA_PLATFORMTHEME "qt6ct"
+    QT_QPA_PLATFORMTHEME_QT6 "qt6ct"
+    QT_QPA_PLATFORMTHEME_QT5 "qt6ct"
+    QT_WAYLAND_DISABLE_WINDOWDECORATION "1"
+
+    MOZ_ENABLE_WAYLAND "1"
 }
 
 
@@ -323,8 +360,8 @@ hotkey-overlay {
 
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
-// If the client will specifically ask for CSD, the request will be honored.
-// Additionally, clients will be informed that they are tiled, removing some client-side rounded corners.
+// If the client will specifically ask for CSD " the request will be honored."
+// Additionally " clients will be informed that they are tiled, removing some client-side rounded corners."
 // This option will also fix border/focus ring drawing behind some semitransparent windows.
 // After enabling or disabling this, you need to restart the apps for this to take effect.
 prefer-no-csd
@@ -658,3 +695,9 @@ binds {
 // xwayland-satellite {
 //     // path "xwayland-satellite"
 // }
+switch-events {
+    lid-close { spawn "hyprlock" "&&" "systemctl" "suspend"; }
+    lid-open { spawn "notify-send" "The laptop lid is open!"; }
+    // tablet-mode-on { spawn "bash" "-c" "gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled true"; }
+    // tablet-mode-off { spawn "bash" "-c" "gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled false"; }
+}

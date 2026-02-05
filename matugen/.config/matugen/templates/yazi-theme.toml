@@ -1,0 +1,173 @@
+# : Manager [[[
+
+[mgr]
+cwd = { fg = "{{colors.on_surface.dark.hex}}" }
+
+# Tab
+tab_active = { fg = "{{colors.on_primary.dark.hex}}", bg = "{{colors.primary.dark.hex}}", bold = true }
+tab_inactive = { fg = "{{colors.primary_fixed.dark.hex}}", bg = "{{colors.on_primary_fixed.dark.hex}}" }
+tab_width = 1
+
+# Find
+find_keyword = { fg = "{{colors.error.dark.hex}}", bold = true, italic = true, underline = true }
+find_position = { fg = "{{colors.error.dark.hex}}", bold = true, italic = true }
+
+# Marker
+marker_copied = { fg = "{{colors.tertiary_fixed.dark.hex | auto_lightness: 20.0}}", bg = "{{colors.tertiary_fixed.dark.hex | auto_lightness: 20.0}}" }
+marker_cut = { fg = "{{colors.tertiary_fixed.dark.hex}}", bg = "{{colors.tertiary_fixed.dark.hex}}" }
+marker_marked = { fg = "{{colors.error.dark.hex}}", bg = "{{colors.error.dark.hex}}" }
+marker_selected = { fg = "{{colors.tertiary.dark.hex}}", bg = "{{colors.tertiary.dark.hex}}" }
+
+# Count
+count_copied = { fg = "{{colors.on_tertiary_fixed.dark.hex}}", bg = "{{colors.tertiary_fixed.dark.hex}}" }
+count_cut = { fg = "{{colors.on_tertiary_fixed.dark.hex}}", bg = "{{colors.tertiary_fixed.dark.hex}}" }
+count_selected = { fg = "{{colors.on_primary.dark.hex}}", bg = "{{colors.tertiary.dark.hex}}" }
+
+# Border
+border_symbol = " "
+border_style  = { fg = "{{colors.surface_tint.dark.hex}}" }
+
+# : ]]]
+
+
+# : Status [[[
+
+[status]
+separator_open = "🭁"
+separator_close = "🭠"
+separator_style = { bg = "{{colors.on_primary.dark.hex}}", fg = "#F4A261" }
+
+[mode]
+# Mode
+normal_main = { bg = "{{colors.primary.dark.hex}}", fg = "{{colors.on_primary.dark.hex}}", bold = true }
+normal_alt  = { bg = "{{colors.surface_variant.dark.hex}}", fg = "{{colors.on_surface_variant.dark.hex}}" }
+
+# Select mode
+select_main = { bg = "{{colors.secondary.dark.hex}}", fg = "{{colors.on_secondary.dark.hex}}", bold = true }
+select_alt  = { bg = "{{colors.surface_variant.dark.hex}}", fg = "{{colors.on_surface_variant.dark.hex}}" }
+
+# Unset mode
+unset_main = { bg = "{{colors.tertiary.dark.hex}}", fg = "{{colors.on_tertiary.dark.hex}}", bold = true }
+unset_alt  = { bg = "{{colors.surface_variant.dark.hex}}", fg = "{{colors.on_surface_variant.dark.hex}}" }
+
+# Progress
+progress_label = { bold = true }
+progress_normal = { fg = "{{colors.primary.dark.hex}}", bg = "{{colors.surface_bright.dark.hex}}" }
+progress_error = { fg = "{{colors.error.dark.hex}}", bg = "{{colors.surface_bright.dark.hex}}" }
+
+# Permissions
+permissions_t = { fg = "{{colors.secondary.dark.hex | auto_lightness: 30.0}}" }
+permissions_w = { fg = "{{colors.tertiary.dark.hex | auto_lightness: 30.0}}" }
+permissions_x = { fg = "{{colors.error.dark.hex | auto_lightness: 30.0}}" }
+permissions_r = { fg = "{{colors.tertiary_fixed.dark.hex | auto_lightness: 30.0}}" }
+permissions_s = { fg = "{{colors.primary_fixed.dark.hex | auto_lightness: 30.0}}" }
+
+# : ]]]
+
+
+# : Select [[[
+
+[select]
+border = { fg = "{{colors.primary.dark.hex}}" }
+active = { fg = "{{colors.tertiary.dark.hex}}", bold = true }
+
+# : ]]]
+
+
+# : Input [[[
+
+[input]
+border = { fg = "{{colors.primary.dark.hex}}" }
+value = { fg = "{{colors.on_surface.dark.hex}}" }
+
+# : ]]]
+
+# : Tabs [[[
+
+[tabs]
+active = { fg = "{{colors.primary.dark.hex}}", bold = true, bg = "{{colors.surface.dark.hex}}" }
+inactive = { fg = "{{colors.secondary.dark.hex}}", bg = "{{colors.surface.dark.hex}}" }
+sep_inner = { open = "[", close = "]" }
+
+# : ]]]
+
+
+# : Completion [[[
+
+[completion]
+border = { fg = "{{colors.primary.dark.hex}}", bg = "{{colors.on_primary.dark.hex}}" }
+
+# : ]]]
+
+
+# : Tasks [[[
+
+[tasks]
+border = { fg = "{{colors.primary.dark.hex}}" }
+title = {}
+hovered = { fg = "{{colors.tertiary_fixed.dark.hex}}", underline = true }
+
+# : ]]]
+
+
+# : Which [[[
+
+[which]
+cols = 3
+mask = { bg = "{{colors.surface_bright.dark.hex}}" }
+cand = { fg = "{{colors.primary.dark.hex}}" }
+rest = { fg = "{{colors.on_primary.dark.hex}}" }
+desc = { fg = "{{colors.on_surface.dark.hex}}" }
+separator = " ▶ "
+separator_style = { fg = "{{colors.on_surface.dark.hex}}" }
+
+# : ]]]
+
+
+# : Help [[[
+
+[help]
+on = { fg = "{{colors.on_surface.dark.hex}}" }
+run = { fg = "{{colors.on_surface.dark.hex}}" }
+footer = { fg = "{{colors.on_secondary.dark.hex}}", bg = "{{colors.secondary.dark.hex}}" }
+
+# : ]]]
+
+
+# : Notify [[[
+
+[notify]
+title_info = { fg = "{{colors.tertiary.dark.hex}}" }
+title_warn = { fg = "{{colors.primary.dark.hex}}" }
+title_error = { fg = "{{colors.error.dark.hex}}" }
+
+# : ]]]
+
+
+# : File-specific styles [[[
+
+[filetype]
+
+rules = [
+    # Images
+    { mime = "image/*", fg = "#94e2d5" },
+
+    # Media
+    { mime = "{audio,video}/*", fg = "#f9e2af" },
+
+    # Archives
+    { mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "#f5c2e7" },
+
+    # Documents
+    { mime = "application/{pdf,doc,rtf}", fg = "#a6e3a1" },
+
+    # Special files
+    { name = "*", is = "orphan", bg = "{{colors.error_container.dark.hex}}" },
+    { name = "*", is = "exec", fg = "{{colors.on_error_container.dark.hex}}" },
+
+    # Fallback
+    { name = "*", fg = "{{colors.on_surface.dark.hex}}" },
+    { name = "*/", fg = "{{colors.surface_tint.dark.hex}}" },
+]
+
+# : ]]]

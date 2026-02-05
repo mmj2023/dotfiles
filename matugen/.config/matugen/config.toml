@@ -1,0 +1,33 @@
+[config]
+
+# [templates.hyprland]
+# input_path = "/home/mdmmj/.config/matugen/templates/hyprland"
+# output_path = "/home/mdmmj/.config/hypr/colors.conf"
+# # pre_hook =
+# post_hook = "hyprctl reload"
+#
+[templates.flameshot]
+input_path = '/home/mdmmj/.config/matugen/templates/flameshot_config.ini'
+output_path = '/home/mdmmj/.config/flameshot/flameshot.ini'
+
+[templates.copyq]
+input_path = '/home/mdmmj/.config/matugen/templates/copyq_config.ini'
+output_path = '/home/mdmmj/.config/copyq/themes/mine.ini'
+post_hook = 'bash /home/mdmmj/.config/matugen/scripts/copyq.sh'
+
+[templates.yazi]
+input_path = '/home/mdmmj/.config/matugen/templates/yazi-theme.toml'
+output_path = '/home/mdmmj/.config/yazi/theme.toml'
+
+[templates.hyprshell]
+input_path = '/home/mdmmj/.config/matugen/templates/hyprshell-theme.css'
+output_path = '/home/mdmmj/.config/hyprshell/styles.css'
+post_hook = 'bash /home/mdmmj/.config/matugen/scripts/pcmanfm.sh'
+
+[templates.starship]
+input_path = '/home/mdmmj/.config/matugen/templates/starship-theme.toml'
+output_path = '/home/mdmmj/.config/starship.toml'
+
+[templates.blerc]
+input_path = '/home/mdmmj/.config/matugen/templates/blerc-theme.sh'
+output_path = '/home/mdmmj/.blerc.sh'

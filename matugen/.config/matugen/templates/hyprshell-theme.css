@@ -1,0 +1,91 @@
+/* Global text */
+* {
+    font-family: JetBrainsMono;
+    font-size: 13px;
+    color: {{colors.on_surface.dark.hex}}CC;
+    min-height: 0;
+}
+
+/* Transparent root container */
+.window {
+    background-color: transparent;
+}
+
+/* Workspaces */
+.workspace {
+    background-color: {{colors.surface.dark.hex}}CC; /* 0.8 */
+    opacity: 0.8;
+    border-radius: 15px;
+    margin-right: 10px;
+    padding: 1px 10px;
+    font-weight: bolder;
+    border: none;
+}
+
+.workspace:hover {
+    background-color: {{colors.surface_container.dark.hex}}CC; /* 0.8 */
+}
+
+/* .workspace.active, */
+.workspace.active {
+    background-color: {{colors.inverse_primary.dark.hex}}CC; /* 0.8 */
+}
+
+.workspace.focused {
+    padding: 0 22px;
+    background-color: {{colors.surface_container.dark.hex}}CC; /* 0.8 */
+    box-shadow:
+        {{colors.outline_variant.dark.hex}}66 0px 0px 0px 2px,   /* 0.4 */
+        {{colors.outline.dark.hex}}A6 0px 4px 6px -1px,          /* 0.65 */
+        {{colors.on_surface_variant.dark.hex}}14 0px 1px 0px inset; /* 0.08 */
+}
+
+/* Clients */
+.client {
+    background-color: {{colors.surface.dark.hex}}A6; /* 0.8 */
+    /* opacity: 0.8; */
+    border-radius: 15px;
+    border: none;
+}
+
+.client:hover {
+    background-color: {{colors.surface_container.dark.hex}}CC; /* 0.8 */
+}
+
+/* .client.active, */
+.client.active {
+    background-color: {{colors.inverse_primary.dark.hex}}CC; /* 0.8 */
+}
+
+.client.focused {
+    background-color: {{colors.surface_container.dark.hex}}CC; /* 0.8 */
+    box-shadow:
+        {{colors.outline_variant.dark.hex}}66 0px 0px 0px 2px,
+        {{colors.outline.dark.hex}}A6 0px 4px 6px -1px,
+        {{colors.on_surface_variant.dark.hex}}14 0px 1px 0px inset;
+}
+
+/* Launcher */
+.launcher {
+    background-color: {{colors.surface.dark.hex}}CC; /* 0.8 */
+    border-radius: 15px;
+    border: none;
+}
+
+.launcher-item {
+    background-color: transparent;
+    border-radius: 15px;
+}
+
+.launcher-item:hover {
+    background-color: {{colors.surface_container.dark.hex}}CC; /* 0.8 */
+}
+
+.launcher-item.active,
+.launcher-item.focused {
+    background-color: {{colors.surface_container.dark.hex}}CC; /* 0.8 */
+    box-shadow:
+        {{colors.outline_variant.dark.hex}}66 0px 0px 0px 2px,
+        {{colors.outline.dark.hex}}A6 0px 4px 6px -1px,
+        {{colors.on_surface_variant.dark.hex}}14 0px 1px 0px inset;
+}

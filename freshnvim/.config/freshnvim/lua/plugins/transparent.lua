@@ -94,7 +94,7 @@ return {
         if not vim.g.transparent_enabled then
           if in_tmux then
             vim.fn.system(
-              'tmux set status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default] 󰃮 %Y-%m-%d 󱑒 %H:%M "'
+              'tmux set status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default] 󰃮 %Y-%m-%d 󱑒 %H:%M:%S "'
             )
             bg_color = vim.fn.synIDattr(vim.fn.hlID("Normal"), "bg")
             vim.fn.system("tmux set-option status-style bg=" .. bg_color)
@@ -102,7 +102,7 @@ return {
         else
           if in_tmux then
             vim.fn.system(
-              'tmux set status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default] 󰃮 %Y-%m-%d 󱑒 %H:%M "'
+              'tmux set status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default] 󰃮 %Y-%m-%d 󱑒 %H:%M:%S "'
             )
             vim.fn.system("tmux set-option status-style bg=default")
           end
