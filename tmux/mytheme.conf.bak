@@ -1,0 +1,68 @@
+# bg="#404775"
+# default_fg="#E5E9F0"
+bg="#535b98"
+active_prefix_bg="#ad6c82"
+default_fg="#9d7559"
+session_fg="#a3c8b9"
+selection_bg="#81A1C1"
+selection_fg="#3B4252"
+active_pane_border="#6d758c"
+active_window_fg="#A3BE8C"
+active_window_fg="#88c0f8"
+message_fg="#abeff4"
+status_active_fg="#6eafa8"
+status_fg="##a3c8b9"
+
+# using_prefix="false"
+
+# set -g status-position bottom
+set-option -g status-position top
+
+# set -g status-left "#[fg=${session_fg},bold]  #S"
+# set -g status-left '#{?client_prefix,#[reverse]<Prefix>#[noreverse] ,} #{#[fg=${session_fg}] #S}' ##[fg=${session_fg},bold]
+# set -g status-left '#{?client_prefix,#[reverse]<Prefix>#[default] ,}#[fg=${session_fg}] #S#[fg=${session_fg},bold]'
+# set -g status-left '#{?client_prefix,#[reverse]<Prefix>#[default] ,}#[fg=yellow,bold]#S'
+# set -g status-left '#{?client_prefix,#[reverse]<Prefix>#[default] ,}#[fg=#a3c8b9,bold] #S'
+# set -g status-left '#{?client_prefix,#[reverse]<Prefix> #S#[default] ,}#[fg=#a3c8b9,bold] #S'
+# set -g status-left '#{?client_prefix,#[default]#[fg=#a3c8b9,bold]<Prefix> #S#[default] ,}#[fg=#a3c8b9,bold] #S'
+# set -g status-left '#{?client_prefix,#[fg=#a3c8b9,bold]<Prefix> #S#[fg=#ad6c82,bold],#[fg=#ad6c82,bold]<Prefix> #S}#[fg=#a3c8b9,bold] #S'
+# if-shell '[ -n "#{client_prefix}" ]' \
+#     "set -g status-left '#[reverse]<Prefix>#[default]#[fg=yellow,bold]#S'" \
+#     "set -g status-left '#[fg=yellow,bold]#S'"
+# set -g status-left '#{?client_prefix,#[fg=red,bold]#S#[fg=yellow,bold],#[fg=yellow,bold]#S}'
+# set -g status-left "#{?client_prefix,#[fg=red,bold]Session: #S,#[fg=yellow,bold]Session: #S}"
+# set -g status-left "#{?client_prefix,#{@my_prefix_status},#[fg=#6eafa8,bold]   }#{?!client_prefix,,#[fg=#a3c8b9,bold] #S}"
+# set -g status-left "#{?client_prefix,#{@my_prefix_status},#[fg=#6eafa8,bold]   }#[fg=#a3c8b9,bold]  #S"
+
+# set -g @my_prefix_status '#[fg=${status_active_fg},bold]   '
+set -g @my_prefix_status '#[fg=#6eafa8,bold]   '
+# set -g status-left "#{?client_prefix,#{@my_prefix_status},#[fg=${status_active_fg},bold]  }#[fg=${status_fg},bold] #S"
+set -g status-left "#{?client_prefix,#{@my_prefix_status},#[fg=#6eafa8,bold]  }#[fg=#a3c8b9,bold] #S"
+
+
+# set -g status-left '#{?client_prefix,#[fg=${session_fg},bold]<Prefix>#[fg=${active_prefix_bg},bold] ,}#[fg=${session_fg},bold]  #S'
+#,bg=${bg}
+# set -g status-right " CPU: #{cpu} |  MEM: #{mem} "
+# set -g status-right "#[fg=${default_fg},bg=${bg}] 󰃮 %Y-%m-%d 󱑒 %H:%M"
+# set -g status-right "#{#[bg=#{default_fg},bold]}#[fg=${default_fg},] 󰃮 %Y-%m-%d " #bg=${bg} 󱑒 %H:%M
+# set -g status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default] 󰃮  %Y-%m-%d "
+# set -g status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default] 󱑒 %H:%M:%S "
+# set -g status-right "#{#[bg=#{default_fg},bold]░}#[fg=${default_fg},bg=default] "
+set -g status-right "#{#[bg=#{default_fg},bold]}#[fg=${default_fg},bg=default] "
+
+# set -g status-right " CPU: #{cpu -i 3} |  MEM: #{mem} | 󱛟 DISK: #{disk -f}"
+#░
+set -g status-justify centre
+set -g status-left-length 200   # default: 10
+set -g status-right-length 200  # default: 10
+# set-option -g status-style bg=${bg}
+set-option -g status-style bg=default
+set -g window-status-current-format "#[fg=${active_window_fg},bg=default]  #I:#W"
+set -g window-status-format "#[fg=${default_fg},bg=default] #I:#W"
+set -g window-status-last-style "fg=${default_fg},bg=default"
+set -g message-command-style bg=default,fg=${default_fg}
+set -g message-style bg=${message_fg},fg=${default_fg}
+set -g mode-style bg=${selection_bg},fg=${selection_fg}
+set -g pane-active-border-style "fg=${active_pane_border},bg=default"
+set -g pane-border-style 'fg=brightblack,bg=default'
+set -g window-status-bell-style "fg=red,nobold"

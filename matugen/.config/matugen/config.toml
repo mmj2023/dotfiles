@@ -31,3 +31,8 @@ output_path = '/home/mdmmj/.config/starship.toml'
 [templates.blerc]
 input_path = '/home/mdmmj/.config/matugen/templates/blerc-theme.sh'
 output_path = '/home/mdmmj/.blerc.sh'
+
+[templates.tmux]
+input_path = '/home/mdmmj/.config/matugen/templates/tmux_theme.sh'
+output_path = '/home/mdmmj/mytheme.conf'
+post_hook = 'tmux source-file ~/.tmux.conf'
