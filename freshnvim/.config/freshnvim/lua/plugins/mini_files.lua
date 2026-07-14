@@ -1,6 +1,7 @@
 local mini_files_git = require("config.mini-files-git")
 return {
   "echasnovski/mini.files",
+  lazy = false,
   opts = {
     windows = {
       preview = true,
@@ -17,29 +18,64 @@ return {
       -- Whether to delete permanently or move into module-specific trash
       permanent_delete = false,
       -- Whether to use for editing directories
-      use_as_default_explorer = false,
+      use_as_default_explorer = true,
     },
   },
   keys = {
+    -- {
+    --   "<leader>e",
+    --   function()
+    --     local bufname = vim.api.nvim_buf_get_name(0)
+    --     -- Check for specific file explorer buffers
+    --     if vim.bo.filetype == "netrw" then
+    --       bufname = vim.fn.expand("%:p:h")
+    --     elseif vim.bo.filetype == "oil" then
+    --       bufname = require("oil").get_current_dir()
+    --     elseif vim.bo.filetype == "neo-tree" then
+    --       bufname = require("neo-tree").get_current_node().path
+    --     elseif vim.bo.filetype == "NvimTree" then
+    --       bufname = require("nvim-tree.lib").get_node_at_cursor().absolute_path
+    --     elseif vim.bo.filetype == "minifiles" then
+    --       bufname = vim.api.nvim_buf_get_name(0)
+    --     end
+    --     require("mini.files").open(bufname, true)
+    --   end,
+    --   desc = "Open mini.files (Directory of Current File)",
+    -- },
     {
       "<leader>e",
       function()
-        local bufname = vim.api.nvim_buf_get_name(0)
-        -- Check for specific file explorer buffers
-        if vim.bo.filetype == "netrw" then
-          bufname = vim.fn.expand("%:p:h")
-        elseif vim.bo.filetype == "oil" then
-          bufname = require("oil").get_current_dir()
-        elseif vim.bo.filetype == "neo-tree" then
-          bufname = require("neo-tree").get_current_node().path
-        elseif vim.bo.filetype == "NvimTree" then
-          bufname = require("nvim-tree.lib").get_node_at_cursor().absolute_path
-        elseif vim.bo.filetype == "minifiles" then
-          bufname = vim.api.nvim_buf_get_name(0)
+        local mini_files = require("mini.files")
+
+        -- 1. If mini.files is already open, close it (Toggle off)
+        if mini_files.get_explorer_state() then
+          mini_files.close()
+          return
         end
-        require("mini.files").open(bufname, true)
+
+        -- 2. Otherwise, determine the path for the current buffer
+        local bufname = vim.api.nvim_buf_get_name(0)
+        local ft = vim.bo.filetype
+
+        if ft == "netrw" then
+          bufname = vim.fn.expand("%:p:h")
+        elseif ft == "oil" then
+          bufname = require("oil").get_current_dir()
+        elseif ft == "neo-tree" then
+          bufname = require("neo-tree").get_current_node().path
+        elseif ft == "NvimTree" then
+          bufname = require("nvim-tree.lib").get_node_at_cursor().absolute_path
+        end
+
+        -- 3. Fall back to current working directory if buffer is empty
+        if bufname == "" then
+          bufname = nil
+        end
+
+        -- 4. Open mini.files (Toggle on)
+        mini_files.open(bufname, true)
       end,
-      desc = "Open mini.files (Directory of Current File)",
+      desc = "Toggle mini.files (Directory of Current File)",
     },
     {
       "<leader>Ef",
