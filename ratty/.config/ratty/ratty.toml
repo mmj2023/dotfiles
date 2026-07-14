@@ -1,0 +1,9 @@
+[window]
+opacity = 0.8 # Range from 0.0 (transparent) to 1.0 (fully opaque)
+
+[font]
+family = "JetBrains Mono Nerd Font" # Replace with your preferred font name
+size = 18                 # Desired font size in points
+
+# [theme]
+# background = "#1f1f2800"
