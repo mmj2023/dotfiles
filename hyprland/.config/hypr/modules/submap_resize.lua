@@ -1,0 +1,43 @@
+-- hl.bind("SUPER+CTRL+ R", hl.dsp.exec_cmd([[hyprctl dispatch submap resize && notify-send -e -h string:x-canonical-private-synchronous:osd -i ~/Pictures/icons/hyprland.icon "Hyprland" "Started Resize mode"]]))
+hl.bind("SUPER+CTRL+ R", function()
+	-- hl.dispatch(hl.dsp.focus({ workspace = 2 }))
+	-- hl.dsp.focus({ workspace = 2 })
+	-- hl.dsp.exec_cmd(RqtBrw)
+    hl.dsp.exec_cmd("notify-send -e -i ~/Pictures/icons/hyprland.icon 'Hyprland' 'Started Resize mode'")
+	hl.dispatch(hl.dsp.submap("resize"))
+end)
+
+hl.define_submap("resize", function()
+	-- hl.bind("right", "resizeactive 10 0", { repeating = true })
+	-- hl.bind("left", "resizeactive -10 0", { repeating = true })
+	-- hl.bind("up", "resizeactive 0 -10", { repeating = true })
+	-- hl.bind("down", "resizeactive 0 10", { repeating = true })
+	-- hl.bind("L", "resizeactive 10 0", { repeating = true })
+	-- hl.bind("H", "resizeactive -10 0", { repeating = true })
+	-- hl.bind("K", "resizeactive 0 -10", { repeating = true })
+	-- hl.bind("J", "resizeactive 0 10", { repeating = true })
+	-- Arrow keys
+	hl.bind("right", hl.dsp.window.resize({ x = 10, y = 0, relative = true }), { repeating = true })
+	hl.bind("left", hl.dsp.window.resize({ x = -10, y = 0, relative = true }), { repeating = true })
+	hl.bind("up", hl.dsp.window.resize({ x = 0, y = -10, relative = true }), { repeating = true })
+	hl.bind("down", hl.dsp.window.resize({ x = 0, y = 10, relative = true }), { repeating = true })
+
+	-- Vim navigation keys (HJKL)
+	hl.bind("L", hl.dsp.window.resize({ x = 10, y = 0, relative = true }), { repeating = true })
+	hl.bind("H", hl.dsp.window.resize({ x = -10, y = 0, relative = true }), { repeating = true })
+	hl.bind("K", hl.dsp.window.resize({ x = 0, y = -10, relative = true }), { repeating = true })
+	hl.bind("J", hl.dsp.window.resize({ x = 0, y = 10, relative = true }), { repeating = true })
+
+	-- hl.bind(
+	-- 	", escape",
+	-- 	'exec hyprctl dispatch submap reset && notify-send -e -h string:x-canonical-private-synchronous:osd -i ~/Pictures/icons/hyprland.icon "Hyprland" "Normal mode"'
+	-- )
+	hl.bind("SUPER+CTRL+ R", function()
+		hl.dispatch(hl.dsp.submap("reset"))
+		hl.dsp.exec_cmd("notify-send -e -i ~/Pictures/icons/hyprland.icon 'Hyprland' 'Normal mode'")
+	end)
+	hl.bind("escape", function()
+		hl.dispatch(hl.dsp.submap("reset"))
+		hl.dsp.exec_cmd("notify-send -e -i ~/Pictures/icons/hyprland.icon 'Hyprland' 'Normal mode'")
+	end)
+end)
