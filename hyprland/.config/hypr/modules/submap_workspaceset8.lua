@@ -5,9 +5,9 @@ local offset = N * 10
 -- hl.bind("SUPER CTRL, " .. key, 'exec hyprctl dispatch submap workspaceset' .. N .. ' && notify-send -e -i ~/Pictures/icons/hyprland.icon "Hyprland" "Using the ' .. N .. 'th set of extra workspaces"')
 hl.bind("SUPER+CTRL+ " .. key, function()
 	hl.dispatch(hl.dsp.submap("workspaceset" .. N))
-	hl.dsp.exec_cmd(
+	hl.dispatch(hl.dsp.exec_cmd(
 		"notify-send -e -i ~/Pictures/icons/hyprland.icon 'Hyprland' 'Using the " .. N .. "th set of extra workspaces'"
-	)
+	))
 end)
 
 hl.define_submap("workspaceset" .. N, function()
@@ -29,8 +29,8 @@ hl.define_submap("workspaceset" .. N, function()
 	-- hl.bind("SUPER CTRL, " .. key, 'exec hyprctl dispatch submap reset && notify-send -e -i ~/Pictures/icons/hyprland.icon "Hyprland" "Using the normal set of workspaces"')
 	hl.bind("SUPER+CTRL+ " .. key, function()
 		hl.dispatch(hl.dsp.submap("reset"))
-		hl.dsp.exec_cmd(
+		hl.dispatch(hl.dsp.exec_cmd(
 			"notify-send -e -i ~/Pictures/icons/hyprland.icon 'Hyprland' 'Using the normal set of workspaces'"
-		)
+		))
 	end)
 end)

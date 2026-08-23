@@ -1,6 +1,7 @@
 -- Security keybindings
 -- hl.bind("SUPER + ALT + L", hl.dsp.exec_cmd("dms ipc call lock lock"))
-hl.bind("SUPER+ALT+ L", hl.dsp.exec_cmd("hyprlock"))
+hl.bind("SUPER+ALT+SHIFT+ L", hl.dsp.exec_cmd("hyprlock"))
+hl.bind("SUPER+ALT+ L", hl.dsp.exec_cmd("pidof dms && dms ipc call lock lock || hyprlock"))
 -- hl.bind("SUPER SHIFT, E", "exit")
 hl.bind(
 	"SUPER+SHIFT+ E",

@@ -4,9 +4,9 @@
 hl.bind("SUPER+ G", function()
 	-- hl.dispatch(hl.dsp.focus({ workspace = 2 }))
 	-- hl.dsp.focus({ workspace = 2 })
-	-- hl.dsp.exec_cmd(RqtBrw)
+	-- hl.dispatch(hl.dsp.exec_cmd(RqtBrw))
 	hl.dispatch(hl.dsp.submap("movetoworkspace"))
-    hl.dsp.exec_cmd([[notify-send -e -i ~/Pictures/icons/hyprland.icon 'Hyprland' 'Started Move-to-Workspace mode']])
+    hl.dispatch(hl.dsp.exec_cmd([[notify-send -e -i ~/Pictures/icons/hyprland.icon 'Hyprland' 'Started Move-to-Workspace mode']]))
 end)
 
 hl.define_submap("movetoworkspace", function()
@@ -29,28 +29,28 @@ hl.define_submap("movetoworkspace", function()
 
 	-- hl.bind(
 	-- 	"escape",
-	-- 	hl.dsp.exec_cmd(
+	-- 	hl.dispatch(hl.dsp.exec_cmd()
 	-- 		"hyprctl dispatch submap reset && notify-send -e -i ~/Pictures/icons/hyprland.icon 'Hyprland' 'Normal mode'"
 	-- 	)
 	-- )
 	-- hl.bind(
 	-- 	"SUPER, G",
-	-- 	hl.dsp.exec_cmd(
+	-- 	hl.dispatch(hl.dsp.exec_cmd()
 	-- 		"hyprctl dispatch submap reset && notify-send -e -i ~/Pictures/icons/hyprland.icon 'Hyprland' 'Normal mode'"
 	-- 	)
 	-- )
 	hl.bind("SUPER+ G", function()
 		-- hl.dispatch(hl.dsp.focus({ workspace = 2 }))
 		-- hl.dsp.focus({ workspace = 2 })
-		-- hl.dsp.exec_cmd(RqtBrw)
+		-- hl.dispatch(hl.dsp.exec_cmd(RqtBrw))
 		hl.dispatch(hl.dsp.submap("reset"))
-		hl.dsp.exec_cmd("notify-send -e -i ~/Pictures/icons/hyprland.icon 'Hyprland' 'Normal mode'")
+		hl.dispatch(hl.dsp.exec_cmd("notify-send -e -i ~/Pictures/icons/hyprland.icon 'Hyprland' 'Normal mode'"))
 	end)
 	hl.bind("escape", function()
 		-- hl.dispatch(hl.dsp.focus({ workspace = 2 }))
 		-- hl.dsp.focus({ workspace = 2 })
-		-- hl.dsp.exec_cmd(RqtBrw)
+		-- hl.dispatch(hl.dsp.exec_cmd(RqtBrw))
 		hl.dispatch(hl.dsp.submap("reset"))
-		hl.dsp.exec_cmd("notify-send -e -i ~/Pictures/icons/hyprland.icon 'Hyprland' 'Normal mode'")
+		hl.dispatch(hl.dsp.exec_cmd("notify-send -e -i ~/Pictures/icons/hyprland.icon 'Hyprland' 'Normal mode'"))
 	end)
 end)
