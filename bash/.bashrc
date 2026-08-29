@@ -5,6 +5,18 @@ case $- in
 *) return ;;
 esac
 
+command_not_found_handle() {
+    case "$1" in
+        *.c)
+            NVIM_APPNAME=freshnvim nvim "$1"
+            return 0
+            ;;
+        *)
+            return 1   # tells bash: "I didn't handle this"
+            ;;
+    esac
+}
+
 # --- Distribution Detection ---
 # Returns the last 2 fields of the working directory
 distribution() {
@@ -237,14 +249,7 @@ else
  alias grep="/usr/bin/grep $GREP_OPTIONS"
 fi
 unset GREP_OPTIONS
-# Color for manpages in less makes manpages a little easier to read
-export LESS_TERMCAP_mb=$'\E[01;31m'
-export LESS_TERMCAP_md=$'\E[01;31m'
-export LESS_TERMCAP_me=$'\E[0m'
-export LESS_TERMCAP_se=$'\E[0m'
-export LESS_TERMCAP_so=$'\E[01;44;33m'
-export LESS_TERMCAP_ue=$'\E[0m'
-export LESS_TERMCAP_us=$'\E[01;32m'
+
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
@@ -334,20 +339,19 @@ fi
 # alias cat="bat"
 # alias emacs="emacs -nw"
 alias imgcatsh="~/useful_scripts/imgcat.sh"
-
 # Alias's for multiple directory listing commands
-alias la='ls -Alh'                # show hidden files
+alias la='ls -Alh'                 # show hidden files
 alias ls='ls -aFh --color=always' # add colors and file type extensions
-if command -v lsd >/dev/null 2>&1; then
- alias lsd='lsd -aFh --color=always' # add colors and file type extensions
- alias ll='lsd -alFh --color=always' # add colors and file type extensions
- alias tree='lsd -aFh --color=always --tree'
+
+if command -v lsd > /dev/null 2>&1; then
+  alias ld='lsd -aFh --color=always'
+  alias ll='lsd -alFh --color=always'
+  alias tree='lsd -aFh --color=always --tree'
 else
- alias lsd='ld -aFh --color=always' # add colors and file type extensions
- alias ll='ls -alFh --color=always' # add colors and file type extensions
+  alias ld='ls -aFh --color=always'
+  alias ll='ls -alFh --color=always'
 fi
-# alias ld='lsd -aFh --color=always' # add colors and file type extensions
-# alias ll='lsd -alFh --color=always' # add colors and file type extensions
+
 alias lx='ls -lXBh'      # sort by extension
 alias lk='ls -lSrh'      # sort by size
 alias lc='ls -ltcrh'     # sort by change time
@@ -356,14 +360,12 @@ alias lr='ls -lRh'       # recursive ls
 alias lt='ls -ltrh'      # sort by date
 alias lm='ls -alh |more' # pipe through 'more'
 alias lw='ls -xAh'       # wide listing format
-# alias ll='ls -Fls'                # long listing format
-alias labc='ls -lap'             # alphabetical sort
+alias labc='ls -lap'     # alphabetical sort
 alias lf="ls -l | egrep -v '^d'" # files only
 alias ldir="ls -l | egrep '^d'"  # directories only
-alias lla='ls -Al'               # List and Hidden Files
-alias las='ls -A'                # Hidden Files
-alias lls='ls -l'                # List
-
+alias lla='ls -Al'       # List and Hidden Files
+alias las='ls -A'        # Hidden Files
+alias lls='ls -l'        # List
 # --- Chmod Aliases ---
 alias mx='chmod a+x'     # Make executable
 alias 000='chmod -R 000' # No permissions
@@ -384,28 +386,14 @@ alias countfiles="for t in files links directories; do echo \`find . -type \${t:
 
 # To see if a command is aliased, a file, or a built-in command
 alias checkcommand="type -t"
-# Search command line history
-alias h="history | grep "
-
-# Search running processes
-alias p="ps aux | grep "
-alias topcpu="/bin/ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10"
 
 # Search files in the current folder
-# alias f="find . | grep "
 if command -v fd &>/dev/null; then
- alias f="fd --type f"
- alias d="fd --type d"
+  alias f="fd --type f"
+  alias d="fd --type d"
 else
- alias f="find . | grep "
+  alias f="find . | grep "
 fi
-# alias f="fd"
-
-# Count all files (recursively) in the current folder
-alias countfiles="for t in files links directories; do echo \`find . -type \${t:0:1} | wc -l\` \$t; done 2> /dev/null"
-
-# To see if a command is aliased, a file, or a built-in command
-alias checkcommand="type -t"
 
 # Show open ports
 alias openports='netstat -nape --inet'
@@ -418,7 +406,6 @@ alias rebootforce='sudo shutdown -r -n now'
 alias diskspace="du -S | sort -n -r |more"
 alias folders='du -h --max-depth=1'
 alias folderssort='find . -maxdepth 1 -type d -print0 | xargs -0 du -sk | sort -rn'
-alias tree='tree -CAhF --dirsfirst'
 alias treed='tree -CAFd'
 alias mountedinfo='df -hT'
 
@@ -480,7 +467,7 @@ if command -v starship &>/dev/null; then
 fi
 
 # FNM (Fast Node Manager) configuration
-FNM_PATH="/home/mylordtome/.local/share/fnm"
+FNM_PATH="$HOME/.local/share/fnm"
 if [ -d "$FNM_PATH" ]; then
  export PATH="$FNM_PATH:$PATH"
  eval "$(fnm env)"
@@ -519,33 +506,7 @@ lazyg() {
  git commit -m "$1"
  git push
 }
-# sessionize_script=~/dotfiles/bash/custom-scripts/sessionize.sh
-# windower_dash_script=$HOME/dotfiles/bash/custom-scripts/windower_dash.sh
-
-# if [ -f "$sessionize_script" ]; then
-#     # echo "dash not found"
-#     if [ ! -x "$sessionize_script" ]; then
-#         chmod +x "$sessionize_script"
-#     fi
-# bind -x '"\C-t":{ $sessionize_script }'
-# bind -x '"\C-t":"$sessionize_script"'
-# ble-bind -x '"\C-t":"$sessionize_script"'
-# ble-bind -x '"\C-t": $sessionize_script'
-if command -v sesh &>/dev/null; then
- # bind -x '"\C-f": sesh connect "$(
- #     sesh list --icons | fzf-tmux -p 80%,70% \
- #         --no-sort --ansi --border-label ' sesh ' --prompt '⚡  ' \
- #         --header '  ^a all ^t tmux ^g configs ^x zoxide ^d tmux kill ^f find' \
- #         --bind 'tab:down,btab:up' \
- #         --bind 'ctrl-a:change-prompt(⚡  )+reload(sesh list --icons)' \
- #         --bind 'ctrl-t:change-prompt(🪟  )+reload(sesh list -t --icons)' \
- #         --bind 'ctrl-g:change-prompt(⚙️  )+reload(sesh list -c --icons)' \
- #         --bind 'ctrl-x:change-prompt(📁  )+reload(sesh list -z --icons)' \
- #         --bind 'ctrl-f:change-prompt(🔎  )+reload(fd -H -d 2 -t d -E .Trash . ~)' \
- #         --bind 'ctrl-d:execute(tmux kill-session -t {2..})+change-prompt(⚡  )+reload(sesh list --icons)' \
- #         --preview-window 'right:55%' \
- #         --preview 'sesh preview {}'
- # )"'
+if command -v sesh &> /dev/null; then
  sesh_tmux_script() {
   sesh connect \"$(
    sesh list --icons | fzf-tmux -p 80%,70% \
@@ -563,31 +524,11 @@ if command -v sesh &>/dev/null; then
   )\"
  }
  sesh_script() {
-
-  # If not in tmux at all
   if [ -z "$TMUX" ]; then
-   # Check if any tmux server is running
    if tmux has-session 2>/dev/null; then
-    #   # # Attach to existing tmux
-    #   # # tmux attach
-    #   # # sesh_tmux_script
-    #   tmux new-window "bash -ic sesh_script"
-    #   # tmux new-window "bash -ic '$(declare -f sesh_script); sesh_script'"
-    # else
-    #   # # No tmux server yet → just start tmux normally
-    #   # tmux new-session
-    #   # tmux new-session "bash -ic sesh_tmux_script"
-    #   # tmux new-session "bash -ic '$(declare -f sesh_script); sesh_script'"
-    # tmux new-session "bash -ic sesh_script"
     tmux attach
    else
-    # tmux new-session -d
     tmux new-session
-
-    # Send the picker command into that session
-    # tmux send-keys -t sesh_tmp C-s T
-
-    # Attach to it
     tmux attach
    fi
    return
@@ -609,45 +550,8 @@ if command -v sesh &>/dev/null; then
   )\"
  }
  bind -x '"\C-sT": sesh_script'
-
 fi
-# else
-#     echo "Sessionize script not found"
-# fi
-# if command -v dash > /dev/null 2>&1; then
-#     if [ -f "$windower_dash_script" ]; then
-#         if [ ! -x "$windower_dash_script" ]; then
-#             chmod +x "$windower_dash_script"
-#         fi
-#         bind -x '"\C-f": dash $HOME/dotfiles/bash/custom-scripts/windower_dash.sh'
-#     fi
-# elif [ -f "$sessionize_script" ]; then
-#     echo "dash not found"
-#     if [ ! -x "$sessionize_script" ]; then
-#         chmod +x "$sessionize_script"
-#     fi
-#     # bind -x '"\C-t":{ $sessionize_script }'
-#     # bind -x '"\C-t":"$sessionize_script"'
-#     # ble-bind -x '"\C-t":"$sessionize_script"'
-#     # ble-bind -x '"\C-t": $sessionize_script'
-#     bind -x '"\C-f": $sessionize_script'
-# else
-#     echo "Sessionize script not found"
-# fi
-# #!/bin/bash
-#
-# # Function to check if running in WSL
-# check_wsl() {
-#     if grep -qEi "(Microsoft|WSL)" /proc/version &> /dev/null ; then
-#         # echo "Running in WSL"
-#         bind '"\C-w": clear'
-#     else
-#         echo "Not running in WSL"
-#     fi
-# }
-#
-# # Run the function
-# check_wsl
+
 # --- Archive Extraction Function (ex) ---
 # usage: ex [file]
 # from http://www.gitlab.com/dwt1/
@@ -688,16 +592,7 @@ function ex {
   done
  fi
 }
-### SET MANPAGER
-### Uncomment only one of these!
-
-### "nvim" as manpager
-# export MANPAGER="nvim --clean +Man!"
-# export MANPAGER="vi +MANPAGER +Man!"
-
 # --- Default Shell Aliases ---
-# change your default USER shell
-# alias tobash="sudo chsh $USER -s /bin/bash && echo 'Log out and log back in for change to take effect.'"  # already set to bash
 alias tozsh="sudo chsh $USER -s /bin/zsh && echo 'Log out and log back in for change to take effect.'"
 alias tofish="sudo chsh $USER -s /bin/fish && echo 'Log out and log back in for change to take effect.'"
 
@@ -713,20 +608,6 @@ if [ -f ~/.local/share/blesh/ble.sh ]; then
  source ~/.local/share/blesh/ble.sh
 fi
 
-# # Pre-write a command in the terminal after loading .bashrc
-# if [ -z "$PRE_WRITTEN_COMMAND_DONE" ]; then
-#     export PRE_WRITTEN_COMMAND_DONE=1
-#     # echo -n "tmux" && read -s -n 1
-#     printf "'\e[1;32m'\e[7m'"
-# fi
-# function y_z() {
-#     local tmp="$(mktemp -t "yazi-cwd-XXXXXX")" cwd
-#     yazi "$@" --cwd-file="$tmp"
-#     if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-#         cd -- "$cwd"
-#     fi
-#     \rm -f -- "$tmp"
-# }
 function y() {
  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
  yazi "$@" --cwd-file="$tmp"
@@ -735,40 +616,24 @@ function y() {
  fi
  \rm -f -- "$tmp"
 }
-# export NODE_COMPILE_CACHE=~/.cache/nodejs-compile-cache
-export PATH="$HOME/.local/bin:$PATH"
 
-# # Check if zoxide is installed and active
-# if command -v z >/dev/null 2>&1; then
-#  # Zoxide-powered directory navigation aliases
-alias cd='z'                                          # Override cd with zoxide for smart directory jumping
-alias home='z ~'                                      # Go to home directory
-alias cd..='z ..'                                     # Go up one directory
-alias ..='z ..'                                       # Shorthand for going up one directory
-alias ...='z ../..'                                   # Go up two directories
-alias ....='z ../../..'                               # Go up three directories
-alias .....='z ../../../..'                           # Go up four directories
-alias bd='z "$OLDPWD"'                                # Go back to the old directory
-alias new_d="z $(ls -td --color=never * | head -n 1)" # Go to the newest directory
-# else
-#  # Fallback to standard cd aliases if zoxide is not available
-#  alias home='cd ~'
-#  alias cd..='cd ..'
-#  alias ..='cd ..'
-#  alias ...='cd ../..'
-#  alias ....='cd ../../..'
-#  alias .....='cd ../../../..'
-#  alias bd='cd "$OLDPWD"'
-#  alias new_d="cd $(ls -td --color=never * | head -n 1)"
-# fi
-# if [ command -v paru ] &>/dev/null; then
+# Zoxide-powered directory navigation aliases
+alias cd='z'
+alias home='z ~'
+alias cd..='z ..'
+alias ..='z ..'
+alias ...='z ../..'
+alias ....='z ../../..'
+alias .....='z ../../../..'
+alias bd='z "$OLDPWD"'
+alias new_d="z $(ls -td --color=never * | head -n 1)"
+
+# Package manager helpers (paru/yay with fzf)
 alias parf="paru -Slq | fzf --multi --preview 'paru -Sii {1}' --preview-window=down:75% | xargs -ro paru -S --needed"
-alias yayf="yay -Slq | fzf --multi --preview 'paru -Sii {1}' --preview-window=down:75% | xargs -ro paru -S --needed"
 alias parr="paru -Qq | fzf --multi --preview 'paru -Qi {1}' --preview-window=down:75% | xargs -ro paru -Rns"
+alias yayf="yay -Slq | fzf --multi --preview 'yay -Sii {1}' --preview-window=down:75% | xargs -ro yay -S --needed"
+alias yayr="yay -Qq | fzf --multi --preview 'yay -Qi {1}' --preview-window=down:75% | xargs -ro yay -Rns"
 
-# fi
-alias mingwgcc="x86_64-w64-mingw32-gcc"
-export PATH="$HOME/.local/:$PATH"
 source ~/.blerc.sh
 
 # for carapace
@@ -780,7 +645,6 @@ source /usr/share/doc/pkgfile/command-not-found.bash
 # eval "$(mise activate bash)"
 # --- Zoxide Integration & Aliases ---
 eval "$(zoxide init bash)"
-
 
 # Added by Antigravity CLI installer
 export PATH="/home/mdmmj/.local/bin:$PATH"
