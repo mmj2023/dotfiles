@@ -32,7 +32,42 @@ output_path = '/home/mdmmj/.config/starship.toml'
 input_path = '/home/mdmmj/.config/matugen/templates/blerc-theme.sh'
 output_path = '/home/mdmmj/.blerc.sh'
 
+[templates.hyprland]
+input_path = '/home/mdmmj/.config/matugen/templates/matugen_colors.lua'
+output_path = '/home/mdmmj/.config/hypr/dms/matugen_colors.lua'
+post_hook = 'hyprctl reload'
+
+[templates.hyprlock]
+input_path = '/home/mdmmj/.config/matugen/templates/hyprlock-colors.conf'
+output_path = '/home/mdmmj/.config/hypr/dms/hyprlock-colors.conf'
+
 [templates.tmux]
 input_path = '/home/mdmmj/.config/matugen/templates/tmux_theme.sh'
 output_path = '/home/mdmmj/mytheme.conf'
 post_hook = 'tmux source-file ~/.tmux.conf'
+
+[templates.wayscriber]
+input_path = '/home/mdmmj/.config/matugen/templates/wayscriber-theme.toml'
+output_path = '/home/mdmmj/.config/wayscriber/config.toml'
+post_hook = 'bash /home/mdmmj/.config/matugen/scripts/wayscriber.sh'
+
+[templates.cosmic]
+input_path = '/home/mdmmj/.config/matugen/templates/Dark.ron'
+output_path = '/home/mdmmj/.config/cosmic/themes/Dark.ron'
+
+[templates.herdr]
+input_path = '/home/mdmmj/.config/matugen/templates/herdr-theme.toml'
+output_path = '/home/mdmmj/.config/herdr/config.toml'
+
+[templates.ghostty]
+input_path = '/home/mdmmj/.config/matugen/templates/ghostty-theme'
+output_path = '/home/mdmmj/.config/ghostty/config-generated-colors'
+
+[templates.wine]
+input_path = '/home/mdmmj/.config/matugen/templates/dms_theme.reg'
+output_path = '/home/mdmmj/.local/share/matugen/dms_theme.reg'
+post_hook = 'bash /home/mdmmj/.config/matugen/scripts/wine_theme.sh /home/mdmmj/.local/share/matugen/dms_theme.reg'
+
+[templates.zsh-syntax-highlighting]
+input_path = '/home/mdmmj/.config/matugen/templates/zsh-syntax-highlighting-theme.zsh'
+output_path = '/home/mdmmj/.config/zsh-syntax-highlighting/theme.zsh'

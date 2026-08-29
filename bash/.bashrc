@@ -171,6 +171,13 @@ if [ -f /usr/share/bash-completion/bash_completion ]; then
 elif [ -f /etc/bash_completion ]; then
  . /etc/bash_completion
 fi
+
+
+# --- fzf Integration ---
+[[ -f /usr/share/fzf/key-bindings.bash ]] && source /usr/share/fzf/key-bindings.bash
+[[ -f /usr/share/fzf/completion.bash ]] && source /usr/share/fzf/completion.bash
+[[ -f ~/.fzf.bash ]] && source ~/.fzf.bash
+
 # --- Shell Options and History Settings ---
 # Disable the bell
 if [[ $iatest -gt 0 ]]; then bind "set bell-style visible"; fi
@@ -773,6 +780,7 @@ source /usr/share/doc/pkgfile/command-not-found.bash
 # eval "$(mise activate bash)"
 # --- Zoxide Integration & Aliases ---
 eval "$(zoxide init bash)"
+
 
 # Added by Antigravity CLI installer
 export PATH="/home/mdmmj/.local/bin:$PATH"
