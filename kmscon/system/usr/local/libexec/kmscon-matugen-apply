@@ -1,0 +1,174 @@
+#!/usr/bin/python3
+
+import os
+import pwd
+import re
+import stat
+import sys
+import tempfile
+
+
+CONFIG_DIR = "/etc/kmscon"
+CONFIG_PATH = os.path.join(CONFIG_DIR, "kmscon.conf")
+BEGIN = "# BEGIN DMS MATUGEN PALETTE"
+END = "# END DMS MATUGEN PALETTE"
+KEYS = (
+    "palette-black",
+    "palette-red",
+    "palette-green",
+    "palette-yellow",
+    "palette-blue",
+    "palette-magenta",
+    "palette-cyan",
+    "palette-light-grey",
+    "palette-dark-grey",
+    "palette-light-red",
+    "palette-light-green",
+    "palette-light-yellow",
+    "palette-light-blue",
+    "palette-light-magenta",
+    "palette-light-cyan",
+    "palette-white",
+    "palette-foreground",
+    "palette-background",
+)
+COLOR_LINE = re.compile(r"^(palette-[a-z-]+)=#([0-9a-fA-F]{6})$")
+MAX_SOURCE_SIZE = 4096
+MAX_CONFIG_SIZE = 131072
+
+
+def read_regular_file(path, owner_uid, max_size):
+    fd = os.open(path, os.O_RDONLY | os.O_CLOEXEC | os.O_NOFOLLOW)
+    try:
+        metadata = os.fstat(fd)
+        if not stat.S_ISREG(metadata.st_mode):
+            raise ValueError(f"{path} is not a regular file")
+        if metadata.st_uid != owner_uid:
+            raise ValueError(f"{path} has an unexpected owner")
+        if metadata.st_size > max_size:
+            raise ValueError(f"{path} is too large")
+        chunks = []
+        size = 0
+        while True:
+            chunk = os.read(fd, min(4096, max_size + 1 - size))
+            if not chunk:
+                break
+            chunks.append(chunk)
+            size += len(chunk)
+            if size > max_size:
+                raise ValueError(f"{path} is too large")
+        return b"".join(chunks).decode("ascii")
+    finally:
+        os.close(fd)
+
+
+def invoking_user():
+    try:
+        uid = int(os.environ["PKEXEC_UID"])
+    except (KeyError, ValueError) as error:
+        raise PermissionError("Run this helper through pkexec") from error
+    if uid == 0:
+        raise PermissionError("A non-root invoking user is required")
+    return pwd.getpwuid(uid)
+
+
+def load_colors(user):
+    source_path = os.path.join(user.pw_dir, ".cache", "kmscon", "matugen-palette.conf")
+    source = read_regular_file(source_path, user.pw_uid, MAX_SOURCE_SIZE)
+    colors = {}
+    for line in source.splitlines():
+        match = COLOR_LINE.fullmatch(line)
+        if match is None:
+            raise ValueError("Matugen palette contains an invalid line")
+        key, hex_value = match.groups()
+        if key not in KEYS or key in colors:
+            raise ValueError(f"Matugen palette contains an unexpected key: {key}")
+        colors[key] = ",".join(
+            str(int(hex_value[index:index + 2], 16))
+            for index in (0, 2, 4)
+        )
+    if set(colors) != set(KEYS):
+        raise ValueError("Matugen palette is incomplete")
+    return colors
+
+
+def render_block(colors):
+    lines = [BEGIN, "palette=custom"]
+    lines.extend(f"{key}={colors[key]}" for key in KEYS)
+    lines.append(END)
+    return "\n".join(lines)
+
+
+def update_config(block):
+    directory = os.stat(CONFIG_DIR, follow_symlinks=False)
+    if (not stat.S_ISDIR(directory.st_mode)
+            or directory.st_uid != 0
+            or directory.st_mode & 0o022):
+        raise ValueError(f"{CONFIG_DIR} is not a protected root-owned directory")
+
+    try:
+        existing = read_regular_file(CONFIG_PATH, 0, MAX_CONFIG_SIZE)
+    except FileNotFoundError:
+        existing = ""
+
+    lines = existing.splitlines()
+    if lines.count(BEGIN) > 1 or lines.count(END) > 1:
+        raise ValueError("kmscon config contains duplicate DMS palette markers")
+    if (BEGIN in lines) != (END in lines):
+        raise ValueError("kmscon config contains an incomplete DMS palette block")
+    if BEGIN in lines:
+        start = lines.index(BEGIN)
+        finish = lines.index(END)
+        if start > finish:
+            raise ValueError("kmscon config has reversed DMS palette markers")
+        del lines[start:finish + 1]
+
+    base = "\n".join(lines).rstrip()
+    content = f"{base}\n\n{block}\n" if base else f"{block}\n"
+    if len(content.encode("ascii")) > MAX_CONFIG_SIZE:
+        raise ValueError("Updated kmscon config is too large")
+    try:
+        current = read_regular_file(CONFIG_PATH, 0, MAX_CONFIG_SIZE)
+    except FileNotFoundError:
+        current = None
+    if current == content:
+        return False
+
+    fd, temporary_path = tempfile.mkstemp(prefix=".kmscon.conf.", dir=CONFIG_DIR)
+    try:
+        os.fchmod(fd, 0o644)
+        os.fchown(fd, 0, 0)
+        with os.fdopen(fd, "w", encoding="ascii") as output:
+            output.write(content)
+            output.flush()
+            os.fsync(output.fileno())
+        os.replace(temporary_path, CONFIG_PATH)
+        directory_fd = os.open(CONFIG_DIR, os.O_RDONLY | os.O_DIRECTORY | os.O_CLOEXEC)
+        try:
+            os.fsync(directory_fd)
+        finally:
+            os.close(directory_fd)
+    except Exception:
+        try:
+            os.unlink(temporary_path)
+        except FileNotFoundError:
+            pass
+        raise
+    return True
+
+
+def main():
+    if os.geteuid() != 0:
+        raise PermissionError("Run this helper through pkexec")
+    colors = load_colors(invoking_user())
+    changed = update_config(render_block(colors))
+    print("Applied the DMS Matugen palette to kmscon." if changed
+          else "kmscon already has the current DMS Matugen palette.")
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except (OSError, UnicodeError, ValueError, PermissionError) as error:
+        print(f"kmscon Matugen update failed: {error}", file=sys.stderr)
+        sys.exit(1)

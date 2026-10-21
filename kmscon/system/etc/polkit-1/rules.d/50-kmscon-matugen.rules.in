@@ -1,0 +1,9 @@
+polkit.addRule(function(action, subject) {
+    if (action.id === "org.freedesktop.policykit.exec"
+        && action.lookup("program") === "/usr/local/libexec/kmscon-matugen-apply"
+        && subject.user === "@USER@"
+        && subject.local
+        && subject.active) {
+        return polkit.Result.YES;
+    }
+});

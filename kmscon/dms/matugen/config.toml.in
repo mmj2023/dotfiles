@@ -1,0 +1,4 @@
+[templates.kmscon]
+input_path = "@TEMPLATE_PATH@"
+output_path = "@PALETTE_PATH@"
+post_hook = "pkexec /usr/local/libexec/kmscon-matugen-apply"

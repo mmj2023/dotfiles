@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# kmscon-screenshot — capture one frame of the current DRM output while
+# kmscon (or any DRM master) owns the display, using ffmpeg's kmsgrab.
+#
+# Must run as root (kmsgrab needs to open the DRM device alongside the
+# running master):  sudo ~/.local/bin/kmscon-screenshot
+# Optional first arg: output path (default ~/Pictures/Screenshots).
+set -euo pipefail
+
+OUT_DIR="${XDG_PICTURES_DIR:-$HOME/Pictures}/Screenshots"
+mkdir -p "$OUT_DIR"
+OUT="${1:-$OUT_DIR/kmscon-$(date +%Y%m%d-%H%M%S).png}"
+
+# 1 frame from the live DRM planes -> BGR raw -> PNG
+# (hwdownload pulls the DRM frame back into normal memory; format=bgr0 is
+#  what kmsgrab outputs.)
+ffmpeg -loglevel error -f kmsgrab -i - -vf 'hwdownload,format=bgr0' \
+	-frames:v 1 "$OUT"
+echo "saved: $OUT"
