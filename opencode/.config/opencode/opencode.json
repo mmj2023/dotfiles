@@ -1,0 +1,22 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": [
+    "Use the configured GitHub MCP server (`tools.github.*`) for remote-repo state: issues, PRs, releases, tags, code search, branch file contents, reviews. Prefer it over approximating via the shell or browsing GitHub; keep plain git for local operations.",
+    "When setting up or testing MCP servers, prefer the OpenCode CLI (`opencode mcp add/list`) and keep bundled dependencies zero-cost when reasonable."
+  ],
+  "mcp": {
+    "servers": {
+      "github": {
+        "type": "local",
+        "command": ["/home/mdmmj/.config/opencode/mcp/github-mcp-docker.sh"]
+      },
+      "ddg": {
+        "type": "local",
+        "command": [
+          "python3",
+          "/home/mdmmj/.config/opencode/mcp/ddg-lite-mcp.py"
+        ]
+      }
+    }
+  }
+}
