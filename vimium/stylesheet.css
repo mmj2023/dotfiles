@@ -1,22 +1,22 @@
-/* Everforest soft palette */
+/* Dynamic material theme for Vimium */
 :root {
-  --soft-cream: #d3c6aa;
-  --soft-green: #a7c080;
-  --soft-blue: #7fbbb3;
-  --soft-red: #e8a2af;
-  --soft-dark: #2c313a;
-  --soft-grey: #565c64;
-  --soft-base: #323d43;
-  --soft-light: #454e56;
+  --soft-cream: #e2e3dd;
+  --soft-green: #88d991;
+  --soft-blue: #a1ced6;
+  --soft-red: #ffb4ab;
+  --soft-dark: #454743;
+  --soft-grey: #1a6c31;
+  --soft-base: #51534f;
+  --soft-light: #5d5f5b;
 
   /* Hint colors & font prefs */
-  --bg-hints: #23f1fc;
-  --border-hints: #25f2c7;
-  --fg-hints: #000000;
+  --bg-hints: #a1ced6;
+  --border-hints: #a3f5ab;
+  --fg-hints: #002108;
 
   --font-size: 14px;
-  --font-size-hints: 12px;
-  --font-size-url: 12px;
+  --font-size-hints: 9px;
+  --font-size-url: 9px;
 
   --font-weight: normal;
   --font-weight-medium: medium;
@@ -41,8 +41,6 @@ div > .vimiumHintMarker {
 }
 
 div > .vimiumHintMarker span {
-  font-size: 18px;
-  font-family: var(--font);
   font-weight: var(--font-weight-bold);
   text-shadow: none;
   color: var(--fg-hints);
