@@ -163,6 +163,7 @@ config.max_fps = 200
 -- --   local frontend = wezterm.gui and wezterm.gui.front_end or "Unknown"
 -- --   window:toast_notification("WezTerm Info", "Active rendering backend: " .. frontend, nil, 5000)
 -- -- end)
+config.color_scheme = "Noctalia"
 return config
 -- -- local function toggle_acrylic()
 -- -- 	acrylic_enabled = not acrylic_enabled
