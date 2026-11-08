@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+
+
+# See https://wiki.hyprland.org/Configuring/Environment-variables/
+# env = QT_QPA_PLATFORM,wayland
+export ELECTRON_OZONE_PLATFORM_HINT=auto
+export TERMINAL=kitty
+export HYPRCURSOR_THEME=cz-Hickson-black
+export XCURSOR_THEME=cz-Hickson-black
+export XCURSOR_SIZE=24
+export HYPRCURSOR_SIZE=24
+
+# Toolkit Backend
+# export GDK_BACKEND="wayland,x11"
+# export GDK_SCALE=1.25
+# # export GDK_DPI_SCALE=1.25
+export SDL_VIDEODRIVER="wayland,x11" # Added ,x11 fallback just in case
+# export SDL_VIDEODRIVER=wayland
+export CLUTTER_BACKEND=wayland
+
+# gtk
+export GDK_BACKEND="wayland=x11"
+export GDK_SCALE=1.25
+export MOZ_ENABLE_WAYLAND=1
+
+# Qt Specifics
+export QT_QPA_PLATFORM="wayland;xcb"
+export QT_QPA_PLATFORMTHEME=qt6ct
+export QT_QPA_PLATFORMTHEME_QT6=qt6ct
+export QT_QPA_PLATFORMTHEME_QT5=qt6ct
+# export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+
+# export QT_AUTO_SCREEN_SCALE_FACTOR=0
+# export QT_SCALE_FACTOR=1.25
+# export QT_QPA_PLATFORMTHEME=hyprqt6engine
+
+
+# Hardware, Rendering & Cursors
+# https://wiki.hyprland.org/hyprland-wiki/pages/Nvidia/
+export HYPRCURSOR_THEME=cz-Hickson-black
+export XCURSOR_THEME=cz-Hickson-black
+export XCURSOR_SIZE=24
+export HYPRCURSOR_SIZE=24
+export WLR_NO_HARDWARE_CURSORS=1
+export WLR_DRM_NO_ATOMIC=1
+export AQ_NO_HARDWARE_CURSORS=1
+export AQ_DRM_NO_ATOMIC=1
+
+export __GLX_VENDOR_LIBRARY_NAME=nvidia
+export LIBVA_DRIVER_NAME=nvidia
+export GBM_BACKEND=nvidia-drm
+export __GL_VRR_ALLOWED=1
+export NVD_BACKEND=direct
+# env = __GLX_VENDOR_LIBRARY_NAME,nvidia
+# env = LIBVA_DRIVER_NAME,nvidia
+# env = GBM_BACKEND,nvidia-drm
+# env = WLR_NO_HARDWARE_CURSORS,1
+# env = WLR_DRM_NO_ATOMIC,1
+# env = AQ_NO_HARDWARE_CURSORS,1
+# # env = AQ_DRM_DEVICES,/dev/dri/card0:/dev/dri/card1
+# env = AQ_DRM_NO_ATOMIC,1
+# env = __GL_VRR_ALLOWED,1
+# env = NVD_BACKEND,direct
+# # env = WLR_DRM_DEVICES,/dev/dri/card0
+# # env = AQ_DRM_DEVICES,/dev/dri/card1
+
+
+exec "$@"
