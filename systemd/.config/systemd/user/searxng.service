@@ -1,0 +1,14 @@
+[Unit]
+Description=SearXNG stack (core + valkey) via podman-compose
+After=graphical-session.target
+Wants=graphical-session.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/podman-compose -f /home/mdmmj/Projects/projects/searxng/docker-compose.yml -p searxng up -d --no-recreate
+ExecStop=/usr/bin/podman-compose -f /home/mdmmj/Projects/projects/searxng/docker-compose.yml -p searxng stop
+User=mdmmj
+
+[Install]
+WantedBy=graphical-session.target
