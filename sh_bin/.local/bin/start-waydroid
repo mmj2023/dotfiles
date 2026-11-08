@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+kwin_wayland --fullscreen --exit-with-session "waydroid show-full-ui"
