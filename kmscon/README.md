@@ -65,6 +65,14 @@ devices directly. Consequences:
   `natural-scrolling=on` inverts the wheel direction.
 - Tap-to-click, click-method, middle-emulation etc. **do not exist** — the
   evdev code is what it is; only a source patch could change that.
+- **Cursor theme cannot be applied.** Unlike Hyprland (`XCURSOR_THEME=cz-Hickson-black`,
+  size 24 via `xhyprctl setcursor`/DMS env), kmscon has no Xcursor loader at
+  all: the mouse pointer is a hard-coded I-beam *glyph* drawn by the text
+  renderer (`kmscon_text_draw_pointer()` in `src/render/text.c`, v10.0.4),
+  scaling with the font size. There is no config option, and no reasonable
+  workaround short of patching kmscon to load `~/.icons/cz-Hickson-black`.
+  The *terminal* (text) cursor is likewise kmscon-internal (`--soft-cursor`,
+  `--blink`), not a themed one.
 
 ## Copy/paste & screenshots — why no keybinds
 
