@@ -1,0 +1,9 @@
+#+TITLE:My emacs config
+#+AUTHOR: Me 😅
+#+DESCRIPTION: It's my personal config duh
+#+STARTUP: showeverything
+#+OPTIONS: toc:2
+
+* Add Elpaca Package Manger
+#+begin_src emacs-lisp
+#+end_src
