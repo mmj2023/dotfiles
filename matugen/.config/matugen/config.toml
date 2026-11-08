@@ -57,11 +57,20 @@ output_path = '/home/mdmmj/.config/cosmic/themes/Dark.ron'
 
 [templates.herdr]
 input_path = '/home/mdmmj/.config/matugen/templates/herdr-theme.toml'
-output_path = '/home/mdmmj/.config/herdr/config.toml'
+output_path = '/home/mdmmj/dotfiles/herdr/.config/herdr/config.toml'
+post_hook = 'if [ -S "$HOME/.config/herdr/herdr.sock" ]; then herdr server reload-config; fi'
+
+[templates.herdr-app]
+input_path = '/home/mdmmj/.config/matugen/templates/herdr-app-theme.json'
+output_path = '/home/mdmmj/dotfiles/herdr-app/.config/herdr-app/themes/matugen.json'
 
 [templates.ghostty]
 input_path = '/home/mdmmj/.config/matugen/templates/ghostty-theme'
 output_path = '/home/mdmmj/.config/ghostty/config-generated-colors'
+
+[templates.terminal-opacity]
+input_path = '/home/mdmmj/.config/matugen/templates/terminal-opacity-theme.sh'
+output_path = '/home/mdmmj/.cache/terminal-opacity/theme.sh'
 
 [templates.wine]
 input_path = '/home/mdmmj/.config/matugen/templates/dms_theme.reg'
@@ -71,3 +80,15 @@ post_hook = 'bash /home/mdmmj/.config/matugen/scripts/wine_theme.sh /home/mdmmj/
 [templates.zsh-syntax-highlighting]
 input_path = '/home/mdmmj/.config/matugen/templates/zsh-syntax-highlighting-theme.zsh'
 output_path = '/home/mdmmj/.config/zsh-syntax-highlighting/theme.zsh'
+
+[templates.obs-flatpak]
+input_path = '/home/mdmmj/.config/matugen/templates/DMS.obt'
+output_path = '/home/mdmmj/.var/app/com.obsproject.Studio/config/obs-studio/themes/DMS.obt'
+
+[templates.obs-system]
+input_path = '/home/mdmmj/.config/matugen/templates/DMS.obt'
+output_path = '/home/mdmmj/.config/obs-studio/themes/DMS.obt'
+
+[templates.vimium]
+input_path = '/home/mdmmj/.config/matugen/templates/vimium-theme.css'
+output_path = '/home/mdmmj/dotfiles/vimium/stylesheet.css'
