@@ -524,6 +524,18 @@ command -v carapace &>/dev/null && source <(carapace _carapace zsh)
 # --- Antigravity CLI ---
 export PATH="/home/mdmmj/.local/bin:$PATH"
 
+# --- Terminal opacity toggle (kitty / alacritty / ghostty) ---
+# colors come from DMS matugen; applies kitty via its config watcher, alacritty via
+# live config reload, ghostty via its Ctrl+Alt+B (reload_config) keybind
+toggle-terminal-opacity() { "$HOME/.local/bin/toggle-terminal-opacity" "$@" }
+_terminal_opacity_widget() {
+  toggle-terminal-opacity
+  zle -I
+}
+zle -N _terminal_opacity_widget
+bindkey $'\e\x02' _terminal_opacity_widget    # Ctrl+Alt+B (legacy encoding)
+bindkey $'\e[98;5u' _terminal_opacity_widget # Ctrl+Alt+B (kitty / CSI-u encoding)
+
 # --- Zsh Syntax Highlighting ---
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null \
   || source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null \
