@@ -1,0 +1,12 @@
+{
+  "zoom": 1,
+  "theme": "matugen",
+  "sounds": {
+    "enabled": true
+  },
+  "font_ligatures": false,
+  "minimum_contrast": 1,
+  "font": "JetBrainsMono Nerd Font Mono",
+  "opacity": 0.1,
+  "telemetry": false
+}

@@ -1,0 +1,9 @@
+{
+  "place": "none",
+  "title": "Tmux prefix",
+  "overlay": {
+    "kind": "dialog",
+    "width": 460,
+    "height": 108
+  }
+}
