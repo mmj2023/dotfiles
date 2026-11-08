@@ -41,6 +41,9 @@ dotfiles/
    stow starship/
    ```
 - there is a sddm config for which you need to use it's makefile to install it cause it will put stuff in the root directory.
+- The optional `kmscon/` package themes kmscon from DMS/Matugen. See
+  [`kmscon/README.md`](kmscon/README.md) and run `~/dotfiles/kmscon/setup.sh`
+  to install its DMS template and restricted system helper.
 
 ## ⚙️ Requirements
 
