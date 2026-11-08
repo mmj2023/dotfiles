@@ -120,7 +120,7 @@ hl.config({
 		shadow = {
 			enabled = false,
 			range = 30,
-			render_power = 5,
+			render_power = 4,
 			offset = "0 5",
 			color = "rgba(00000070)",
 		},
@@ -162,9 +162,10 @@ hl.config({
 	},
 
 	scrolling = {
-		fullscreen_on_one_column = true,
-		focus_fit_method = 1,
-		follow_focus = true,
+     column_width = 0.5,
+     fullscreen_on_one_column = true,
+     focus_fit_method = 1,
+     follow_focus = true,
 	},
 
 	xwayland = {
@@ -186,7 +187,7 @@ hl.config({
 		allow_session_lock_restore = 1,
 		background_color = "rgba(0,0,0,0)",
 		session_lock_xray = true,
-		initial_workspace_tracking = 2,
+		-- initial_workspace_tracking = 1,
 	},
 
 	cursor = {
@@ -238,6 +239,7 @@ hl.window_rule({ match = { class = "^(org\\.wezfurlong\\.wezterm)$" }, tile = tr
 hl.window_rule({ match = { class = "^(org\\.gnome\\.)" }, rounding = 12 })
 hl.window_rule({ match = { class = "^(gnome-control-center)$" }, tile = true })
 hl.window_rule({ match = { class = "^(org\\.pulseaudio\\.pavucontrol)$" }, float = true })
+hl.window_rule({ match = { class = "^(xfce4-appfinder)$" }, float = true })
 hl.window_rule({ match = { class = "^(org\\.kde\\.kcalc)$" }, float = true })
 hl.window_rule({ match = { class = "^(org\\.opengamingcollective\\.rog-control-center)$" }, float = true })
 hl.window_rule({ match = { class = "^(nm-connection-editor)$" }, tile = true })
@@ -258,6 +260,10 @@ hl.window_rule({
 	pin = true,
 })
 hl.window_rule({
+	match = { class = "^(xdg-desktop-portal-gtk)$" },
+	float = true,
+})
+hl.window_rule({
 	match = { class = "^(firefox)$", title = "^(Picture-in-Picture)$" },
 	float = true,
 })
@@ -266,7 +272,7 @@ hl.window_rule({
 	float = true,
 })
 hl.window_rule({ match = { class = "^(zoom)$" }, float = true })
-hl.layer_rule({ match = { namespace = "^(quickshell)$" }, no_anim = true })
+-- hl.layer_rule({ match = { namespace = "^(quickshell)$" }, no_anim = true })
 hl.layer_rule({ match = { namespace = "^dms:.*" }, no_anim = true })
 
 require("modules.gestures")
@@ -311,6 +317,8 @@ hl.on("hyprland.start", function()
 	-- # exec-once = /usr/lib/mate-polkit/polkit-mate-authentication-agent-1
 	-- # exec-once = bash ~/protal.sh
 	hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
+	-- hl.exec_cmd("sysmemctl --user start graphical-session.target")
+	hl.exec_cmd("systemctl --user start searxng")
 	hl.exec_cmd("/usr/lib/polkit-kde-authentication-agent-1")
 	hl.exec_cmd("hyprctl setcursor cz-Hickson-black 24")
 	hl.exec_cmd("xrdb ~/.Xresources")
@@ -318,7 +326,6 @@ hl.on("hyprland.start", function()
 	-- # exec-once = killall hypridle & hypridle
 	hl.exec_cmd("bash -c 'wl-paste --watch cliphist store &'")
 	hl.exec_cmd("hyprpm reload -n")
-	hl.exec_cmd("dms run")
 	hl.exec_cmd("hyprshell run")
 	hl.exec_cmd("pcmanfm-qt --desktop")
 	-- # # exec-once = systemctl --user start hyprpolkitagent
@@ -330,9 +337,12 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("walker --gapplication-service")
 	hl.exec_cmd("wayscriber --daemon")
 	hl.exec_cmd("kwalletd6")
-	hl.exec_cmd("prime-run ghostty", { workspace = "1 silent" })
-	hl.exec_cmd("prime-run kitty", { workspace = "special:magic silent" })
-	hl.exec_cmd("prime-run zen", { workspace = "2 silent" })
+	-- hl.exec_cmd("sleep 5")
+	hl.exec_cmd("sleep 3 && dms run")
+	-- hl.exec_cmd("sleep 1")
+	hl.exec_cmd("sleep 3 && prime-run ghostty", { workspace = "1 silent" })
+	hl.exec_cmd("sleep 3 && prime-run kitty", { workspace = "special:magic silent" })
+	hl.exec_cmd("sleep 3 && prime-run zen", { workspace = "2 silent" })
 	-- # exec-once = [workspace 5 silent] ~/AppImages/squashfs-root/AppRun
 
 	-- # exec-once = [workspace 5 silent] sleep 1 && prime-run helium-browser --ozone-platform=x11
@@ -349,6 +359,7 @@ end)
 ---- WINDOW RULES ----
 ----------------------
 hl.workspace_rule({ workspace = "2", layout = "scrolling" })
+hl.workspace_rule({ workspace = "5", layout = "scrolling" })
 -- Ref https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
 -- "Smart gaps" / "No gaps when only"
 hl.workspace_rule({ workspace = "w[tv1]", gaps_out = 0, gaps_in = 0 })

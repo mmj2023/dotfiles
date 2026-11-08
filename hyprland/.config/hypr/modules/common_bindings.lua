@@ -8,7 +8,7 @@ local menu = "rofi -show run"
 -- closeWindowBind:set_enabled(false)
 hl.bind("SUPER+ Q", hl.dsp.window.close())
 -- hl.bind("SUPER+ F", "fullscreen 0")
-hl.bind("SUPER+ F", hl.dsp.window.fullscreen(1,1))
+hl.bind("SUPER+ F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
 -- hl.bind("SUPER+SHIFT+ F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
 hl.bind("SUPER+SHIFT+ F", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
 -- hl.bind("SUPER SHIFT+ F", "fullscreenstate 1 0")
@@ -34,7 +34,24 @@ hl.bind("ALT+SHIFT+ Tab", hl.dsp.window.cycle_next("prev"))
 -- === OCR & Utilities ===
 -- hl.bind("SUPER+SHIFT+ Y", hl.dsp.exec_cmd([[exec grim "$(slurp)" /tmp/ocr.png && tesseract /tmp/ocr.png stdout | wl-copy && notify-send -i ~/Pictures/icons/hyprland.icon "Hyprland" "Text copied to clipboard"]]))
 hl.bind("SUPER+SHIFT+ T", hl.dsp.exec_cmd([[grim -g "$(slurp)" /tmp/ocr.png && tesseract /tmp/ocr.png stdout | wl-copy && notify-send -i ~/Pictures/icons/hyprland.icon "Hyprland" "Text copied to clipboard"]]))
-hl.bind("SUPER+ O", hl.dsp.exec_cmd([[ADDR=$(hyprctl -j activewindow | /usr/bin/jq -r .address); val=$(hyprctl getprop \"address:$ADDR\" opacity); if [ \"$val\" = \"0.65\" ]; then hyprctl -q dispatch setprop \"address:$ADDR\" opacity 1; hyprctl -q dispatch setprop \"address:$ADDR\" opacity_inactive 1; hyprctl -q dispatch setprop \"address:$ADDR\" opacity_fullscreen 1; else hyprctl -q dispatch setprop \"address:$ADDR\" opacity 0.65; hyprctl -q dispatch setprop \"address:$ADDR\" opacity_inactive 0.65; hyprctl -q dispatch setprop \"address:$ADDR\" opacity_fullscreen 0.65; fi]]))
+-- toggle opacity of the active window (updated for Lua config: hl.dsp.window.set_prop,
+-- docs https://wiki.hypr.land/configuring/core/dispatchers/#window)
+hl.bind("SUPER+ O", function()
+	local win = hl.get_active_window()
+	if not win then
+		return
+	end
+	local addr = "address:" .. tostring(win.address)
+	local popen = io.popen(("hyprctl getprop '%s' opacity"):format(addr))
+	local cur = tonumber(popen and popen:read("a") or "1") or 1
+	if popen then
+		popen:close()
+	end
+	local value = (math.abs(cur - 0.65) < 0.01) and "1" or "0.65"
+	for _, prop in ipairs({ "opacity", "opacity_inactive", "opacity_fullscreen" }) do
+		hl.dispatch(hl.dsp.window.set_prop({ prop = prop, value = value, window = addr }))
+	end
+end)
 -- toggle blur + game mode
 hl.bind("SUPER + F1", function ()
     local game_mode = (hl.get_config("animations.enabled") == false)
@@ -116,20 +133,62 @@ hl.bind("SUPER + SHIFT+ B", function ()
         -- }
     })
 end)
+
+local function layout_bind(bind_table)
+    return function ()
+        local workspace = hl.get_active_special_workspace() or
+                          hl.get_active_workspace()
+
+        if not workspace then
+            return
+        end
+
+        local layout = workspace.tiled_layout
+
+        if bind_table[layout] then
+            hl.dispatch(bind_table[layout])
+        end
+    end
+end
+
 -- hl.bind("SUPER+ B", hl.dsp.exec_cmd("bash /home/mdmmj/toggle_blur.sh"))
 -- hl.bind("SUPER CTRL+ C", "exec hyprctl kill")
 -- hl.bind(mainMod .. "+ CTRL + C", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind("SUPER+SHIFT+ C", hl.dsp.exec_cmd("pkill hyprpicker || hyprpicker | wl-copy"))
 
 -- === Window Movement ===
-hl.bind("SUPER+SHIFT+ left",hl.dsp.window.move({ direction = "left"}))
+-- hl.bind("SUPER+SHIFT+ left",hl.dsp.window.move({ direction = "left"}))
+hl.bind("SUPER+SHIFT+ left", layout_bind({
+    scrolling = hl.dsp.layout("swapcol l"),  -- Scrolling: swap column with left one
+    dwindle   = hl.dsp.window.move({ direction = "left"}),  -- Dwindle: swap window split
+    monocle   = hl.dsp.window.move({ direction = "left"}),  -- Monocle and master: cycle prev window
+    master    = hl.dsp.window.move({ direction = "left"}),
+}))
 hl.bind("SUPER+SHIFT+ down", hl.dsp.window.move({ direction = "down"}))
 hl.bind("SUPER+SHIFT+ up", hl.dsp.window.move({ direction = "up"}))
-hl.bind("SUPER+SHIFT+ right", hl.dsp.window.move({ direction = "right"}))
-hl.bind("SUPER+SHIFT+ H", hl.dsp.window.move({ direction = "left"}))
+-- hl.bind("SUPER+SHIFT+ right", hl.dsp.window.move({ direction = "right"}))
+hl.bind("SUPER+SHIFT+ right", layout_bind({
+    scrolling = hl.dsp.layout("swapcol r"),  -- Scrolling: swap column with left one
+    dwindle   = hl.dsp.window.move({ direction = "right"}),  -- Dwindle: swap window split
+    monocle   = hl.dsp.window.move({ direction = "right"}),  -- Monocle and master: cycle prev window
+    master    = hl.dsp.window.move({ direction = "right"}),
+}))
+-- hl.bind("SUPER+SHIFT+ H", hl.dsp.window.move({ direction = "left"}))
+hl.bind("SUPER+SHIFT+ H", layout_bind({
+    scrolling = hl.dsp.layout("swapcol l"),  -- Scrolling: swap column with left one
+    dwindle   = hl.dsp.window.move({ direction = "left"}),  -- Dwindle: swap window split
+    monocle   = hl.dsp.window.move({ direction = "left"}),  -- Monocle and master: cycle prev window
+    master    = hl.dsp.window.move({ direction = "left"}),
+}))
 hl.bind("SUPER+SHIFT+ J", hl.dsp.window.move({ direction = "down"}))
 hl.bind("SUPER+SHIFT+ K", hl.dsp.window.move({ direction = "up"}))
-hl.bind("SUPER+SHIFT+ L", hl.dsp.window.move({ direction = "right"}))
+-- hl.bind("SUPER+SHIFT+ L", hl.dsp.window.move({ direction = "right"}))
+hl.bind("SUPER+SHIFT+ L", layout_bind({
+    scrolling = hl.dsp.layout("swapcol r"),  -- Scrolling: swap column with left one
+    dwindle   = hl.dsp.window.move({ direction = "right"}),  -- Dwindle: swap window split
+    monocle   = hl.dsp.window.move({ direction = "right"}),  -- Monocle and master: cycle prev window
+    master    = hl.dsp.window.move({ direction = "right"}),
+}))
 
 -- === Column Management ===
 hl.bind("SUPER + bracketleft", hl.dsp.layout("preselect l"))
@@ -140,14 +199,53 @@ hl.bind("SUPER + R", hl.dsp.layout("togglesplit"))
 -- hl.bind("SUPER CTRL+ F", "resizeactive exact 100%")
 
 -- === Focus Navigation ===
-hl.bind("SUPER+ left", hl.dsp.focus({ direction = "left"}))
+-- hl.bind("SUPER + period", hl.dsp.layout("move +col"))
+-- hl.bind("SUPER + comma", hl.dsp.layout("move -col"))
+--
+-- hl.bind("SUPER + left", hl.dsp.layout("focus l"))
+-- hl.bind("SUPER + right", hl.dsp.layout("focus r"))
+-- hl.bind("SUPER + up", hl.dsp.layout("focus u"))
+-- hl.bind("SUPER + down", hl.dsp.layout("focus d"))
+-- hl.bind("SUPER + equal", hl.dsp.layout("colresize +conf"))
+-- hl.bind("SUPER + minus", hl.dsp.layout("colresize -conf"))
+-- hl.bind("SUPER + f", hl.dsp.layout("fit expand"))
+-- hl.bind("SUPER + bracketleft", hl.dsp.layout("consume_or_expel prev"))
+-- hl.bind("SUPER + bracketright", hl.dsp.layout("consume_or_expel next"))
+-- hl.bind("SUPER + SHIFT + comma", hl.dsp.layout("swapcol l"))
+-- hl.bind("SUPER + shift + period", hl.dsp.layout("swapcol r"))
+
+-- hl.bind("SUPER+ left", hl.dsp.focus({ direction = "left"}))
+hl.bind("SUPER+ left", layout_bind({
+    scrolling = hl.dsp.layout("move -col"),  -- Scrolling: swap column with left one
+    dwindle   = hl.dsp.focus({ direction = "right"}),  -- Dwindle: swap window split
+    monocle   = hl.dsp.focus({ direction = "right"}),  -- Monocle and master: cycle prev window
+    master    = hl.dsp.focus({ direction = "right"}),
+}))
 hl.bind("SUPER+ down", hl.dsp.focus({ direction = "down"}))
 hl.bind("SUPER+ up", hl.dsp.focus({ direction = "up"}))
-hl.bind("SUPER+ right", hl.dsp.focus({ direction = "right"}))
-hl.bind("SUPER+ H", hl.dsp.focus({ direction = "left"}))
+-- hl.bind("SUPER+ right", hl.dsp.focus({ direction = "right"}))
+hl.bind("SUPER+ right", layout_bind({
+    scrolling = hl.dsp.layout("move +col"),  -- Scrolling: swap column with left one
+    dwindle   = hl.dsp.focus({ direction = "left"}),  -- Dwindle: swap window split
+    monocle   = hl.dsp.focus({ direction = "left"}),  -- Monocle and master: cycle prev window
+    master    = hl.dsp.focus({ direction = "left"}),
+}))
+-- hl.bind("SUPER+ H", hl.dsp.focus({ direction = "left"}))
+hl.bind("SUPER+ H", layout_bind({
+    scrolling = hl.dsp.layout("move -col"),  -- Scrolling: swap column with left one
+    dwindle   = hl.dsp.focus({ direction = "right"}),  -- Dwindle: swap window split
+    monocle   = hl.dsp.focus({ direction = "right"}),  -- Monocle and master: cycle prev window
+    master    = hl.dsp.focus({ direction = "right"}),
+}))
 hl.bind("SUPER+ J", hl.dsp.focus({ direction = "down"}))
 hl.bind("SUPER+ K", hl.dsp.focus({ direction = "up"}))
-hl.bind("SUPER+ L", hl.dsp.focus({ direction = "right"}))
+-- hl.bind("SUPER+ L", hl.dsp.focus({ direction = "right"}))
+hl.bind("SUPER+ L", layout_bind({
+    scrolling = hl.dsp.layout("move +col"),  -- Scrolling: swap column with left one
+    dwindle   = hl.dsp.focus({ direction = "left"}),  -- Dwindle: swap window split
+    monocle   = hl.dsp.focus({ direction = "left"}),  -- Monocle and master: cycle prev window
+    master    = hl.dsp.focus({ direction = "left"}),
+}))
 
 -- -- === Workspace Management ===
 -- hl.bind("CTRL + SHIFT + R", hl.dsp.exec_cmd("dms ipc call workspace-rename open"))
@@ -270,7 +368,8 @@ hl.bind("SUPER+ E", hl.dsp.exec_cmd(fileManager))
 hl.bind("SUPER+ M", hl.dsp.exec_cmd("dms ipc call processlist toggle"))
 hl.bind("SUPER+ comma", hl.dsp.exec_cmd("dms ipc call settings toggle"))
 hl.bind("SUPER+ N", hl.dsp.exec_cmd("dms ipc call notifications toggle"))
-hl.bind("SUPER+SHIFT+ N", hl.dsp.exec_cmd("dms ipc call notepad toggle"))
+-- MyQuickshell notes overlay (DMS' notepad was on this combo before)
+hl.bind("SUPER+SHIFT+ N", hl.dsp.exec_cmd("qs -p ~/Projects/projects/qml_Projects/MyQuickshell ipc call notes toggle"))
 hl.bind("SUPER+CTRL+ V", hl.dsp.exec_cmd("voxtype record start"))
 hl.bind("SUPER+CTRL+ V", hl.dsp.exec_cmd("voxtype record stop", { release = true }))
 
