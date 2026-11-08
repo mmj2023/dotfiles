@@ -648,3 +648,11 @@ eval "$(zoxide init bash)"
 
 # Added by Antigravity CLI installer
 export PATH="/home/mdmmj/.local/bin:$PATH"
+
+# --- Terminal opacity toggle (kitty / alacritty / ghostty) ---
+# Ctrl+Alt+B runs the shared toggle script; the script flips each terminal's
+# config and, for ghostty, sends SIGUSR2 (its native config-reload signal),
+# so ghostty needs no keybind of its own.
+toggle-terminal-opacity() { "$HOME/.local/bin/toggle-terminal-opacity" "$@"; }
+bind -x $'"\e\x02": toggle-terminal-opacity' 2>/dev/null || true   # legacy encoding
+bind -x $'"\e[98;5u": toggle-terminal-opacity' 2>/dev/null || true # kitty protocol encoding
