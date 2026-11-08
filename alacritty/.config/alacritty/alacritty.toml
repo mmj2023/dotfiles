@@ -1,0 +1,37 @@
+# matches kitty/ghostty: DMS/matugen theme, JetBrains Mono 12, transparent by default
+[general]
+import = [
+    "~/.config/alacritty/dank-theme.toml",
+    "~/.config/alacritty/themes/noctalia.toml",
+]
+live_config_reload = true
+
+# --- BEGIN terminal-opacity-toggle (managed by toggle-terminal-opacity; do not edit) ---
+[window]
+opacity = 0.0
+# --- END terminal-opacity-toggle ---
+
+[font.normal]
+family = "JetBrains Mono Nerd Font"
+
+[font]
+size = 12.0
+
+[cursor.style]
+shape = "Block"
+blinking = "On"
+
+[[keyboard.bindings]]
+key = "B"
+mods = "Control|Alt"
+# run the shared toggle; changes apply via alacritty's live config reload
+command = { program = "bash", args = ["-c", "/home/mdmmj/.local/bin/toggle-terminal-opacity"] }
+
+[scrolling]
+history = 3023
+
+[mouse]
+hide_when_typing = true
+
+[env]
+TERM = "xterm-kitty"
