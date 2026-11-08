@@ -1,0 +1,210 @@
+#!/usr/bin/env bash
+# toggle-terminal-opacity — flip background opacity 0 <-> 1 in kitty / alacritty / ghostty
+#
+# It discovers whose key press invoked it, with this precedence:
+#   1. terminal name given as argument: `toggle-terminal-opacity kitty`
+#      (kitty's keybind passes `kitty`, alacritty's passes `alacritty`)
+#   2. env detection (ghostty keybind falls through to the shell, which has
+#      no terminal arg -> env vars: KITTY_WINDOW_ID / ALACRITTY_LOG / GHOSTTY_RESOURCES_DIR)
+#   3. manual invocation with nothing detectable -> all terminals
+# Scope can be forced:
+#       --all         change all terminals at once
+#       --individual  change only the invoking terminal
+# and scope defaults to `terminal-opacity = all` in ~/.config/mydot/flags.conf
+# (default: individual).
+#
+# Colors are read from the cached theme file (~/.cache/terminal-opacity/theme.sh,
+# written once by DMS's matugen template). Each terminal applies the change via
+# its own mechanism:
+#   kitty      : managed block in kitty.conf, applied by kitty's config watcher
+#   alacritty  : managed block in alacritty.toml, applied by live config reload
+#   ghostty    : include file ~/.cache/terminal-opacity/ghostty.conf, applied by
+#                poking running ghostty with its native SIGUSR2 config reload
+set -euo pipefail
+
+CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/terminal-opacity"
+STATE_FILE="$CACHE/mode"
+THEME_FILE="$CACHE/theme.sh"
+FLAGS_CONF="$HOME/.config/mydot/flags.conf"
+KITTY_CONF="$HOME/.config/kitty/kitty.conf"
+ALACRITTY_CONF="$HOME/.config/alacritty/alacritty.toml"
+
+mkdir -p "$CACHE"
+
+# launch --type=background (kitty) hides stderr; keep any crash messages visible
+exec 2>>"$CACHE/debug.log"
+
+usage() {
+	cat <<EOF
+usage: toggle-terminal-opacity [kitty|alacritty|ghostty] [--all | --individual]
+usage: toggle-terminal-opacity --help
+  <terminal>    change only this terminal (kitty/alacritty pass their own name)
+  --all         change all terminals at once (overrides flags.conf)
+  --individual  change only the invoking terminal (overrides flags.conf)
+EOF
+}
+
+load_colors() {
+	# cached once by the matugen template; defaults only as a safety net
+	if [[ -r "$THEME_FILE" ]]; then
+		# shellcheck disable=SC1090
+		source "$THEME_FILE"
+	fi
+	TRANSPARENT_BG=${TRANSPARENT_BG:-#111411}
+	OPAQUE_BG=${OPAQUE_BG:-#1d201d}
+}
+
+# scope: all | individual
+load_scope() {
+	if [[ -r "$FLAGS_CONF" ]]; then
+		local conf
+		conf=$(grep -E '^[[:space:]]*terminal-opacity[[:space:]]*=' "$FLAGS_CONF" 2>/dev/null | tail -1 || true)
+		conf=${conf#*=}
+		conf=${conf//[[:space:]]/}
+		if [[ "$conf" == "all" ]]; then
+			echo all
+			return 0
+		fi
+	fi
+	echo individual
+}
+
+# only when scope is individual
+target_terminal() {
+	if [[ -n "${KITTY_WINDOW_ID:-}" ]]; then
+		echo kitty
+	elif [[ -n "${ALACRITTY_LOG:-}" || -n "${ALACRITTY_WINDOW_ID:-}" ]]; then
+		echo alacritty
+	elif [[ -n "${GHOSTTY_RESOURCES_DIR:-}" ]]; then
+		echo ghostty
+	else
+		# not invoked from inside one of the three (manual run etc.) — act on all
+		echo all
+	fi
+}
+
+arg_terminal=""
+
+# debounce: one physical keypress can reach this script via several paths
+# (kitty's own `map ctrl+alt+b`, bash `bind -x` fallbacks in kitty/alacritty/
+# ghostty, key auto-repeat). Multiple invocations within 300ms count as a
+# single toggle to avoid an even number of flips cancelling out.
+DEBOUNCE_MS=300
+DEBOUNCE_FILE="$CACHE/last"
+last_ts=0
+[[ -f $DEBOUNCE_FILE ]] && read -r last_ts <"$DEBOUNCE_FILE"
+{
+	now_ns=$(date +%s%N)
+} 2>/dev/null
+if ((last_ts > 0 && now_ns - last_ts < DEBOUNCE_MS * 1000000)); then
+	printf '%s debounce: skipped (invoked again within %sms)\n' "$(date +%T)" "$DEBOUNCE_MS" >>"$CACHE/debug.log"
+	exit 0
+fi
+echo "$now_ns" >"$DEBOUNCE_FILE"
+
+mode=$(cat "$STATE_FILE" 2>/dev/null || echo 0)
+next=$((mode == 0 ? 1 : 0))
+echo "$next" >"$STATE_FILE"
+load_colors
+if ((next == 1)); then
+	ghostty_opacity=1
+	ghostty_bg="$OPAQUE_BG"
+else
+	ghostty_opacity=0
+	ghostty_bg="$TRANSPARENT_BG"
+fi
+
+while [[ $# -gt 0 ]]; do
+	case $1 in
+	-h | --help) usage; exit 0 ;;
+	--all | -a) scope=all; shift ;;
+	--individual | -i) scope=individual; shift ;;
+	kitty | alacritty | ghostty) arg_terminal=$1; shift ;;
+	*) echo "unknown argument: $1" >&2; usage >&2; exit 1 ;;
+	esac
+done
+
+scope=${scope:-$(load_scope)}
+
+# which terminals should apply the new state
+if [[ -n "$arg_terminal" ]]; then
+	target=$arg_terminal
+else
+	target=$(target_terminal)
+fi
+apply_all=false
+[[ "$scope" == "all" ]] && apply_all=true
+
+{
+	printf '%s scope=%s target=%s mode:%s->%s\n' "$(date +%T)" "$scope" "$target" "$mode" "$next"
+} >>"$CACHE/debug.log" 2>&1
+
+# replace content between BEGIN/END markers, appending the block when absent
+update_block() {
+	local -r file="$1" content="$2"
+	local -r begin='# --- BEGIN terminal-opacity-toggle (managed by toggle-terminal-opacity; do not edit) ---'
+	local -r end='# --- END terminal-opacity-toggle ---'
+
+	if ! grep -qF "$begin" "$file"; then
+		printf '%s\n' >>"$file"
+		printf '%s\n%s\n%s\n' "$begin" "$content" "$end" >>"$file"
+		return 0
+	fi
+
+	python3 - "$file" "$begin" "$end" "$content" <<'PYEOF'
+import os
+import sys
+
+path, begin, end, content = sys.argv[1:5]
+with open(path, encoding="utf-8") as fh:
+    text = fh.read()
+pos = text.index(begin)
+start = text.index("\n", pos) + 1
+stop = text.index("\n" + end, start)
+out = text[:start] + content + text[stop:]
+tmp = path + ".opacity-toggle.tmp"
+with open(tmp, "w", encoding="utf-8") as fh:
+    fh.write(out)
+    fh.flush()
+    os.fsync(fh.fileno())
+os.replace(tmp, path)
+PYEOF
+}
+
+kitty_block=$(printf 'background_opacity %s\nbackground %s' "$ghostty_opacity" "$ghostty_bg")
+alacritty_block=$(printf '[window]\nopacity = %s' "$(awk -v o="$ghostty_opacity" 'BEGIN { printf "%.1f", o }')")
+if ((ghostty_opacity == 1)); then
+	alacritty_block+=$(printf '\n\n[colors.primary]\nbackground = \x27%s\x27' "$ghostty_bg")
+fi
+
+# kitty: apply via kitty's own config watcher (kitten __watch_conf__)
+if $apply_all || [[ "$target" == kitty ]]; then
+	if [[ -e "$KITTY_CONF" ]]; then
+		update_block "$KITTY_CONF" "$kitty_block"
+	fi
+fi
+
+# alacritty: apply via alacritty's live config reload
+if $apply_all || [[ "$target" == alacritty ]]; then
+	if [[ -e "$ALACRITTY_CONF" ]]; then
+		update_block "$ALACRITTY_CONF" "$alacritty_block"
+	fi
+fi
+
+# ghostty: write the include file, then poke running ghostty with its native
+# SIGUSR2 config-reload signal so it applies immediately (no keybind needed)
+if $apply_all || [[ "$target" == ghostty ]]; then
+	{
+		echo "# generated by toggle-terminal-opacity"
+		echo "background-opacity = $ghostty_opacity"
+		echo "background = $ghostty_bg"
+	} >"$CACHE/ghostty.conf"
+
+	if command -v pgrep >/dev/null 2>&1; then
+		for pid in $(pgrep -x ghostty); do
+			kill -USR2 "$pid" 2>/dev/null || true
+		done
+	fi
+fi
+
+exit 0
