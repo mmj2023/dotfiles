@@ -49,4 +49,9 @@ shell-integration-features = cursor,sudo,title,no-cursor
 keybind = shift+enter=text:\n
 
 # Dank color generation
-config-file = ./config-dankcolors
+config-file = ./config-generated-colors
+
+# --- terminal opacity toggle (managed by toggle-terminal-opacity; do not edit) ---
+# The include is loaded LAST so its background/opacity win. toggle-terminal-opacity
+# rewrites it; apply with ghostty's built-in Ctrl+Shift+, (reload_config).
+config-file = ?/home/mdmmj/.cache/terminal-opacity/ghostty.conf
